@@ -1,0 +1,10 @@
+html {
+  background-color: lavenderblush;
+}
+
+.container_404 {
+  margin: auto;
+  max-width: 960;
+  text-align: center;
+  justify-content: center;
+}
