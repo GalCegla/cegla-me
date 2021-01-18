@@ -78,6 +78,20 @@ html {
   border-radius: 100px;
   border: 10px solid #ffdae6;
   background: #ffdae6;
+  animation: boxAnimation 8s;
+}
+
+@keyframes boxAnimation {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+    transition-timing-function: ease-in-out;
+  }
 }
 
 .box:hover {
