@@ -1,5 +1,5 @@
 html {
-  background-color: lavenderblush;
+  background-color: #fff0f5;
   text-align: center;
 }
 
@@ -10,7 +10,7 @@ html {
   display: inline-block;
   margin-right: auto;
   margin-left: auto;
-  width: 960px;
+  width: calc(30%);
   animation: wipeAnimation 3s;
 }
 
@@ -21,7 +21,7 @@ html {
   display: inline-block;
   margin-right: auto;
   margin-left: auto;
-  width: 960px;
+  width: calc(30%);
   animation: wipeAnimation 3s;
 }
 
@@ -50,8 +50,8 @@ html {
   margin-right: auto;
   margin-left: auto;
   margin-top: auto;
-  width: 300;
-  height: 300px;
+  width: calc(15%);
+  height: calc(15%);
   animation: logoAnimation 6s;
 }
 
@@ -66,4 +66,25 @@ html {
     opacity: 100;
     transition-timing-function: ease-in-out;
   }
+}
+
+.box {
+  transition: box-shadow 0.3s;
+  width: calc(70%);
+  display: inline-block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10vh;
+  border-radius: 100px;
+  border: 10px solid #ffdae6;
+  background: #ffdae6;
+}
+
+.box:hover {
+  box-shadow: 0 0 11px rgba(0, 0, 0, 0.3);
+}
+
+.socialIcon {
+  width: calc(10%);
+  height: calc(10%);
 }
