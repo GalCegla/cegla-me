@@ -4,6 +4,10 @@ import icon from "./images/icon.png";
 import gitHubLogo from "./images/gitHubLogo.png";
 import lottie from "lottie-web";
 import bothAnim from "../animations/bothAnim.json";
+import useSound from "use-sound";
+import soundOnSfx from "../sfx/soundOn.wav";
+import soundOffSfx from "../sfx/soundOff.wav";
+import clairDeLune from "../sfx/clairDeLune.mp3";
 
 const leftLine = styles.leftLine;
 const rightLine = styles.rightLine;
@@ -16,8 +20,13 @@ const { useState, useEffect } = React;
 
 export default function IndexPage() {
   const [animationState, setAnimationState] = useState("");
-  //const [shouldPlay, setShouldPlay] = useState(true);
+  const [isOn, setIsOn] = useState(false);
   let animationContainer = React.createRef();
+
+  const [playOn] = useSound(soundOnSfx, { volume: 0.25 });
+  const [playOff] = useSound(soundOffSfx, { volume: 0.25 });
+
+  const [play, { stop, isPlaying }] = useSound(clairDeLune);
 
   useEffect(() => {
     const animation = lottie.loadAnimation({
@@ -32,13 +41,20 @@ export default function IndexPage() {
     } else if (animationState === "off") {
       animation.playSegments([85, 110], true);
     }
+    return () => {
+      animation.destroy();
+    };
   });
 
   const handleClick = () => {
     if (animationState === "off" || animationState === "") {
       setAnimationState("on");
+      playOn();
+      play();
     } else if (animationState === "on") {
       setAnimationState("off");
+      playOff();
+      stop();
     }
   };
 
@@ -48,7 +64,7 @@ export default function IndexPage() {
         className={soundAnimationContainer}
         ref={animationContainer}
         role=""
-        onClick={handleClick}
+        onClick={() => handleClick()}
       />
       <div>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -21,6 +21,7 @@
     "gatsby-plugin-offline": "^3.8.0",
     "lottie-web": "^5.7.6",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "use-sound": "^2.0.1"
   }
 }
