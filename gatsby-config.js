@@ -12,6 +12,5 @@ module.exports = {
         icon: "src/pages/images/icon.png",
       },
     },
-    `gatsby-plugin-offline`,
   ],
 };
