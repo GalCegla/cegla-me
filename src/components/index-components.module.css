@@ -102,3 +102,11 @@ html {
   width: calc(10%);
   height: calc(10%);
 }
+
+.soundAnimationContainer {
+  width: calc(3%);
+  height: calc(3%);
+  cursor: pointer;
+  display: inline-block;
+  margin-left: -95vw;
+}
