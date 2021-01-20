@@ -109,4 +109,5 @@ html {
   cursor: pointer;
   display: inline-block;
   margin-left: -95vw;
+  animation: boxAnimation 8s;
 }
