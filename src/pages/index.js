@@ -71,6 +71,8 @@ export default function IndexPage() {
     }
   };
 
+  document.title = "Gal Cegla's Space";
+
   return (
     <div>
       <div
