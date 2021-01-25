@@ -12,5 +12,6 @@ module.exports = {
         icon: "src/pages/images/icon.png",
       },
     },
+    `gatsby-plugin-remove-serviceworker`,
   ],
 };

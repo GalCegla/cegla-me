@@ -18,7 +18,7 @@
   "dependencies": {
     "gatsby": "^2.26.1",
     "gatsby-plugin-manifest": "^2.10.0",
-    "gatsby-plugin-offline": "^3.8.0",
+    "gatsby-plugin-remove-serviceworker": "^1.0.0",
     "howler": "^2.2.1",
     "lottie-web": "^5.7.6",
     "react": "^16.14.0",
