@@ -71,7 +71,9 @@ export default function IndexPage() {
     }
   };
 
-  document.title = "Gal Cegla's Space";
+  useEffect(() => {
+    document.title = "Gal Cegla's Space";
+  }, []);
 
   return (
     <div>
