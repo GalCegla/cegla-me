@@ -16,11 +16,14 @@
   },
   "license": "0BSD",
   "dependencies": {
+    "apollo-server": "^2.21.0",
     "gatsby": "^2.26.1",
     "gatsby-plugin-manifest": "^2.10.0",
     "gatsby-plugin-remove-serviceworker": "^1.0.0",
+    "graphql": "^14.7.0",
     "howler": "^2.2.1",
     "lottie-web": "^5.7.6",
+    "nexus": "^1.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-lottie": "^1.2.3"
@@ -28,6 +31,8 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "ts-node-dev": "^1.1.1",
+    "typescript": "^4.1.3"
   }
 }
