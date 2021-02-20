@@ -12,7 +12,10 @@
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --transpile-only --no-notify api/app.ts",
+    "GQLbuild": "tsc"
   },
   "license": "0BSD",
   "dependencies": {
