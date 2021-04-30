@@ -16,6 +16,11 @@
   },
   "license": "0BSD",
   "dependencies": {
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.3.0",
+    "@material-ui/core": "^4.11.3",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "gatsby": "^2.26.1",
     "gatsby-plugin-manifest": "^2.10.0",
     "gatsby-plugin-remove-serviceworker": "^1.0.0",
@@ -26,8 +31,12 @@
     "react-lottie": "^1.2.3"
   },
   "devDependencies": {
+    "@types/howler": "^2.2.2",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "source-map-loader": "^2.0.1",
+    "ts-loader": "^9.1.0",
+    "typescript": "^4.2.4"
   }
 }
