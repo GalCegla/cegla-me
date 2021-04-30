@@ -87,7 +87,6 @@
       }
     ],
     "line-comment-position": "error",
-    "linebreak-style": ["error", "windows"],
     "lines-around-comment": "error",
     "lines-around-directive": "error",
     "lines-between-class-members": "error",
@@ -166,8 +165,6 @@
     "no-process-exit": "error",
     "no-proto": "error",
     "no-restricted-globals": "error",
-    "no-restricted-imports": "error",
-    "no-restricted-modules": "error",
     "no-restricted-properties": "error",
     "no-restricted-syntax": "error",
     "no-return-assign": "error",
