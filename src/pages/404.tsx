@@ -1,14 +1,15 @@
-import * as React from "react";
+import React, { FC } from "react";
 import { Link } from "gatsby";
 import Container_404 from "../components/404-Container";
 
-const Container = Container_404;
 
-export default function Not_Found() {
+const Not_Found: FC = () => {
   return (
-    <Container text>
+    <Container_404>
       <h1>How'd YOU get here?</h1>
       <Link to="/">Go back?</Link>
-    </Container>
+    </Container_404>
   );
 }
+
+export default Not_Found

@@ -1,13 +1,12 @@
-import * as React from "react";
 import styles from "../components/index-components.module.css";
-import icon from "./images/icon.png";
-import gitHubLogo from "./images/gitHubLogo.png";
+import styled from "@emotion/styled"
+import {icon, gitHubLogo} from 'images/index'
 import lottie from "lottie-web";
 import bothAnim from "../animations/bothAnim.json";
-import soundOnSfx from "../sfx/soundOn.wav";
-import soundOffSfx from "../sfx/soundOff.wav";
-import clairDeLune from "../sfx/clairDeLune.mp3";
+import {soundOn, soundOff, clairDeLune} from "sfx/index";
 import { Howl, Howler } from "howler";
+import React, { FC } from "react";
+import { Box } from "@material-ui/core";
 
 const leftLine = styles.leftLine;
 const rightLine = styles.rightLine;
@@ -18,12 +17,12 @@ const soundAnimationContainer = styles.soundAnimationContainer;
 const { useState, useEffect } = React;
 
 const playOn = new Howl({
-  src: [soundOnSfx],
+  src: [soundOn],
   volume: 0.25,
 });
 
 const playOff = new Howl({
-  src: [soundOffSfx],
+  src: [soundOff],
   volume: 0.25,
 });
 
@@ -32,7 +31,7 @@ const clairDeLuneSfx = new Howl({
   volume: 0.75,
 });
 
-export default function IndexPage() {
+const IndexPage: FC = () => {
   const [animationState, setAnimationState] = useState("");
   let animationContainer = React.createRef();
   let animationRef = React.createRef();
@@ -106,3 +105,42 @@ export default function IndexPage() {
     </div>
   );
 }
+
+const StyledContainer = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  background-color: #fff0f5;
+`
+
+const StyledLogo = styled.img`
+  
+`
+
+const StyledLine = styled(Box)`
+  border: 5px solid #8d427c;
+  background-color: #8d427c;
+  border-radius: 5px;
+  width: calc(30%);
+  animation: wipeAnimation 3s;
+
+  @keyframes wipeAnimation {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+
+  32% {
+    width: 0;
+    opacity: 0;
+  }
+  33% {
+    width: 0;
+    opacity: 100;
+  }
+  100% {
+    width: 100;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+`
