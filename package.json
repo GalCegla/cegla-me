@@ -27,6 +27,7 @@
     "gatsby-plugin-typescript": "^2.10.0",
     "howler": "^2.2.1",
     "lottie-web": "^5.7.6",
+    "material-ui-color": "^1.2.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-lottie": "^1.2.3"

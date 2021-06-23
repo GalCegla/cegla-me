@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
 import { icon, gitHubLogo } from "../images";
 import lottie from "lottie-web";
-import bothAnim from "../animations/bothAnim.json";
+import { bothAnim } from "../animations/index";
 import { soundOn, soundOff, clairDeLune } from "../../src/sfx";
 import { Howl } from "howler";
 import React, { FC, useCallback, useRef, useState, useEffect } from "react";
-import { Box, Button } from "@material-ui/core";
+import { Box, BoxProps, Button, ButtonBase } from "@material-ui/core";
 import { Link } from "gatsby";
+import { ColorPicker, Color, ColorBox, ColorBoxProps } from "material-ui-color";
 
 const playOn = new Howl({
   src: soundOn,
@@ -25,10 +26,11 @@ const clairDeLuneSfx = new Howl({
 
 const IndexPage: FC = () => {
   const [animationState, setAnimationState] = useState("");
+  const [pickedColor, setPickedColor] = useState<Color>();
+  const [isColorBoxOpen, setIsColorBoxOpen] = useState<boolean>(false);
   const animationContainerRef = useRef<HTMLDivElement>();
   const animationRef = useRef();
 
-  //@ts-ignore
   const loadAnimation = lottie.loadAnimation({
     container: animationContainerRef.current as Element,
     animationData: bothAnim,
@@ -43,9 +45,11 @@ const IndexPage: FC = () => {
     } else if (animationState === "off") {
       loadAnimation.playSegments([85, 110], true);
     }
-  }, [animationState, animationRef]);
+  }, [animationState, animationRef, loadAnimation]);
 
   const handleClick = useCallback(() => {
+    // eslint-disable-next-line no-console
+    console.log("clicked");
     if (animationState === "off" || animationState === "") {
       setAnimationState("on");
       playOn.play();
@@ -57,24 +61,27 @@ const IndexPage: FC = () => {
     }
   }, [animationState, setAnimationState]);
 
+  const handleColorChange = useCallback((color) => {
+    setPickedColor(color);
+  }, [setPickedColor]);
+
+  const handleLogoClick = useCallback(() => {setIsColorBoxOpen(true)}, []);
+
   useEffect(() => {
     document.title = "Gal Cegla's Space";
   }, []);
 
   return (
-    <StyledContainer>
-      <StyledSoundAnimationContainer
-        ref={() => animationContainerRef}
-        role=""
-        onClick={handleClick}
-      />
-      <div>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <StyledContainer pickedColor={pickedColor}>
+       {isColorBoxOpen ? <StyledColorBox onChange={handleColorChange} value={pickedColor} isOpen={isColorBoxOpen} /> : null}
+      <StyledHeaderContainer>
         <StyledLine />
+        <ButtonBase onClick={handleLogoClick}>
         <StyledLogo src={icon} alt="Logo" />
+        </ButtonBase>
         <StyledLine />
-      </div>
-      <Link to="https://github.com/galcegla/">
+      </StyledHeaderContainer>
+      <Link to="https://github.com/galcegla/" className="StyledButton" target="_blank">
         <StyledButton>
           <StyledIcon src={gitHubLogo} alt="GitHub Icon" />
         </StyledButton>
@@ -85,48 +92,61 @@ const IndexPage: FC = () => {
 
 export default IndexPage;
 
-const StyledContainer = styled(Box)`
+type NewBoxProps = BoxProps & {pickedColor: string}
+
+const StyledContainer = styled<FC<NewBoxProps>>(Box)`
   display: flex;
   flex-direction: column;
-  background-color: #fff0f5;
+  background: ${({pickedColor}) => pickedColor};
+  align-items: center;
+  justify-content: center;
 `;
 
-const StyledLogo = styled.img``;
-const StyledIcon = styled.img``;
+const StyledLogo = styled.img`
+  height: 80px;
+  width: 80px;
+`;
+const StyledIcon = styled.img`
+  height: 40px;
+  width: 40px;
+`;
+
+const StyledHeaderContainer = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 8px;
+  margin-bottom: 42px;
+
+  & > * {
+    margin: 0 6px;
+  }
+`;
 
 const StyledLine = styled(Box)`
-  border: 5px solid #8d427c;
+  border: 1px solid #8d427c;
   background-color: #8d427c;
-  border-radius: 5px;
-  width: calc(30%);
-  animation: wipeAnimation 3s;
-
-  @keyframes wipeAnimation {
-    0% {
-      width: 0;
-      opacity: 0;
-    }
-
-    32% {
-      width: 0;
-      opacity: 0;
-    }
-    33% {
-      width: 0;
-      opacity: 100;
-    }
-    100% {
-      width: 100;
-      transition-timing-function: ease-in-out;
-    }
-  }
+  border-radius: 50px;
+  height: 6px;
+  width: 120px;
 `;
 
 const StyledButton = styled(Button)`
   background: #ffdae6;
   align-items: center;
-  align-self: stretch;
-  border-radius: 10px;
+  border-radius: 100%;
+  width: 70px;
+  height: 70px;
 `;
 
-const StyledSoundAnimationContainer = styled.div``;
+const StyledColorBox = styled<FC<ColorBoxProps & {isOpen: boolean}>>(ColorBox)`
+  position: fixed;
+  margin-top: 60px;
+
+  transition: opacity 1s;
+
+  opacity: ${({isOpen}) => isOpen ? `100` : `0`};
+
+`;
