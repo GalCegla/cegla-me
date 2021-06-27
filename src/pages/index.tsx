@@ -6,11 +6,11 @@ import { bothAnim } from "../animations/index";
 import { soundOn, soundOff, clairDeLune } from "../../src/sfx";
 import { Howl } from "howler";
 import React, { FC, useCallback, useRef, useState, useEffect } from "react";
-import { Box, BoxProps, Button, ButtonBase } from "@material-ui/core";
+import { Box, Button, ButtonBase, ClickAwayListener } from "@material-ui/core";
 import { Link } from "gatsby";
 import { Helmet } from "react-helmet";
 
-import { ColorPicker, Color, ColorBox, ColorBoxProps } from "material-ui-color";
+import { Color, ColorBox, ColorBoxProps } from "material-ui-color";
 
 const playOn = new Howl({
   src: soundOn,
@@ -75,6 +75,11 @@ const IndexPage: FC = () => {
     setIsColorBoxOpen(true);
   }, []);
 
+  const handleColorPickerClickAway = useCallback(() => {
+    console.log("click");
+    setIsColorBoxOpen(false);
+  }, [setIsColorBoxOpen]);
+
   useEffect(() => {
     document.title = "";
   }, []);
@@ -95,11 +100,17 @@ const IndexPage: FC = () => {
       />
       <StyledContainer>
         {isColorBoxOpen ? (
-          <StyledColorBox
-            onChange={handleColorChange}
-            value={pickedColor}
-            isOpen={isColorBoxOpen}
-          />
+          <ClickAwayListener onClickAway={handleColorPickerClickAway}>
+            <ColorContainer>
+              <StyledColorBox
+                onChange={handleColorChange}
+                value={pickedColor}
+                isOpen={isColorBoxOpen}
+                palette={{ default: "lavenderblush" }}
+                defaultValue="lavenderblush"
+              />
+            </ColorContainer>
+          </ClickAwayListener>
         ) : null}
         <StyledHeaderContainer>
           <StyledLine />
@@ -174,13 +185,19 @@ type StyledColorBoxProps = ColorBoxProps & {
   isOpen: boolean;
 };
 
-const StyledColorBox = styled<FC<StyledColorBoxProps>>(ColorBox)`
+const ColorContainer = styled(Box)`
   position: fixed;
-  margin-top: 100px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+`;
 
+const StyledColorBox = styled<FC<StyledColorBoxProps>>(ColorBox)`
+  margin-top: 100px;
   transition: opacity 1s;
 
   opacity: ${({ isOpen }) => (isOpen ? `100` : `0`)};
-  z-index: 1000;
   background: lavenderblush;
 `;
