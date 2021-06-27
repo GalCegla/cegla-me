@@ -1,3 +1,4 @@
+import { Global, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { icon, gitHubLogo } from "../images";
 import lottie from "lottie-web";
@@ -7,6 +8,8 @@ import { Howl } from "howler";
 import React, { FC, useCallback, useRef, useState, useEffect } from "react";
 import { Box, BoxProps, Button, ButtonBase } from "@material-ui/core";
 import { Link } from "gatsby";
+import { Helmet } from "react-helmet";
+
 import { ColorPicker, Color, ColorBox, ColorBoxProps } from "material-ui-color";
 
 const playOn = new Howl({
@@ -61,43 +64,69 @@ const IndexPage: FC = () => {
     }
   }, [animationState, setAnimationState]);
 
-  const handleColorChange = useCallback((color) => {
-    setPickedColor(color);
-  }, [setPickedColor]);
+  const handleColorChange = useCallback(
+    (color) => {
+      setPickedColor(color);
+    },
+    [setPickedColor]
+  );
 
-  const handleLogoClick = useCallback(() => {setIsColorBoxOpen(true)}, []);
+  const handleLogoClick = useCallback(() => {
+    setIsColorBoxOpen(true);
+  }, []);
 
   useEffect(() => {
-    document.title = "Gal Cegla's Space";
+    document.title = "";
   }, []);
 
   return (
-    <StyledContainer pickedColor={pickedColor}>
-       {isColorBoxOpen ? <StyledColorBox onChange={handleColorChange} value={pickedColor} isOpen={isColorBoxOpen} /> : null}
-      <StyledHeaderContainer>
-        <StyledLine />
-        <ButtonBase onClick={handleLogoClick}>
-        <StyledLogo src={icon} alt="Logo" />
-        </ButtonBase>
-        <StyledLine />
-      </StyledHeaderContainer>
-      <Link to="https://github.com/galcegla/" className="StyledButton" target="_blank">
-        <StyledButton>
-          <StyledIcon src={gitHubLogo} alt="GitHub Icon" />
-        </StyledButton>
-      </Link>
-    </StyledContainer>
+    <>
+      <Helmet>
+        <title>Gal Cegla's Space</title>
+      </Helmet>
+      <Global
+        styles={css`
+          body {
+            background: ${pickedColor
+              ? `#${pickedColor.hex}`
+              : "lavenderblush"};
+          }
+        `}
+      />
+      <StyledContainer>
+        {isColorBoxOpen ? (
+          <StyledColorBox
+            onChange={handleColorChange}
+            value={pickedColor}
+            isOpen={isColorBoxOpen}
+          />
+        ) : null}
+        <StyledHeaderContainer>
+          <StyledLine />
+          <ButtonBase onClick={handleLogoClick}>
+            <StyledLogo src={icon} alt="Logo" />
+          </ButtonBase>
+          <StyledLine />
+        </StyledHeaderContainer>
+        <Link
+          to="https://github.com/galcegla/"
+          className="StyledButton"
+          target="_blank"
+        >
+          <StyledButton>
+            <StyledIcon src={gitHubLogo} alt="GitHub Icon" />
+          </StyledButton>
+        </Link>
+      </StyledContainer>
+    </>
   );
 };
 
 export default IndexPage;
 
-type NewBoxProps = BoxProps & {pickedColor: string}
-
-const StyledContainer = styled<FC<NewBoxProps>>(Box)`
+const StyledContainer = styled(Box)`
   display: flex;
   flex-direction: column;
-  background: ${({pickedColor}) => pickedColor};
   align-items: center;
   justify-content: center;
 `;
@@ -141,12 +170,17 @@ const StyledButton = styled(Button)`
   height: 70px;
 `;
 
-const StyledColorBox = styled<FC<ColorBoxProps & {isOpen: boolean}>>(ColorBox)`
+type StyledColorBoxProps = ColorBoxProps & {
+  isOpen: boolean;
+};
+
+const StyledColorBox = styled<FC<StyledColorBoxProps>>(ColorBox)`
   position: fixed;
-  margin-top: 60px;
+  margin-top: 100px;
 
   transition: opacity 1s;
 
-  opacity: ${({isOpen}) => isOpen ? `100` : `0`};
-
+  opacity: ${({ isOpen }) => (isOpen ? `100` : `0`)};
+  z-index: 1000;
+  background: lavenderblush;
 `;
