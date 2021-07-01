@@ -199,10 +199,11 @@ const ColorContainer = styled(Box)`
   align-items: center;
   justify-content: center;
   align-self: center;
+  top: 10px;
 `;
 
 const StyledColorBox = styled<FC<StyledColorBoxProps>>(ColorBox)`
-  margin-top: 150px;
+  //margin-top: 150px;
   transition: opacity 1s;
 
   opacity: ${({ isOpen }) => (isOpen ? `100` : `0`)};
@@ -212,6 +213,8 @@ const StyledColorBox = styled<FC<StyledColorBoxProps>>(ColorBox)`
 const AnimationContainer = styled(Box)`
   height: 50px;
   width: 50px;
-  align-self: flex-start;
+  left: 10px;
+  top: 10px;
   cursor: pointer;
+  position: fixed;
 `;
