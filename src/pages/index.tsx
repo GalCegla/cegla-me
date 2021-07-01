@@ -1,16 +1,25 @@
 import { Global, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { icon, gitHubLogo } from "../images";
-import lottie from "lottie-web";
-import { bothAnim } from "../animations/index";
+import { Options as AnimationOptions } from "react-lottie";
+import Lottie from "react-lottie-segments";
+import {
+  soundOn as soundOnAnimation,
+  soundOff as soundOffAnimation,
+} from "../animations/index";
 import { soundOn, soundOff, clairDeLune } from "../../src/sfx";
 import { Howl } from "howler";
-import React, { FC, useCallback, useRef, useState, useEffect } from "react";
+import React, { FC, useCallback, useState, useEffect } from "react";
 import { Box, Button, ButtonBase, ClickAwayListener } from "@material-ui/core";
 import { Link } from "gatsby";
 import { Helmet } from "react-helmet";
 
 import { Color, ColorBox, ColorBoxProps } from "material-ui-color";
+
+type PlaySegmentsOptions = {
+  segments: Array<number>;
+  forceFlag: boolean;
+};
 
 const playOn = new Howl({
   src: soundOn,
@@ -28,41 +37,32 @@ const clairDeLuneSfx = new Howl({
 });
 
 const IndexPage: FC = () => {
-  const [animationState, setAnimationState] = useState("");
+  const [isAnimationPaused, setIsAnimationPaused] = useState<boolean>(false);
+  const [isSoundOn, setIsSoundOn] = useState<boolean>(false);
   const [pickedColor, setPickedColor] = useState<Color>();
   const [isColorBoxOpen, setIsColorBoxOpen] = useState<boolean>(false);
-  const animationContainerRef = useRef<HTMLDivElement>();
-  const animationRef = useRef();
 
-  const loadAnimation = lottie.loadAnimation({
-    container: animationContainerRef.current as Element,
-    animationData: bothAnim,
-    renderer: "svg",
+  const animationOptions: AnimationOptions = {
+    animationData: isSoundOn ? soundOffAnimation : soundOnAnimation,
     loop: false,
     autoplay: false,
-  });
+  };
 
-  useEffect(() => {
-    if (animationState === "on") {
-      loadAnimation.playSegments([30, 50], true);
-    } else if (animationState === "off") {
-      loadAnimation.playSegments([85, 110], true);
-    }
-  }, [animationState, animationRef, loadAnimation]);
+  const animationStartPoint: PlaySegmentsOptions = {
+    segments: [30, 50],
+    forceFlag: true,
+  };
 
-  const handleClick = useCallback(() => {
-    // eslint-disable-next-line no-console
-    console.log("clicked");
-    if (animationState === "off" || animationState === "") {
-      setAnimationState("on");
+  const handleAnimationClick = useCallback(() => {
+    if (isSoundOn) {
       playOn.play();
       clairDeLuneSfx.play();
-    } else if (animationState === "on") {
-      setAnimationState("off");
+    } else {
       playOff.play();
       clairDeLuneSfx.pause();
     }
-  }, [animationState, setAnimationState]);
+    setIsSoundOn((value) => !value);
+  }, [isSoundOn]);
 
   const handleColorChange = useCallback(
     (color) => {
@@ -99,6 +99,13 @@ const IndexPage: FC = () => {
         `}
       />
       <StyledContainer>
+        <AnimationContainer onClick={handleAnimationClick}>
+          <Lottie
+            options={animationOptions}
+            isStopped={isAnimationPaused}
+            playSegments={animationStartPoint}
+          />
+        </AnimationContainer>
         {isColorBoxOpen ? (
           <ClickAwayListener onClickAway={handleColorPickerClickAway}>
             <ColorContainer>
@@ -195,9 +202,16 @@ const ColorContainer = styled(Box)`
 `;
 
 const StyledColorBox = styled<FC<StyledColorBoxProps>>(ColorBox)`
-  margin-top: 100px;
+  margin-top: 150px;
   transition: opacity 1s;
 
   opacity: ${({ isOpen }) => (isOpen ? `100` : `0`)};
   background: lavenderblush;
+`;
+
+const AnimationContainer = styled(Box)`
+  height: 50px;
+  width: 50px;
+  align-self: flex-start;
+  cursor: pointer;
 `;

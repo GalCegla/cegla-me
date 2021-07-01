@@ -21,6 +21,7 @@
     "@emotion/styled": "^11.3.0",
     "@material-ui/core": "^4.11.3",
     "@types/react-helmet": "^6.1.1",
+    "@types/react-lottie": "^1.2.5",
     "gatsby": "^2.26.1",
     "gatsby-plugin-emotion": "^6.4.0",
     "gatsby-plugin-manifest": "^2.10.0",
@@ -28,12 +29,13 @@
     "gatsby-plugin-remove-serviceworker": "^1.0.0",
     "gatsby-plugin-typescript": "^2.10.0",
     "howler": "^2.2.1",
-    "lottie-web": "^5.7.6",
+    "lottie-web": "^5.7.11",
     "material-ui-color": "^1.2.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-helmet": "^6.1.0",
-    "react-lottie": "^1.2.3"
+    "react-lottie": "^1.2.3",
+    "react-lottie-segments": "^1.4.9"
   },
   "devDependencies": {
     "@types/howler": "^2.2.2",
