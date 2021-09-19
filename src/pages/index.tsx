@@ -15,6 +15,7 @@ import { Link } from "gatsby";
 import { Helmet } from "react-helmet";
 
 import { Color, ColorBox, ColorBoxProps } from "material-ui-color";
+import Bounce from "../components/Bounce";
 
 type PlaySegmentsOptions = {
   segments: Array<number>;
@@ -136,6 +137,7 @@ const IndexPage: FC = () => {
           </StyledButton>
         </Link>
       </StyledContainer>
+      <Bounce />
     </>
   );
 };
