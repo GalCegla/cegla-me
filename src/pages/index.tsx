@@ -11,7 +11,7 @@ import { soundOn, soundOff, clairDeLune } from "../../src/sfx";
 import { Howl } from "howler";
 import React, { FC, useCallback, useState, useEffect } from "react";
 import { Box, Button, ButtonBase, ClickAwayListener } from "@material-ui/core";
-import { Link } from "gatsby";
+import Link from "next/link";
 import { Helmet } from "react-helmet";
 
 import { Color, ColorBox, ColorBoxProps } from "material-ui-color";
@@ -127,9 +127,7 @@ const IndexPage: FC = () => {
           <StyledLine />
         </StyledHeaderContainer>
         <Link
-          to="https://github.com/galcegla/"
-          className="StyledButton"
-          target="_blank"
+          href="https://github.com/galcegla/"
         >
           <StyledButton>
             <StyledIcon src={gitHubLogo} alt="GitHub Icon" />

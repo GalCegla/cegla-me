@@ -29,7 +29,8 @@ export const cache = new InMemoryCache({
  */
 export default new ApolloClient({
   link: concat(
-    setContext((gatsby, { headers }) => {
+	  //@ts-ignore
+    setContext((next, { headers }) => {
       return {
         headers: {
           ...headers,

@@ -12,7 +12,7 @@ import { Post } from ".prisma/client";
 
 const IndexPage: FC = () => {
   const { data } = useQuery(GET_POSTS);
-  const posts = data.posts;
+  const posts = data?.posts;
   return (
     <Container>
       {posts ? (
