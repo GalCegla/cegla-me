@@ -7,6 +7,8 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { createUploadLink } from "apollo-upload-client";
 
+import { getId } from "./client-auth";
+
 export const TYPE_POLICIES: TypePolicies = {
   /**
    * Disable normalization for engagement input
@@ -29,11 +31,15 @@ export const cache = new InMemoryCache({
  */
 export default new ApolloClient({
   link: concat(
-	  //@ts-ignore
     setContext((next, { headers }) => {
+      const id = getId();
+      if (!id) {
+        return;
+      }
       return {
         headers: {
           ...headers,
+          authorization: `Basic ${btoa(`${id}:`)}`,
         },
       };
     }),
