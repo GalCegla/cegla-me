@@ -1,30 +1,46 @@
-import styled from "@emotion/styled";
-import TextField from "components/TextField";
-import { Form, Formik } from "formik";
+import { Box, Button } from "@material-ui/core";
+import PostForm from "components/PostForm";
+import { Formik } from "formik";
 import React, { FC, useCallback } from "react";
 import { Post } from "types/post";
+import { gql, useMutation } from "@apollo/client";
+import { createPost, createPostVariables } from "__generated__/createPost";
+import { PostCreateInput } from "__generated__/globalTypes";
+import { useRouter } from "next/router";
 
 const INITIAL_VALUES: Post = {
   title: "",
   subtitle: "",
   body: "",
-  shop: {
-    id: "",
-  },
+  shopId: "",
 };
 
 const AddPage: FC = () => {
-  const onSubmit = useCallback(() => {
-    return null;
+  const router = useRouter();
+  const [createPost] = useMutation<createPost, createPostVariables>(
+    CREATE_POST
+  );
+  const onSubmit = useCallback((values) => {
+    console.log(values);
+    return createPost({
+      variables: {
+        data: ValuesToInput(values),
+      },
+    }).then(() => router.push("/coffee"));
   }, []);
   return (
     <Formik initialValues={INITIAL_VALUES} onSubmit={onSubmit}>
       {(formik) => (
-        <StyledForm>
-          <TextField name="title" label="title" variant="outlined" />
-          <TextField name="subtitle" label="subtitle" variant="outlined" />
-          <TextField name="body" label="body" variant="outlined" minRows={10} />
-        </StyledForm>
+        <Box>
+          <PostForm />
+          <Button
+            onClick={formik.submitForm}
+            disabled={formik.isSubmitting}
+            variant="outlined"
+          >
+            SAVE
+          </Button>
+        </Box>
       )}
     </Formik>
   );
@@ -32,11 +48,24 @@ const AddPage: FC = () => {
 
 export default AddPage;
 
-const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-
-  & > * {
-    margin-bottom: 20px;
+export const CREATE_POST = gql`
+  mutation createPost($data: PostCreateInput!) {
+    createOnePost(data: $data) {
+      id
+    }
   }
 `;
+
+function ValuesToInput(values: Post): PostCreateInput {
+  const { title, subtitle, body, shopId } = values;
+  return {
+    title,
+    subtitle,
+    body,
+    shop: {
+      connect: {
+        id: shopId,
+      },
+    },
+  };
+}
