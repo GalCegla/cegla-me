@@ -5,10 +5,13 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  Icon,
   Typography,
 } from "@material-ui/core";
 import styled from "@emotion/styled";
 import { getPosts } from "__generated__/getPosts";
+//import { coffeeIcon } from "../../../pub";
+import Image from "next/image";
 
 const IndexPage: FC = () => {
   const { data, error, loading } = useQuery<getPosts>(GET_POSTS);
@@ -22,6 +25,7 @@ const IndexPage: FC = () => {
   }
   return (
     <Container>
+      <Image src="/coffeeIcon.png" width="100" height="100" alt="Coffee Bean" />
       {posts ? (
         posts.map((post) => {
           return (
@@ -79,4 +83,8 @@ const Container = styled(Box)`
 
 const StyledCard = styled(Card)`
   width: 30%;
+`;
+
+const StyledLogo = styled(Image)`
+  color: black;
 `;

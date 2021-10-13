@@ -1,6 +1,6 @@
 import { Global, css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { icon, gitHubLogo } from "../images";
+import Image from "next/image";
 import { Options as AnimationOptions } from "react-lottie";
 import Lottie from "react-lottie-segments";
 import {
@@ -122,15 +122,18 @@ const IndexPage: FC = () => {
         <StyledHeaderContainer>
           <StyledLine />
           <ButtonBase onClick={handleLogoClick}>
-            <StyledLogo src={icon} alt="Logo" />
+            <StyledLogo height="80" width="80" src="/icon.png" alt="Logo" />
           </ButtonBase>
           <StyledLine />
         </StyledHeaderContainer>
-        <Link
-          href="https://github.com/galcegla/"
-        >
+        <Link href="https://github.com/galcegla/">
           <StyledButton>
-            <StyledIcon src={gitHubLogo} alt="GitHub Icon" />
+            <StyledIcon
+              width="40"
+              height="40"
+              src="/gitHubLogo.png"
+              alt="GitHub Icon"
+            />
           </StyledButton>
         </Link>
       </StyledContainer>
@@ -147,7 +150,7 @@ const StyledContainer = styled(Box)`
   justify-content: center;
 `;
 
-const StyledLogo = styled.img`
+const StyledLogo = styled(Image)`
   height: 80px;
   width: 80px;
 `;
