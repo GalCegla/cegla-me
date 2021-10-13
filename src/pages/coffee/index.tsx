@@ -8,15 +8,19 @@ import {
   Typography,
 } from "@material-ui/core";
 import styled from "@emotion/styled";
-import { Post } from ".prisma/client";
+import { getPosts } from "__generated__/getPosts";
 
 const IndexPage: FC = () => {
-  const { data } = useQuery(GET_POSTS);
+  const { data, error } = useQuery<getPosts>(GET_POSTS);
   const posts = data?.posts;
+  console.log(data);
+  if (error) {
+    console.log("Yo! " + error.message);
+  }
   return (
     <Container>
       {posts ? (
-        posts.map((post: Post) => {
+        posts.map((post) => {
           return (
             <Card>
               <CardActionArea>
@@ -50,6 +54,7 @@ const GET_POSTS = gql`
       title
       subtitle
       body
+      shopId
       shop {
         id
         name

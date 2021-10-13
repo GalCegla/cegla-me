@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { ApolloError, ApolloServer } from "apollo-server-micro";
 import { MicroRequest } from "apollo-server-micro/dist/types";
-import { processRequest } from "graphql-upload";
 import { ServerResponse } from "http";
 import schema, { Context } from "schema";
 
@@ -17,7 +16,6 @@ type ContextFunctionParams = {
 };
 
 const apolloServer = new ApolloServer({
-  uploads: false,
   context: async ({ req, res }: ContextFunctionParams): Promise<Context> => ({
     prisma,
   }),

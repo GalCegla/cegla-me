@@ -108,11 +108,11 @@ input PostCreateWithoutShopInput {
 
 input PostScalarWhereInput {
   AND: [PostScalarWhereInput!]
+  NOT: [PostScalarWhereInput!]
+  OR: [PostScalarWhereInput!]
   body: StringFilter
   createdAt: DateTimeFilter
   id: StringFilter
-  NOT: [PostScalarWhereInput!]
-  OR: [PostScalarWhereInput!]
   shopId: StringFilter
   subtitle: StringFilter
   title: StringFilter
@@ -126,6 +126,11 @@ input PostUpdateManyMutationInput {
   subtitle: StringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input PostUpdateManyWithWhereWithoutShopInput {
+  data: PostUpdateManyMutationInput!
+  where: PostScalarWhereInput!
 }
 
 input PostUpdateManyWithoutShopInput {
@@ -142,9 +147,9 @@ input PostUpdateManyWithoutShopInput {
   upsert: [PostUpsertWithWhereUniqueWithoutShopInput!]
 }
 
-input PostUpdateManyWithWhereWithoutShopInput {
-  data: PostUpdateManyMutationInput!
-  where: PostScalarWhereInput!
+input PostUpdateWithWhereUniqueWithoutShopInput {
+  data: PostUpdateWithoutShopInput!
+  where: PostWhereUniqueInput!
 }
 
 input PostUpdateWithoutShopInput {
@@ -154,11 +159,6 @@ input PostUpdateWithoutShopInput {
   subtitle: StringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
-}
-
-input PostUpdateWithWhereUniqueWithoutShopInput {
-  data: PostUpdateWithoutShopInput!
-  where: PostWhereUniqueInput!
 }
 
 input PostUpsertWithWhereUniqueWithoutShopInput {
