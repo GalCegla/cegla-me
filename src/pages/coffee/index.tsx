@@ -25,7 +25,7 @@ const IndexPage: FC = () => {
       {posts ? (
         posts.map((post) => {
           return (
-            <Card>
+            <StyledCard>
               <CardActionArea>
                 <CardContent>
                   <Typography gutterBottom variant="h5">
@@ -38,7 +38,7 @@ const IndexPage: FC = () => {
                   </Typography>
                 </CardContent>
               </CardActionArea>
-            </Card>
+            </StyledCard>
           );
         })
       ) : (
@@ -74,4 +74,9 @@ const Container = styled(Box)`
   & > * {
     margin-bottom: 10px;
   }
+  align-items: center;
+`;
+
+const StyledCard = styled(Card)`
+  width: 30%;
 `;
