@@ -11,9 +11,12 @@ import styled from "@emotion/styled";
 import { getPosts } from "__generated__/getPosts";
 
 const IndexPage: FC = () => {
-  const { data, error } = useQuery<getPosts>(GET_POSTS);
+  const { data, error, loading } = useQuery<getPosts>(GET_POSTS);
   const posts = data?.posts;
   console.log(data);
+  if (loading) {
+    return null;
+  }
   if (error) {
     console.log("Yo! " + error.message);
   }
@@ -29,7 +32,9 @@ const IndexPage: FC = () => {
                     {post.title}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    {post.body.slice(0, 30)}...
+                    {post.body.length > 30
+                      ? post.body.slice(0, 30) + "..."
+                      : post.body}
                   </Typography>
                 </CardContent>
               </CardActionArea>
