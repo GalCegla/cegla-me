@@ -59,8 +59,7 @@ const CREATE_SHOP = gql`
 const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
-
   & > * {
-    margin-bottom: 10px;
+    margin-bottom: 20px !important;
   }
 `;
