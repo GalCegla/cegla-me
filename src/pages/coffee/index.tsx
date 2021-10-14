@@ -5,12 +5,10 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  Icon,
   Typography,
 } from "@material-ui/core";
 import styled from "@emotion/styled";
 import { getPosts } from "__generated__/getPosts";
-//import { coffeeIcon } from "../../../pub";
 import Image from "next/image";
 
 const IndexPage: FC = () => {
@@ -25,7 +23,16 @@ const IndexPage: FC = () => {
   }
   return (
     <Container>
-      <Image src="/coffeeIcon.png" width="100" height="100" alt="Coffee Bean" />
+      <TitleContainer>
+        <Typography variant="h3">Kafe</Typography>
+        <Image
+          src="/coffeeIcon.png"
+          width="100"
+          height="100"
+          alt="Coffee Bean"
+        />
+        <Typography variant="h3">TLV</Typography>
+      </TitleContainer>
       {posts ? (
         posts.map((post) => {
           return (
@@ -78,6 +85,12 @@ const Container = styled(Box)`
   & > * {
     margin-bottom: 10px;
   }
+  align-items: center;
+`;
+
+const TitleContainer = styled(Box)`
+  display: flex;
+  flex-direction: row;
   align-items: center;
 `;
 
