@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
 import { Form } from "formik";
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useState } from "react";
 import TextField from "./TextField";
 import { gql, useQuery } from "@apollo/client";
 import { getShops } from "__generated__/getShops";
 import Select from "./Select";
 import { Box, Button } from "@material-ui/core";
 import { useRouter } from "next/router";
+import MarkdownEditor from "./MarkdownEditor";
 
 const PostForm: FC = () => {
   const router = useRouter();
@@ -22,11 +23,11 @@ const PostForm: FC = () => {
     <StyledForm>
       <TextField name="title" label="title" variant="outlined" />
       <TextField name="subtitle" label="subtitle" variant="outlined" />
-      <TextField name="body" label="body" variant="outlined" minRows={10} />
       <Select name="shopId" shops={shops} />
       <Button variant="outlined" onClick={onClick}>
-        ADD
+        ADD SHOP
       </Button>
+      <MarkdownEditor height="500px" width="700px" name="body" />
     </StyledForm>
   );
 };
@@ -45,6 +46,8 @@ export const GET_SHOPS = gql`
 const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  align-items: center;
 
   & > * {
     margin-bottom: 20px !important;
