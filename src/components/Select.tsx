@@ -14,7 +14,7 @@ type SelectProps = MuiSelectProps & {
   shops: ShopsOption[] | undefined;
   name: string;
 };
-const Select: FC<SelectProps> = ({ shops, name }) => {
+const Select: FC<SelectProps> = ({ shops, name, fullWidth }) => {
   const [shopId, setShopId] = useState<string>("");
   const [field, meta, helpers] = useField<string>({
     name,
@@ -39,6 +39,7 @@ const Select: FC<SelectProps> = ({ shops, name }) => {
         label="Shop"
         labelId="inputLabel"
         variant="outlined"
+        fullWidth={fullWidth}
       >
         {shops
           ? shops.map((shop) => (
