@@ -5,8 +5,7 @@ import TextField from "./TextField";
 import { gql, useQuery } from "@apollo/client";
 import { getShops } from "__generated__/getShops";
 import Select from "./Select";
-import { Box, Button, Dialog, DialogContent } from "@material-ui/core";
-import { useRouter } from "next/router";
+import { Button } from "@material-ui/core";
 import MarkdownEditor from "./MarkdownEditor";
 import ShopForm from "./ShopForm";
 
