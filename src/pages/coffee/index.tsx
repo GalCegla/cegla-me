@@ -11,6 +11,7 @@ import styled from "@emotion/styled";
 import { getPosts } from "__generated__/getPosts";
 import Image from "next/image";
 import { css, Global } from "@emotion/react";
+import ReactMarkdown from "react-markdown";
 
 const IndexPage: FC = () => {
   const { data, error, loading } = useQuery<getPosts>(GET_POSTS);
@@ -50,7 +51,7 @@ const IndexPage: FC = () => {
                   <CardTitle variant="h5">{post.title}</CardTitle>
                   <CardSubtitle variant="body1">{post.subtitle}</CardSubtitle>
                   <CardBody variant="body2" color="textSecondary">
-                    {WordSlicer(post.body)}
+                    <ReactMarkdown>{WordSlicer(post.body)}</ReactMarkdown>
                   </CardBody>
                 </CardContent>
               </CardActionArea>
