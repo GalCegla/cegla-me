@@ -5,18 +5,25 @@ import TextField from "./TextField";
 import { gql, useQuery } from "@apollo/client";
 import { getShops } from "__generated__/getShops";
 import Select from "./Select";
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Dialog, DialogContent } from "@material-ui/core";
 import { useRouter } from "next/router";
 import MarkdownEditor from "./MarkdownEditor";
+import ShopForm from "./ShopForm";
 
 const PostForm: FC = () => {
-  const router = useRouter();
-  const { data } = useQuery<getShops>(GET_SHOPS);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const { data, refetch } = useQuery<getShops>(GET_SHOPS);
 
   const shops = data?.shops;
 
+  const handleClose = useCallback(() => {
+    refetch();
+    setOpenDialog(false);
+    console.log(openDialog);
+  }, []);
+
   const onClick = useCallback(() => {
-    return router.push("/coffee/add/shop");
+    return setOpenDialog(true);
   }, []);
 
   return (
@@ -28,6 +35,7 @@ const PostForm: FC = () => {
         ADD SHOP
       </Button>
       <MarkdownEditor height="500px" width="700px" name="body" />
+      <ShopForm open={openDialog} onClose={handleClose} />
     </StyledForm>
   );
 };
@@ -52,9 +60,4 @@ const StyledForm = styled(Form)`
   & > * {
     margin-bottom: 20px !important;
   }
-`;
-
-const ShopContainer = styled(Box)`
-  display: flex;
-  flex-direction: row;
 `;
