@@ -34,7 +34,7 @@ const PostForm: FC = () => {
         ADD SHOP
       </Button>
       <MarkdownEditor height="500px" width="700px" name="body" />
-      <ShopForm open={openDialog} onClose={handleClose} />
+      <ShopForm open={openDialog} onClose={handleClose} shops={shops} />
     </StyledForm>
   );
 };
