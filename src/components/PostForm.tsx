@@ -27,8 +27,8 @@ const PostForm: FC = () => {
 
   return (
     <StyledForm>
-      <TextField name="title" label="title" variant="outlined" />
-      <TextField name="subtitle" label="subtitle" variant="outlined" />
+      <TextField name="title" label="title" />
+      <TextField name="subtitle" label="subtitle" />
       <Select name="shopId" shops={shops} />
       <Button variant="outlined" onClick={onClick}>
         ADD SHOP
