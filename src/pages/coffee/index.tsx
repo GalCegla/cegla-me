@@ -11,6 +11,8 @@ import styled from "@emotion/styled";
 import { getPosts } from "__generated__/getPosts";
 import Image from "next/image";
 import { css, Global } from "@emotion/react";
+import ReactMarkdown from "react-markdown";
+import PostCard from "components/PostCard";
 
 const IndexPage: FC = () => {
   const { data, error, loading } = useQuery<getPosts>(GET_POSTS);
@@ -43,19 +45,7 @@ const IndexPage: FC = () => {
       </TitleContainer>
       {posts ? (
         posts.map((post) => {
-          return (
-            <StyledCard>
-              <CardActionArea>
-                <CardContent>
-                  <CardTitle variant="h5">{post.title}</CardTitle>
-                  <CardSubtitle variant="body1">{post.subtitle}</CardSubtitle>
-                  <CardBody variant="body2" color="textSecondary">
-                    {WordSlicer(post.body)}
-                  </CardBody>
-                </CardContent>
-              </CardActionArea>
-            </StyledCard>
-          );
+          return <PostCard post={post} />;
         })
       ) : (
         <Typography>Nothing here yet!</Typography>
@@ -99,30 +89,3 @@ const TitleContainer = styled(Box)`
   align-items: center;
   margin-bottom: 50px;
 `;
-
-const StyledCard = styled(Card)`
-  width: 25%;
-`;
-
-const CardTitle = styled(Typography)`
-  margin-bottom: 0 !important;
-`;
-const CardSubtitle = styled(Typography)``;
-const CardBody = styled(Typography)`
-  margin-top: 10px !important;
-`;
-
-function WordSlicer(body: string): string {
-  if (body[30] === " ") {
-    return body.slice(0, 30) + "...";
-  } else if (body.length < 30) {
-    return body;
-  }
-  for (let i = 0; i <= body.length; i++) {
-    if (i >= 29 && body[i] === " ") {
-      const slicedBody = body.slice(0, i) + "...";
-      return slicedBody;
-    }
-  }
-  return "No content found :(";
-}
