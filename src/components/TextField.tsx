@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 import {
   TextField as MuiTextField,
   TextFieldProps as MuiTextFieldProps,
@@ -17,7 +17,6 @@ export type TextFieldProps = MuiTextFieldProps &
  */
 const TextField: FC<TextFieldProps> = ({
   maxLength,
-  validate,
   name,
   helperText,
   rows,
@@ -26,7 +25,6 @@ const TextField: FC<TextFieldProps> = ({
 }) => {
   const [field, meta] = useField<string>({
     name,
-    validate,
   });
 
   return (
