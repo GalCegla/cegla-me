@@ -21,7 +21,6 @@ const AddPage: FC = () => {
     CREATE_POST
   );
   const onSubmit = useCallback((values) => {
-    console.log(values);
     return createPost({
       variables: {
         data: ValuesToInput(values),

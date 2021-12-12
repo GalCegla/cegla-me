@@ -18,7 +18,6 @@ const PostForm: FC = () => {
   const handleClose = useCallback(() => {
     refetch();
     setOpenDialog(false);
-    console.log(openDialog);
   }, []);
 
   const onClick = useCallback(() => {

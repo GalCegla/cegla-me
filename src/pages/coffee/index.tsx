@@ -11,13 +11,11 @@ import styled from "@emotion/styled";
 import { getPosts } from "__generated__/getPosts";
 import Image from "next/image";
 import { css, Global } from "@emotion/react";
-import ReactMarkdown from "react-markdown";
 import PostCard from "components/PostCard";
 
 const IndexPage: FC = () => {
   const { data, error, loading } = useQuery<getPosts>(GET_POSTS);
   const posts = data?.posts;
-  console.log(data);
   if (loading) {
     return null;
   }
