@@ -1,6 +1,6 @@
 import { Global, css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { icon, gitHubLogo } from "../images";
+import Image from "next/image";
 import { Options as AnimationOptions } from "react-lottie";
 import Lottie from "react-lottie-segments";
 import {
@@ -11,7 +11,7 @@ import { soundOn, soundOff, clairDeLune } from "../../src/sfx";
 import { Howl } from "howler";
 import React, { FC, useCallback, useState, useEffect } from "react";
 import { Box, Button, ButtonBase, ClickAwayListener } from "@material-ui/core";
-import { Link } from "gatsby";
+import Link from "next/link";
 import { Helmet } from "react-helmet";
 
 import { Color, ColorBox, ColorBoxProps } from "material-ui-color";
@@ -122,17 +122,18 @@ const IndexPage: FC = () => {
         <StyledHeaderContainer>
           <StyledLine />
           <ButtonBase onClick={handleLogoClick}>
-            <StyledLogo src={icon} alt="Logo" />
+            <StyledLogo height="80" width="80" src="/icon.png" alt="Logo" />
           </ButtonBase>
           <StyledLine />
         </StyledHeaderContainer>
-        <Link
-          to="https://github.com/galcegla/"
-          className="StyledButton"
-          target="_blank"
-        >
+        <Link href="https://github.com/galcegla/">
           <StyledButton>
-            <StyledIcon src={gitHubLogo} alt="GitHub Icon" />
+            <StyledIcon
+              width="40"
+              height="40"
+              src="/gitHubLogo.png"
+              alt="GitHub Icon"
+            />
           </StyledButton>
         </Link>
       </StyledContainer>
@@ -149,7 +150,7 @@ const StyledContainer = styled(Box)`
   justify-content: center;
 `;
 
-const StyledLogo = styled.img`
+const StyledLogo = styled(Image)`
   height: 80px;
   width: 80px;
 `;

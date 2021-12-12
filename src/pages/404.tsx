@@ -1,13 +1,13 @@
 import React, { FC } from "react";
-import { Link } from "gatsby";
-import Container_404 from "../components/404-Container";
+import Link from "next/link";
+import { Box } from "@material-ui/core";
 
 const Not_Found: FC = () => {
   return (
-    <Container_404>
+    <Box>
       <h1>How'd YOU get here?</h1>
-      <Link to="/">Go back?</Link>
-    </Container_404>
+      <Link href="/">Go back?</Link>
+    </Box>
   );
 };
 
