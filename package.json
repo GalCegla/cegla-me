@@ -19,12 +19,12 @@
     "prepare": "npm run generate",
     "rm:generated": "npx rimraf ./src/__generated__",
     "codegen": "apollo client:codegen --outputFlat --target typescript --addTypename src/__generated__",
-    "generate": "npm run-s generate:db generate:graphql-server generate:graphql-client",
+    "generate": "run-s generate:db generate:graphql-server generate:graphql-client",
     "generate:db": "npx prisma generate",
     "generate:graphql-server": "npx cross-env NEXUS_SHOULD_GENERATE_ARTIFACTS=true NODE_PATH=./src npx ts-node --transpile-only src/schema",
-    "generate:graphql-client": "npm run-s rm:generated codegen",
+    "generate:graphql-client": "run-s rm:generated codegen",
     "studio": "prisma studio",
-    "heroku-postbuild": "yarn run generate && yarn build"
+    "heroku-postbuild": "run-s generate build"
   },
   "license": "0BSD",
   "dependencies": {
@@ -55,8 +55,7 @@
     "react-lottie": "^1.2.3",
     "react-lottie-segments": "^1.4.9",
     "react-markdown": "^7.0.1",
-    "react-markdown-editor-lite": "^1.3.1",
-    "run-s": "^0.0.0"
+    "react-markdown-editor-lite": "^1.3.1"
   },
   "devDependencies": {
     "@types/node": "^15.0.2",
@@ -69,6 +68,7 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "file-loader": "^6.2.0",
+    "npm-run-all": "^4.1.5",
     "source-map-loader": "^2.0.1",
     "ts-loader": "^9.1.0",
     "typescript": "^4.2.4"
