@@ -19,11 +19,18 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
+input EnumRoleFieldUpdateOperationsInput {
+  set: Role
+}
+
 type Mutation {
   createOnePost(data: PostCreateInput!): Post!
   createOneShop(data: ShopCreateInput!): Shop!
+  createOneUser(data: UserCreateInput!): User!
   deleteOneShop(where: ShopWhereUniqueInput!): Shop
+  deleteOneUser(where: UserWhereUniqueInput!): User
   updateOneShop(data: ShopUpdateInput!, where: ShopWhereUniqueInput!): Shop
+  updateOneUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
 }
 
 input NestedDateTimeFilter {
@@ -71,7 +78,23 @@ input PostCreateInput {
   title: String!
 }
 
+input PostCreateManyAuthorInput {
+  body: String!
+  createdAt: DateTime
+  id: String
+  shopId: String!
+  subtitle: String!
+  title: String!
+  updatedAt: DateTime
+}
+
+input PostCreateManyAuthorInputEnvelope {
+  data: [PostCreateManyAuthorInput!]
+  skipDuplicates: Boolean
+}
+
 input PostCreateManyShopInput {
+  authorId: String!
   body: String!
   createdAt: DateTime
   id: String
@@ -85,6 +108,13 @@ input PostCreateManyShopInputEnvelope {
   skipDuplicates: Boolean
 }
 
+input PostCreateNestedManyWithoutAuthorInput {
+  connect: [PostWhereUniqueInput!]
+  connectOrCreate: [PostCreateOrConnectWithoutAuthorInput!]
+  create: [PostCreateWithoutAuthorInput!]
+  createMany: PostCreateManyAuthorInputEnvelope
+}
+
 input PostCreateNestedManyWithoutShopInput {
   connect: [PostWhereUniqueInput!]
   connectOrCreate: [PostCreateOrConnectWithoutShopInput!]
@@ -92,12 +122,28 @@ input PostCreateNestedManyWithoutShopInput {
   createMany: PostCreateManyShopInputEnvelope
 }
 
+input PostCreateOrConnectWithoutAuthorInput {
+  create: PostCreateWithoutAuthorInput!
+  where: PostWhereUniqueInput!
+}
+
 input PostCreateOrConnectWithoutShopInput {
   create: PostCreateWithoutShopInput!
   where: PostWhereUniqueInput!
 }
 
+input PostCreateWithoutAuthorInput {
+  body: String!
+  createdAt: DateTime
+  id: String
+  shop: ShopCreateNestedOneWithoutPostsInput!
+  subtitle: String!
+  title: String!
+  updatedAt: DateTime
+}
+
 input PostCreateWithoutShopInput {
+  author: UserCreateNestedOneWithoutPostsInput!
   body: String!
   createdAt: DateTime
   id: String
@@ -110,6 +156,7 @@ input PostScalarWhereInput {
   AND: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
+  authorId: StringFilter
   body: StringFilter
   createdAt: DateTimeFilter
   id: StringFilter
@@ -128,9 +175,28 @@ input PostUpdateManyMutationInput {
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
 
+input PostUpdateManyWithWhereWithoutAuthorInput {
+  data: PostUpdateManyMutationInput!
+  where: PostScalarWhereInput!
+}
+
 input PostUpdateManyWithWhereWithoutShopInput {
   data: PostUpdateManyMutationInput!
   where: PostScalarWhereInput!
+}
+
+input PostUpdateManyWithoutAuthorInput {
+  connect: [PostWhereUniqueInput!]
+  connectOrCreate: [PostCreateOrConnectWithoutAuthorInput!]
+  create: [PostCreateWithoutAuthorInput!]
+  createMany: PostCreateManyAuthorInputEnvelope
+  delete: [PostWhereUniqueInput!]
+  deleteMany: [PostScalarWhereInput!]
+  disconnect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutAuthorInput!]
+  updateMany: [PostUpdateManyWithWhereWithoutAuthorInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
 input PostUpdateManyWithoutShopInput {
@@ -147,18 +213,40 @@ input PostUpdateManyWithoutShopInput {
   upsert: [PostUpsertWithWhereUniqueWithoutShopInput!]
 }
 
+input PostUpdateWithWhereUniqueWithoutAuthorInput {
+  data: PostUpdateWithoutAuthorInput!
+  where: PostWhereUniqueInput!
+}
+
 input PostUpdateWithWhereUniqueWithoutShopInput {
   data: PostUpdateWithoutShopInput!
   where: PostWhereUniqueInput!
 }
 
+input PostUpdateWithoutAuthorInput {
+  body: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  shop: ShopUpdateOneRequiredWithoutPostsInput
+  subtitle: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
 input PostUpdateWithoutShopInput {
+  author: UserUpdateOneRequiredWithoutPostsInput
   body: StringFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   subtitle: StringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input PostUpsertWithWhereUniqueWithoutAuthorInput {
+  create: PostCreateWithoutAuthorInput!
+  update: PostUpdateWithoutAuthorInput!
+  where: PostWhereUniqueInput!
 }
 
 input PostUpsertWithWhereUniqueWithoutShopInput {
@@ -176,11 +264,18 @@ type Query {
   posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int): [Post!]!
   shop(where: ShopWhereUniqueInput!): Shop
   shops(after: ShopWhereUniqueInput, before: ShopWhereUniqueInput, first: Int, last: Int): [Shop!]!
+  user(where: UserWhereUniqueInput!): User
+  users(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int): [User!]!
 }
 
 enum QueryMode {
   default
   insensitive
+}
+
+enum Role {
+  ADMIN
+  USER
 }
 
 type Shop {
@@ -203,12 +298,50 @@ input ShopCreateInput {
   updatedAt: DateTime
 }
 
+input ShopCreateNestedOneWithoutPostsInput {
+  connect: ShopWhereUniqueInput
+  connectOrCreate: ShopCreateOrConnectWithoutPostsInput
+  create: ShopCreateWithoutPostsInput
+}
+
+input ShopCreateOrConnectWithoutPostsInput {
+  create: ShopCreateWithoutPostsInput!
+  where: ShopWhereUniqueInput!
+}
+
+input ShopCreateWithoutPostsInput {
+  createdAt: DateTime
+  id: String
+  name: String!
+  updatedAt: DateTime
+}
+
 input ShopUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   posts: PostUpdateManyWithoutShopInput
   updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input ShopUpdateOneRequiredWithoutPostsInput {
+  connect: ShopWhereUniqueInput
+  connectOrCreate: ShopCreateOrConnectWithoutPostsInput
+  create: ShopCreateWithoutPostsInput
+  update: ShopUpdateWithoutPostsInput
+  upsert: ShopUpsertWithoutPostsInput
+}
+
+input ShopUpdateWithoutPostsInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input ShopUpsertWithoutPostsInput {
+  create: ShopCreateWithoutPostsInput!
+  update: ShopUpdateWithoutPostsInput!
 }
 
 input ShopWhereUniqueInput {
@@ -232,4 +365,85 @@ input StringFilter {
   not: NestedStringFilter
   notIn: [String!]
   startsWith: String
+}
+
+type User {
+  Posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int): [Post!]!
+  createdAt: DateTime!
+  email: String!
+  id: String!
+  name: String!
+  password: String!
+  role: Role!
+  updatedAt: DateTime!
+}
+
+input UserCreateInput {
+  Posts: PostCreateNestedManyWithoutAuthorInput
+  createdAt: DateTime
+  email: String!
+  id: String
+  name: String!
+  password: String!
+  role: Role
+  updatedAt: DateTime
+}
+
+input UserCreateNestedOneWithoutPostsInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutPostsInput
+  create: UserCreateWithoutPostsInput
+}
+
+input UserCreateOrConnectWithoutPostsInput {
+  create: UserCreateWithoutPostsInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateWithoutPostsInput {
+  createdAt: DateTime
+  email: String!
+  id: String
+  name: String!
+  password: String!
+  role: Role
+  updatedAt: DateTime
+}
+
+input UserUpdateInput {
+  Posts: PostUpdateManyWithoutAuthorInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
+  role: EnumRoleFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input UserUpdateOneRequiredWithoutPostsInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutPostsInput
+  create: UserCreateWithoutPostsInput
+  update: UserUpdateWithoutPostsInput
+  upsert: UserUpsertWithoutPostsInput
+}
+
+input UserUpdateWithoutPostsInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
+  role: EnumRoleFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input UserUpsertWithoutPostsInput {
+  create: UserCreateWithoutPostsInput!
+  update: UserUpdateWithoutPostsInput!
+}
+
+input UserWhereUniqueInput {
+  id: String
 }
