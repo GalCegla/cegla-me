@@ -20,6 +20,7 @@ model Post {
 	body		String
 	shop		Shop @relation(fields: [shopId], references: [id])
 	shopId		String
+	rating 		Rating
 }
 
 model Shop {
@@ -30,3 +31,8 @@ model Shop {
 	posts		Post[]
 }
 
+enum Rating {
+	GOOD
+	OK
+	BAD
+}

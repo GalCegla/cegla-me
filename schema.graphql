@@ -19,6 +19,17 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
+input EnumRatingFieldUpdateOperationsInput {
+  set: Rating
+}
+
+input EnumRatingFilter {
+  equals: Rating
+  in: [Rating!]
+  not: NestedEnumRatingFilter
+  notIn: [Rating!]
+}
+
 type Mutation {
   createOnePost(data: PostCreateInput!): Post!
   createOneShop(data: ShopCreateInput!): Shop!
@@ -35,6 +46,13 @@ input NestedDateTimeFilter {
   lte: DateTime
   not: NestedDateTimeFilter
   notIn: [DateTime!]
+}
+
+input NestedEnumRatingFilter {
+  equals: Rating
+  in: [Rating!]
+  not: NestedEnumRatingFilter
+  notIn: [Rating!]
 }
 
 input NestedStringFilter {
@@ -75,6 +93,7 @@ input PostCreateManyShopInput {
   body: String!
   createdAt: DateTime
   id: String
+  rating: Rating!
   subtitle: String!
   title: String!
   updatedAt: DateTime
@@ -101,6 +120,7 @@ input PostCreateWithoutShopInput {
   body: String!
   createdAt: DateTime
   id: String
+  rating: Rating!
   subtitle: String!
   title: String!
   updatedAt: DateTime
@@ -113,6 +133,7 @@ input PostScalarWhereInput {
   body: StringFilter
   createdAt: DateTimeFilter
   id: StringFilter
+  rating: EnumRatingFilter
   shopId: StringFilter
   subtitle: StringFilter
   title: StringFilter
@@ -123,6 +144,7 @@ input PostUpdateManyMutationInput {
   body: StringFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  rating: EnumRatingFieldUpdateOperationsInput
   subtitle: StringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -156,6 +178,7 @@ input PostUpdateWithoutShopInput {
   body: StringFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  rating: EnumRatingFieldUpdateOperationsInput
   subtitle: StringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -181,6 +204,12 @@ type Query {
 enum QueryMode {
   default
   insensitive
+}
+
+enum Rating {
+  BAD
+  GOOD
+  OK
 }
 
 type Shop {
