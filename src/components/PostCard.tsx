@@ -6,6 +6,7 @@ import {
   Card as MuiCard,
   Box,
 } from "@material-ui/core";
+import DEFAULT_THUMBNAIL from "consts/defaultThumbnail";
 import WordSlicer from "lib/word-slicer";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
@@ -32,10 +33,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
 
   return (
     <Container onClick={handleClick}>
-      <PostThumbnail
-        thumbnail="https://i.pinimg.com/600x315/d1/fa/b1/d1fab134f215278891d79b59eaf249e8.jpg"
-        rating={Rating.OK}
-      />
+      <PostThumbnail thumbnail={DEFAULT_THUMBNAIL} rating={Rating.OK} />
       <ContentContainer>
         <Box>
           <CardTitle variant="h5">

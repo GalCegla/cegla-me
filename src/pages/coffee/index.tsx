@@ -12,13 +12,20 @@ import { getPosts } from "__generated__/getPosts";
 import Image from "next/image";
 import { css, Global } from "@emotion/react";
 import PostCard from "components/PostCard";
+import HeadPost from "components/HeadPost";
 
 const IndexPage: FC = () => {
   const { data, error, loading } = useQuery<getPosts>(GET_POSTS);
   const posts = data?.posts;
-  if (loading) {
+
+  if (loading || !posts) {
     return null;
   }
+
+  if (posts.length === 0) {
+    return <Typography>Nothing here yet!</Typography>;
+  }
+
   if (error) {
     console.log("Yo! " + error.message);
   }
@@ -27,27 +34,14 @@ const IndexPage: FC = () => {
       <Global
         styles={css`
           body {
-            background-color: #e2a05589;
+            background-color: #f7f6f5;
           }
         `}
       />
-      <TitleContainer>
-        <Typography variant="h3">Kafe</Typography>
-        <Image
-          src="/coffeeIcon.png"
-          width="100"
-          height="100"
-          alt="Coffee Bean"
-        />
-        <Typography variant="h3">TLV</Typography>
-      </TitleContainer>
-      {posts ? (
-        posts.map((post) => {
-          return <PostCard post={post} />;
-        })
-      ) : (
-        <Typography>Nothing here yet!</Typography>
-      )}
+      <HeadPost post={posts[0]} />
+      {posts.map((post) => {
+        return <PostCard post={post} />;
+      })}
     </Container>
   );
 };
@@ -68,6 +62,8 @@ const GET_POSTS = gql`
         id
         name
       }
+      rating
+      thumbnail
     }
   }
 `;
@@ -79,11 +75,4 @@ const Container = styled(Box)`
     margin-bottom: 10px;
   }
   align-items: center;
-`;
-
-const TitleContainer = styled(Box)`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 50px;
 `;
