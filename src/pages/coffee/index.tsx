@@ -35,6 +35,12 @@ const IndexPage: FC = () => {
       {posts.map((post) => {
         return <PostCard post={post} />;
       })}
+      <Typography
+        style={{ position: "absolute", bottom: "0", color: "lightgray" }}
+        variant="caption"
+      >
+        Design by Guy Einhorn, Dev & content by your's truly
+      </Typography>
     </Container>
   );
 };
