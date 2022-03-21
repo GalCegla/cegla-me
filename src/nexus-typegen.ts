@@ -70,11 +70,28 @@ export interface NexusGenInputs {
     notIn?: string[] | null; // [String!]
     startsWith?: string | null; // String
   }
+  NestedStringNullableFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    not?: NexusGenInputs['NestedStringNullableFilter'] | null; // NestedStringNullableFilter
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
+  }
+  NullableStringFieldUpdateOperationsInput: { // input type
+    set?: string | null; // String
+  }
   PostCreateInput: { // input type
     body: string; // String!
     rating: NexusGenEnums['Rating']; // Rating!
     shop: NexusGenInputs['ShopConnectNestedOne']; // ShopConnectNestedOne!
     subtitle: string; // String!
+    thumbnail: string; // String!
     title: string; // String!
   }
   PostCreateManyShopInput: { // input type
@@ -83,6 +100,7 @@ export interface NexusGenInputs {
     id?: string | null; // String
     rating: NexusGenEnums['Rating']; // Rating!
     subtitle: string; // String!
+    thumbnail?: string | null; // String
     title: string; // String!
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
@@ -106,6 +124,7 @@ export interface NexusGenInputs {
     id?: string | null; // String
     rating: NexusGenEnums['Rating']; // Rating!
     subtitle: string; // String!
+    thumbnail?: string | null; // String
     title: string; // String!
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
@@ -119,6 +138,7 @@ export interface NexusGenInputs {
     rating?: NexusGenInputs['EnumRatingFilter'] | null; // EnumRatingFilter
     shopId?: NexusGenInputs['StringFilter'] | null; // StringFilter
     subtitle?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    thumbnail?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     title?: NexusGenInputs['StringFilter'] | null; // StringFilter
     updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
   }
@@ -128,6 +148,7 @@ export interface NexusGenInputs {
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     rating?: NexusGenInputs['EnumRatingFieldUpdateOperationsInput'] | null; // EnumRatingFieldUpdateOperationsInput
     subtitle?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    thumbnail?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
     title?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
   }
@@ -158,6 +179,7 @@ export interface NexusGenInputs {
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     rating?: NexusGenInputs['EnumRatingFieldUpdateOperationsInput'] | null; // EnumRatingFieldUpdateOperationsInput
     subtitle?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    thumbnail?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
     title?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
   }
@@ -206,6 +228,20 @@ export interface NexusGenInputs {
     notIn?: string[] | null; // [String!]
     startsWith?: string | null; // String
   }
+  StringNullableFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    mode?: NexusGenEnums['QueryMode'] | null; // QueryMode
+    not?: NexusGenInputs['NestedStringNullableFilter'] | null; // NestedStringNullableFilter
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
+  }
 }
 
 export interface NexusGenEnums {
@@ -231,6 +267,7 @@ export interface NexusGenObjects {
     rating: NexusGenEnums['Rating']; // Rating!
     shopId: string; // String!
     subtitle: string; // String!
+    thumbnail?: string | null; // String
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
@@ -268,6 +305,7 @@ export interface NexusGenFieldTypes {
     shop: NexusGenRootTypes['Shop']; // Shop!
     shopId: string; // String!
     subtitle: string; // String!
+    thumbnail: string | null; // String
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
@@ -301,6 +339,7 @@ export interface NexusGenFieldTypeNames {
     shop: 'Shop'
     shopId: 'String'
     subtitle: 'String'
+    thumbnail: 'String'
     title: 'String'
     updatedAt: 'DateTime'
   }

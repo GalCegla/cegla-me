@@ -14,6 +14,7 @@ export const Post = nexus.objectType({
     t.model.shop();
     t.model.shopId();
     t.model.rating();
+    t.model.thumbnail();
   },
 });
 
@@ -48,6 +49,7 @@ export const PostCreateInput = nexus.inputObjectType({
     t.nonNull.string("title");
     t.nonNull.string("subtitle");
     t.nonNull.string("body");
+    t.nonNull.string("thumbnail");
     t.nonNull.field("shop", {
       type: ShopConnectNestedOne,
       description: "The shop about which the post is about",

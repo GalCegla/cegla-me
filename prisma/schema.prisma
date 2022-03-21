@@ -21,6 +21,7 @@ model Post {
 	shop		Shop @relation(fields: [shopId], references: [id])
 	shopId		String
 	rating 		Rating
+	thumbnail	String?
 }
 
 model Shop {

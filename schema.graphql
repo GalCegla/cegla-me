@@ -69,6 +69,24 @@ input NestedStringFilter {
   startsWith: String
 }
 
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NullableStringFieldUpdateOperationsInput {
+  set: String
+}
+
 type Post {
   body: String!
   createdAt: DateTime!
@@ -77,6 +95,7 @@ type Post {
   shop: Shop!
   shopId: String!
   subtitle: String!
+  thumbnail: String
   title: String!
   updatedAt: DateTime!
 }
@@ -90,6 +109,7 @@ input PostCreateInput {
   """The shop about which the post is about"""
   shop: ShopConnectNestedOne!
   subtitle: String!
+  thumbnail: String!
   title: String!
 }
 
@@ -99,6 +119,7 @@ input PostCreateManyShopInput {
   id: String
   rating: Rating!
   subtitle: String!
+  thumbnail: String
   title: String!
   updatedAt: DateTime
 }
@@ -126,6 +147,7 @@ input PostCreateWithoutShopInput {
   id: String
   rating: Rating!
   subtitle: String!
+  thumbnail: String
   title: String!
   updatedAt: DateTime
 }
@@ -140,6 +162,7 @@ input PostScalarWhereInput {
   rating: EnumRatingFilter
   shopId: StringFilter
   subtitle: StringFilter
+  thumbnail: StringNullableFilter
   title: StringFilter
   updatedAt: DateTimeFilter
 }
@@ -150,6 +173,7 @@ input PostUpdateManyMutationInput {
   id: StringFieldUpdateOperationsInput
   rating: EnumRatingFieldUpdateOperationsInput
   subtitle: StringFieldUpdateOperationsInput
+  thumbnail: NullableStringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
@@ -184,6 +208,7 @@ input PostUpdateWithoutShopInput {
   id: StringFieldUpdateOperationsInput
   rating: EnumRatingFieldUpdateOperationsInput
   subtitle: StringFieldUpdateOperationsInput
+  thumbnail: NullableStringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
@@ -263,6 +288,21 @@ input StringFilter {
   lte: String
   mode: QueryMode
   not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
   notIn: [String!]
   startsWith: String
 }
