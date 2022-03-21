@@ -5,15 +5,15 @@ import React, { FC, useCallback } from "react";
 import { Post } from "types/post";
 import { gql, useMutation } from "@apollo/client";
 import { createPost, createPostVariables } from "__generated__/createPost";
-import { PostCreateInput } from "__generated__/globalTypes";
+import { PostCreateInput, Rating } from "__generated__/globalTypes";
 import { useRouter } from "next/router";
 
-const INITIAL_VALUES: Post = {
+const INITIAL_VALUES: Omit<Post, "thumbnail"> = {
   title: "",
   subtitle: "",
   body: "",
   shopId: "",
-  rating: "",
+  rating: Rating.GOOD,
 };
 
 const AddPage: FC = () => {

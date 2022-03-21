@@ -5,5 +5,6 @@ export type Post = {
   subtitle: string;
   body: string;
   shopId: string;
-  rating: Rating | "";
+  rating: Rating;
+  thumbnail: string | null;
 };
