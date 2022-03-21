@@ -22,10 +22,14 @@ type PostCardProps = {
 const PostCard: FC<PostCardProps> = ({ post }) => {
   const router = useRouter();
   const id = post.id;
+
   const handleClick = useCallback(
     () => router.push(`${router.asPath}/${id}`),
     []
   );
+
+  const createdAt = post.createdAt.slice(0, 10).split("-").reverse().join("/");
+
   return (
     <Container onClick={handleClick}>
       <PostThumbnail
@@ -33,11 +37,16 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
         rating={Rating.OK}
       />
       <ContentContainer>
-        <CardTitle variant="h5">{post.title}</CardTitle>
-        <CardSubtitle variant="body1">{post.subtitle}</CardSubtitle>
-        <CardBody variant="body2" color="textSecondary">
-          <ReactMarkdown>{WordSlicer(post.body)}</ReactMarkdown>
-        </CardBody>
+        <Box>
+          <CardTitle variant="h5">
+            {post.shop.name}: {post.title}
+          </CardTitle>
+          <CardSubtitle variant="body1">{post.subtitle}</CardSubtitle>
+        </Box>
+        <CardDate variant="body2" color="textSecondary">
+          {createdAt}
+          {/* <ReactMarkdown>{WordSlicer(post.body)}</ReactMarkdown> */}
+        </CardDate>
       </ContentContainer>
     </Container>
   );
@@ -56,12 +65,11 @@ const ContentContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   margin-left: 14px;
+  justify-content: space-between;
 `;
 
 const CardTitle = styled(Typography)`
   margin-bottom: 0 !important;
 `;
 const CardSubtitle = styled(Typography)``;
-const CardBody = styled(Typography)`
-  margin-top: 10px !important;
-`;
+const CardDate = styled(Typography)``;
