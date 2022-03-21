@@ -28,7 +28,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
       <PostThumbnail thumbnail={DEFAULT_THUMBNAIL} rating={Rating.OK} />
       <ContentContainer>
         <Box>
-          <CardTitle variant="h5">
+          <CardTitle variant="h6">
             {post.shop.name}: {post.title}
           </CardTitle>
           <CardSubtitle variant="body1">{post.subtitle}</CardSubtitle>
@@ -60,6 +60,10 @@ const ContentContainer = styled(Box)`
 
 const CardTitle = styled(Typography)`
   margin-bottom: 0 !important;
+  font-family: "Rubik" !important;
+  font-weight: 500 !important;
 `;
-const CardSubtitle = styled(Typography)``;
+const CardSubtitle = styled(Typography)`
+  font-family: "Rubik", sans-serif !important;
+`;
 const CardDate = styled(Typography)``;

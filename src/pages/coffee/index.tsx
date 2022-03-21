@@ -26,12 +26,14 @@ const IndexPage: FC = () => {
     <Container>
       <Global
         styles={css`
+          @import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;400&family=Rubik:wght@300;400&display=swap");
+
           body {
             background-color: #f7f6f5;
           }
         `}
       />
-      <HeadPost post={posts[0]} />
+      <HeadPost post={posts[posts.length - 1]} />
       {posts.map((post) => {
         return <PostCard post={post} />;
       })}

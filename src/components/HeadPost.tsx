@@ -6,7 +6,7 @@ import { getPosts_posts } from "__generated__/getPosts";
 import PostThumbnail, { Size } from "./PostThumbnail";
 
 type HeadPostProps = {
-  post: Omit<getPosts_posts, "__typename">;
+  post: getPosts_posts;
 };
 
 const HeadPost: FC<HeadPostProps> = ({ post }) => {
@@ -70,6 +70,8 @@ const CatchPhrase = styled(Typography)`
   font-weight: bold !important;
   top: -25px;
   right: 25px;
+  font-family: "Readex Pro", sans-serif !important;
+  font-weight: 400;
 `;
 
 const CreateAt = styled(Box)`
@@ -87,5 +89,10 @@ const StyledDate = styled(Typography)`
   margin-bottom: 5px !important;
 `;
 
-const StyledShopName = styled(Typography)``;
-const StyledTitle = styled(Typography)``;
+const StyledShopName = styled(Typography)`
+  font-family: "Readex Pro", sans-serif !important;
+  font-weight: 200 !important;
+`;
+const StyledTitle = styled(Typography)`
+  font-family: "Rubik", sans-serif !important;
+`;
