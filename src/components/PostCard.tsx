@@ -1,17 +1,9 @@
 import styled from "@emotion/styled";
-import {
-  CardActionArea,
-  CardContent,
-  Typography,
-  Card as MuiCard,
-  Box,
-} from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
 import DEFAULT_THUMBNAIL from "consts/defaultThumbnail";
-import WordSlicer from "lib/word-slicer";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import react, { FC } from "react";
-import ReactMarkdown from "react-markdown";
 import { getPosts_posts } from "__generated__/getPosts";
 import { Rating } from "__generated__/globalTypes";
 import PostThumbnail from "./PostThumbnail";

@@ -1,15 +1,8 @@
 import React, { FC } from "react";
 import { gql, useQuery } from "@apollo/client";
-import {
-  Box,
-  Card,
-  CardActionArea,
-  CardContent,
-  Typography,
-} from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import styled from "@emotion/styled";
 import { getPosts } from "__generated__/getPosts";
-import Image from "next/image";
 import { css, Global } from "@emotion/react";
 import PostCard from "components/PostCard";
 import HeadPost from "components/HeadPost";
