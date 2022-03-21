@@ -73,6 +73,7 @@ type Post {
   body: String!
   createdAt: DateTime!
   id: String!
+  rating: Rating!
   shop: Shop!
   shopId: String!
   subtitle: String!
@@ -82,6 +83,9 @@ type Post {
 
 input PostCreateInput {
   body: String!
+
+  """The rating of the shop defined in the post"""
+  rating: Rating!
 
   """The shop about which the post is about"""
   shop: ShopConnectNestedOne!

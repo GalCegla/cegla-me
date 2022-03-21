@@ -72,6 +72,7 @@ export interface NexusGenInputs {
   }
   PostCreateInput: { // input type
     body: string; // String!
+    rating: NexusGenEnums['Rating']; // Rating!
     shop: NexusGenInputs['ShopConnectNestedOne']; // ShopConnectNestedOne!
     subtitle: string; // String!
     title: string; // String!
@@ -227,6 +228,7 @@ export interface NexusGenObjects {
     body: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
+    rating: NexusGenEnums['Rating']; // Rating!
     shopId: string; // String!
     subtitle: string; // String!
     title: string; // String!
@@ -262,6 +264,7 @@ export interface NexusGenFieldTypes {
     body: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
+    rating: NexusGenEnums['Rating']; // Rating!
     shop: NexusGenRootTypes['Shop']; // Shop!
     shopId: string; // String!
     subtitle: string; // String!
@@ -294,6 +297,7 @@ export interface NexusGenFieldTypeNames {
     body: 'String'
     createdAt: 'DateTime'
     id: 'String'
+    rating: 'Rating'
     shop: 'Shop'
     shopId: 'String'
     subtitle: 'String'
