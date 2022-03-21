@@ -19,6 +19,7 @@ const SIZE_CHART = {
     },
     ratingIcon: {
       width: "20px",
+      height: "20px",
     },
   },
   large: {
@@ -31,6 +32,7 @@ const SIZE_CHART = {
     },
     ratingIcon: {
       width: "35px",
+      height: undefined,
     },
   },
 };
@@ -71,6 +73,7 @@ const PostThumbnail: FC<PostThumbnailProps> = ({
           right: 2,
           bottom: 2,
           width: currentSize.ratingIcon.width,
+          height: currentSize.ratingIcon.height || undefined,
         }}
       />
     </Container>
@@ -80,7 +83,7 @@ const PostThumbnail: FC<PostThumbnailProps> = ({
 export default PostThumbnail;
 
 const Container = styled(Box)`
-  width: 128px;
+  min-width: 128px;
   height: 85px;
   position: relative;
 `;

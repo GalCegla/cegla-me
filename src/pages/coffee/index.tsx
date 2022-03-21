@@ -34,9 +34,11 @@ const IndexPage: FC = () => {
         `}
       />
       <HeadPost post={posts[posts.length - 1]} />
-      {posts.map((post) => {
-        return <PostCard post={post} />;
-      })}
+      <PostsContainer>
+        {posts.map((post) => {
+          return <PostCard post={post} />;
+        })}
+      </PostsContainer>
       <Typography
         style={{ position: "absolute", bottom: "0", color: "lightgray" }}
         variant="caption"
@@ -76,4 +78,9 @@ const Container = styled(Box)`
     margin-bottom: 10px;
   }
   align-items: center;
+`;
+
+const PostsContainer = styled(Box)`
+  display: flex;
+  flex-wrap: wrap;
 `;

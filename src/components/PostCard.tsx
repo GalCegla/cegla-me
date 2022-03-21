@@ -6,7 +6,7 @@ import React, { useCallback } from "react";
 import react, { FC } from "react";
 import { getPosts_posts } from "__generated__/getPosts";
 import { Rating } from "__generated__/globalTypes";
-import PostThumbnail from "./PostThumbnail";
+import PostThumbnail, { Size } from "./PostThumbnail";
 
 type PostCardProps = {
   post: getPosts_posts;
@@ -25,7 +25,11 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
 
   return (
     <Container onClick={handleClick}>
-      <PostThumbnail thumbnail={DEFAULT_THUMBNAIL} rating={Rating.OK} />
+      <PostThumbnail
+        thumbnail={DEFAULT_THUMBNAIL}
+        rating={post.rating}
+        size={Size.SMALL}
+      />
       <ContentContainer>
         <Box>
           <CardTitle variant="h6">
@@ -48,7 +52,8 @@ const Container = styled(Box)`
   display: flex;
   flex-direction: row;
   align-self: flex-start;
-  margin-left: 14px;
+  margin: 10px;
+  cursor: pointer;
 `;
 
 const ContentContainer = styled(Box)`
