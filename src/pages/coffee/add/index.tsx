@@ -73,5 +73,6 @@ function ValuesToInput(values: Post): PostCreateInput {
       },
     },
     rating,
+    thumbnail: "",
   };
 }
