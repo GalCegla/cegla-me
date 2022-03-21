@@ -18,11 +18,11 @@ const PostThumbnail: FC<PostThumbnailProps> = ({ thumbnail, rating }) => {
       />
       <img
         src="/fold.png"
-        style={{ position: "absolute", right: 0, bottom: 0 }}
+        style={{ position: "absolute", right: 0, bottom: 0, width: "46px" }}
       />
       <img
         src={ratingIcon}
-        style={{ position: "absolute", right: 2, bottom: 2 }}
+        style={{ position: "absolute", right: 2, bottom: 2, width: "20px" }}
       />
     </Container>
   );
