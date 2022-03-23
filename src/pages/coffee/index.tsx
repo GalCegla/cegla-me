@@ -41,7 +41,7 @@ const IndexPage: FC = () => {
       <HeadPost post={posts[posts.length - 1]} />
       <PostsContainer>
         {posts.map((post) => {
-          return <PostCard post={post} />;
+          return <PostCard post={post} key={post.id} />;
         })}
       </PostsContainer>
       <StyledDivider
