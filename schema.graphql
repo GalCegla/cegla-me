@@ -34,6 +34,7 @@ type Mutation {
   createOnePost(data: PostCreateInput!): Post!
   createOneShop(data: ShopCreateInput!): Shop!
   deleteOneShop(where: ShopWhereUniqueInput!): Shop
+  updateOnePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateOneShop(data: ShopUpdateInput!, where: ShopWhereUniqueInput!): Shop
 }
 
@@ -167,6 +168,18 @@ input PostScalarWhereInput {
   updatedAt: DateTimeFilter
 }
 
+input PostUpdateInput {
+  body: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  rating: EnumRatingFieldUpdateOperationsInput
+  shop: ShopUpdateOneRequiredWithoutPostsInput
+  subtitle: StringFieldUpdateOperationsInput
+  thumbnail: NullableStringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
 input PostUpdateManyMutationInput {
   body: StringFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
@@ -261,12 +274,44 @@ input ShopCreateInput {
   updatedAt: DateTime
 }
 
+input ShopCreateOrConnectWithoutPostsInput {
+  create: ShopCreateWithoutPostsInput!
+  where: ShopWhereUniqueInput!
+}
+
+input ShopCreateWithoutPostsInput {
+  createdAt: DateTime
+  id: String
+  name: String!
+  updatedAt: DateTime
+}
+
 input ShopUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   posts: PostUpdateManyWithoutShopInput
   updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input ShopUpdateOneRequiredWithoutPostsInput {
+  connect: ShopWhereUniqueInput
+  connectOrCreate: ShopCreateOrConnectWithoutPostsInput
+  create: ShopCreateWithoutPostsInput
+  update: ShopUpdateWithoutPostsInput
+  upsert: ShopUpsertWithoutPostsInput
+}
+
+input ShopUpdateWithoutPostsInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input ShopUpsertWithoutPostsInput {
+  create: ShopCreateWithoutPostsInput!
+  update: ShopUpdateWithoutPostsInput!
 }
 
 input ShopWhereUniqueInput {
