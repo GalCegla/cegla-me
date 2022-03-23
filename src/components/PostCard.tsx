@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import react, { FC } from "react";
 import { getPosts_posts } from "__generated__/getPosts";
-import { Rating } from "__generated__/globalTypes";
 import PostThumbnail, { Size } from "./PostThumbnail";
 
 type PostCardProps = {
@@ -26,7 +25,11 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
   return (
     <Container onClick={handleClick}>
       <PostThumbnail
-        thumbnail={DEFAULT_THUMBNAIL}
+        thumbnail={
+          post.thumbnail ||
+          process.env.NEXT_PUBLIC_DEFAULT_THUMBNAIL ||
+          DEFAULT_THUMBNAIL
+        }
         rating={post.rating}
         size={Size.SMALL}
       />

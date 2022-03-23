@@ -26,7 +26,11 @@ const HeadPost: FC<HeadPostProps> = ({ post }) => {
         <PostThumbnail
           size={Size.LARGE}
           rating={post.rating}
-          thumbnail={post.thumbnail || DEFAULT_THUMBNAIL}
+          thumbnail={
+            post.thumbnail ||
+            process.env.NEXT_PUBLIC_DEFAULT_THUMBNAIL ||
+            DEFAULT_THUMBNAIL
+          }
         />
         <HeaderLogo src="/header.png" />
         <CatchPhrase>Drink it slow</CatchPhrase>
