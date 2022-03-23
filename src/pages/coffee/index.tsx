@@ -52,12 +52,15 @@ const IndexPage: FC = () => {
         }}
       />
       <AboutSection />
-      {/* <Typography
-        style={{ position: "absolute", bottom: "0", color: "lightgray" }}
+      <Typography
+        style={{
+          color: "lightgray",
+          marginTop: "80px",
+        }}
         variant="caption"
       >
         Design by Guy Einhorn, Dev & content by your's truly
-      </Typography> */}
+      </Typography>
     </Container>
   );
 };
@@ -87,7 +90,6 @@ const GET_POSTS = gql`
 const Container = styled(Box)`
   display: flex;
   flex-direction: column;
-  margin-bottom: 80px;
   margin-top: 80px;
   & > * {
     margin-bottom: 10px;
