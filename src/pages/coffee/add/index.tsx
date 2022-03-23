@@ -1,7 +1,7 @@
-import { Box, Button, Card, CardContent } from "@material-ui/core";
+import { Button, Card, CardContent, TextField } from "@material-ui/core";
 import PostForm from "components/PostForm";
 import { Formik } from "formik";
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { Post } from "types/post";
 import { gql, useMutation } from "@apollo/client";
 import { createPost, createPostVariables } from "__generated__/createPost";
@@ -17,6 +17,7 @@ const INITIAL_VALUES: Omit<Post, "thumbnail"> = {
 };
 
 const AddPage: FC = () => {
+  const [password, setPassword] = useState("");
   const router = useRouter();
   const [createPost] = useMutation<createPost, createPostVariables>(
     CREATE_POST
@@ -28,6 +29,21 @@ const AddPage: FC = () => {
       },
     }).then(() => router.push("/coffee"));
   }, []);
+
+  const handlePasswordChange = useCallback(
+    (event) => setPassword(event.target.value),
+    []
+  );
+  if (password !== process.env.NEXT_PUBLIC_PASSWORD) {
+    return (
+      <Card>
+        <CardContent>
+          <TextField value={password} onChange={handlePasswordChange} />
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Formik initialValues={INITIAL_VALUES} onSubmit={onSubmit}>
       {(formik) => (
