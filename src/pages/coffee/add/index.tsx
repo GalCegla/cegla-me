@@ -8,12 +8,13 @@ import { createPost, createPostVariables } from "__generated__/createPost";
 import { PostCreateInput, Rating } from "__generated__/globalTypes";
 import { useRouter } from "next/router";
 
-const INITIAL_VALUES: Omit<Post, "thumbnail"> = {
+const INITIAL_VALUES: Post = {
   title: "",
   subtitle: "",
   body: "",
   shopId: "",
   rating: Rating.GOOD,
+  thumbnail: "",
 };
 
 const AddPage: FC = () => {
@@ -75,7 +76,7 @@ export const CREATE_POST = gql`
 `;
 
 function ValuesToInput(values: Post): PostCreateInput {
-  const { title, subtitle, body, shopId, rating } = values;
+  const { title, subtitle, body, shopId, rating, thumbnail } = values;
   if (!rating) {
     throw new Error("Rating must be defined");
   }
@@ -89,6 +90,6 @@ function ValuesToInput(values: Post): PostCreateInput {
       },
     },
     rating,
-    thumbnail: "",
+    thumbnail: thumbnail || "",
   };
 }

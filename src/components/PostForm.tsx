@@ -59,6 +59,7 @@ const PostForm: FC = () => {
         ADD SHOP
       </Button>
       <MarkdownEditor height="500px" width="700px" name="body" />
+      <TextField name="thumbnail" label="thumbnail" />
       <ShopForm open={openDialog} onClose={handleClose} shops={data?.shops} />
     </StyledForm>
   );
