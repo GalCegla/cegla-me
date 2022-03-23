@@ -8,7 +8,7 @@ import { createPost, createPostVariables } from "__generated__/createPost";
 import { PostCreateInput, Rating } from "__generated__/globalTypes";
 import { useRouter } from "next/router";
 
-const INITIAL_VALUES: Post = {
+export const INITIAL_VALUES: Post = {
   title: "",
   subtitle: "",
   body: "",
