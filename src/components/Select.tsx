@@ -5,17 +5,18 @@ import {
   Select as MuiSelect,
   SelectProps as MuiSelectProps,
 } from "@material-ui/core";
-import { getShops_shops } from "__generated__/getShops";
 import { useField } from "formik";
 
-type ShopsOption = Omit<getShops_shops, "__typename">;
+export type Option = {
+  name: string;
+  value: string;
+};
 
 type SelectProps = MuiSelectProps & {
-  shops: ShopsOption[] | undefined;
+  options: Option[] | undefined;
   name: string;
 };
-const Select: FC<SelectProps> = ({ shops, name, fullWidth }) => {
-  const [shopId, setShopId] = useState<string>("");
+const Select: FC<SelectProps> = ({ options, name, fullWidth, label }) => {
   const [field, meta, helpers] = useField<string>({
     name,
   });
@@ -25,26 +26,27 @@ const Select: FC<SelectProps> = ({ shops, name, fullWidth }) => {
     setValue(event.target.value);
   }, []);
 
-  if (!shops) {
+  if (!options) {
     return null;
   }
   return (
     <>
-      <InputLabel id="inputLabel">Shop</InputLabel>
+      <InputLabel id="inputLabel">{label}</InputLabel>
       <MuiSelect
         {...field}
         onChange={handleChange}
-        name="shopId"
+        name={name}
         value={field.value}
-        label="Shop"
+        label={label}
         labelId="inputLabel"
         variant="outlined"
         fullWidth={fullWidth}
+        placeholder="Select..."
       >
-        {shops
-          ? shops.map((shop) => (
-              <MenuItem key={shop.id} value={shop.id}>
-                {shop.name}
+        {options
+          ? options.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.name}
               </MenuItem>
             ))
           : null}

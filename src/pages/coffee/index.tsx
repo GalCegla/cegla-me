@@ -1,24 +1,25 @@
 import React, { FC } from "react";
 import { gql, useQuery } from "@apollo/client";
-import {
-  Box,
-  Card,
-  CardActionArea,
-  CardContent,
-  Typography,
-} from "@material-ui/core";
+import { Box, Divider, Typography } from "@material-ui/core";
 import styled from "@emotion/styled";
 import { getPosts } from "__generated__/getPosts";
-import Image from "next/image";
 import { css, Global } from "@emotion/react";
 import PostCard from "components/PostCard";
+import HeadPost from "components/HeadPost";
+import AboutSection from "components/AboutSection";
 
 const IndexPage: FC = () => {
   const { data, error, loading } = useQuery<getPosts>(GET_POSTS);
   const posts = data?.posts;
-  if (loading) {
+
+  if (loading || !posts) {
     return null;
   }
+
+  if (posts.length === 0) {
+    return <Typography>Nothing here yet!</Typography>;
+  }
+
   if (error) {
     console.log("Yo! " + error.message);
   }
@@ -26,28 +27,33 @@ const IndexPage: FC = () => {
     <Container>
       <Global
         styles={css`
+          @import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;400&family=Rubik:wght@300;400&display=swap");
+
           body {
-            background-color: #e2a05589;
+            background-color: #f7f6f5;
           }
         `}
       />
-      <TitleContainer>
-        <Typography variant="h3">Kafe</Typography>
-        <Image
-          src="/coffeeIcon.png"
-          width="100"
-          height="100"
-          alt="Coffee Bean"
-        />
-        <Typography variant="h3">TLV</Typography>
-      </TitleContainer>
-      {posts ? (
-        posts.map((post) => {
+      <HeadPost post={posts[posts.length - 1]} />
+      <PostsContainer>
+        {posts.map((post) => {
           return <PostCard post={post} />;
-        })
-      ) : (
-        <Typography>Nothing here yet!</Typography>
-      )}
+        })}
+      </PostsContainer>
+      <StyledDivider
+        style={{
+          backgroundColor: "#E96F51",
+          width: "620px",
+          marginTop: "50px",
+        }}
+      />
+      <AboutSection />
+      {/* <Typography
+        style={{ position: "absolute", bottom: "0", color: "lightgray" }}
+        variant="caption"
+      >
+        Design by Guy Einhorn, Dev & content by your's truly
+      </Typography> */}
     </Container>
   );
 };
@@ -68,6 +74,8 @@ const GET_POSTS = gql`
         id
         name
       }
+      rating
+      thumbnail
     }
   }
 `;
@@ -75,15 +83,21 @@ const GET_POSTS = gql`
 const Container = styled(Box)`
   display: flex;
   flex-direction: column;
+  margin-bottom: 80px;
+  margin-top: 80px;
   & > * {
     margin-bottom: 10px;
   }
   align-items: center;
 `;
 
-const TitleContainer = styled(Box)`
+const PostsContainer = styled(Box)`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 50px;
+  flex-wrap: wrap;
+`;
+
+const StyledDivider = styled(Divider)`
+  @media (max-width: 744px) {
+    width: 70% !important;
+  }
 `;

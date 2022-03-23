@@ -1,16 +1,12 @@
 import styled from "@emotion/styled";
-import {
-  CardActionArea,
-  CardContent,
-  Typography,
-  Card as MuiCard,
-} from "@material-ui/core";
-import WordSlicer from "lib/word-slicer";
+import { Typography, Box } from "@material-ui/core";
+import DEFAULT_THUMBNAIL from "consts/defaultThumbnail";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import react, { FC } from "react";
-import ReactMarkdown from "react-markdown";
 import { getPosts_posts } from "__generated__/getPosts";
+import { Rating } from "__generated__/globalTypes";
+import PostThumbnail, { Size } from "./PostThumbnail";
 
 type PostCardProps = {
   post: getPosts_posts;
@@ -19,35 +15,60 @@ type PostCardProps = {
 const PostCard: FC<PostCardProps> = ({ post }) => {
   const router = useRouter();
   const id = post.id;
+
   const handleClick = useCallback(
     () => router.push(`${router.asPath}/${id}`),
     []
   );
+
+  const createdAt = post.createdAt.slice(0, 10).split("-").reverse().join("/");
+
   return (
-    <StyledCard onClick={handleClick}>
-      <CardActionArea>
-        <CardContent>
-          <CardTitle variant="h5">{post.title}</CardTitle>
+    <Container onClick={handleClick}>
+      <PostThumbnail
+        thumbnail={DEFAULT_THUMBNAIL}
+        rating={post.rating}
+        size={Size.SMALL}
+      />
+      <ContentContainer>
+        <Box>
+          <CardTitle variant="h6">
+            {post.shop.name}: {post.title}
+          </CardTitle>
           <CardSubtitle variant="body1">{post.subtitle}</CardSubtitle>
-          <CardBody variant="body2" color="textSecondary">
-            <ReactMarkdown>{WordSlicer(post.body)}</ReactMarkdown>
-          </CardBody>
-        </CardContent>
-      </CardActionArea>
-    </StyledCard>
+        </Box>
+        <CardDate variant="body2" color="textSecondary">
+          {createdAt}
+          {/* <ReactMarkdown>{WordSlicer(post.body)}</ReactMarkdown> */}
+        </CardDate>
+      </ContentContainer>
+    </Container>
   );
 };
 
 export default PostCard;
 
-const StyledCard = styled(MuiCard)`
-  width: 25%;
+const Container = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  align-self: flex-start;
+  margin: 10px;
+  cursor: pointer;
+`;
+
+const ContentContainer = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  margin-left: 14px;
+  justify-content: space-between;
 `;
 
 const CardTitle = styled(Typography)`
   margin-bottom: 0 !important;
+  font-family: "Rubik" !important;
+  font-weight: 500 !important;
 `;
-const CardSubtitle = styled(Typography)``;
-const CardBody = styled(Typography)`
-  margin-top: 10px !important;
+const CardSubtitle = styled(Typography)`
+  font-family: "Rubik", sans-serif !important;
 `;
+const CardDate = styled(Typography)``;

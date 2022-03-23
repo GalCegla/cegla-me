@@ -13,6 +13,8 @@ export const Post = nexus.objectType({
     t.model.body();
     t.model.shop();
     t.model.shopId();
+    t.model.rating();
+    t.model.thumbnail();
   },
 });
 
@@ -47,9 +49,14 @@ export const PostCreateInput = nexus.inputObjectType({
     t.nonNull.string("title");
     t.nonNull.string("subtitle");
     t.nonNull.string("body");
+    t.nonNull.string("thumbnail");
     t.nonNull.field("shop", {
       type: ShopConnectNestedOne,
       description: "The shop about which the post is about",
+    });
+    t.nonNull.field("rating", {
+      type: "Rating",
+      description: "The rating of the shop defined in the post",
     });
   },
 });

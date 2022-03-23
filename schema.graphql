@@ -19,6 +19,17 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
+input EnumRatingFieldUpdateOperationsInput {
+  set: Rating
+}
+
+input EnumRatingFilter {
+  equals: Rating
+  in: [Rating!]
+  not: NestedEnumRatingFilter
+  notIn: [Rating!]
+}
+
 type Mutation {
   createOnePost(data: PostCreateInput!): Post!
   createOneShop(data: ShopCreateInput!): Shop!
@@ -37,6 +48,13 @@ input NestedDateTimeFilter {
   notIn: [DateTime!]
 }
 
+input NestedEnumRatingFilter {
+  equals: Rating
+  in: [Rating!]
+  not: NestedEnumRatingFilter
+  notIn: [Rating!]
+}
+
 input NestedStringFilter {
   contains: String
   endsWith: String
@@ -51,13 +69,33 @@ input NestedStringFilter {
   startsWith: String
 }
 
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NullableStringFieldUpdateOperationsInput {
+  set: String
+}
+
 type Post {
   body: String!
   createdAt: DateTime!
   id: String!
+  rating: Rating!
   shop: Shop!
   shopId: String!
   subtitle: String!
+  thumbnail: String
   title: String!
   updatedAt: DateTime!
 }
@@ -65,9 +103,13 @@ type Post {
 input PostCreateInput {
   body: String!
 
+  """The rating of the shop defined in the post"""
+  rating: Rating!
+
   """The shop about which the post is about"""
   shop: ShopConnectNestedOne!
   subtitle: String!
+  thumbnail: String!
   title: String!
 }
 
@@ -75,7 +117,9 @@ input PostCreateManyShopInput {
   body: String!
   createdAt: DateTime
   id: String
+  rating: Rating!
   subtitle: String!
+  thumbnail: String
   title: String!
   updatedAt: DateTime
 }
@@ -101,7 +145,9 @@ input PostCreateWithoutShopInput {
   body: String!
   createdAt: DateTime
   id: String
+  rating: Rating!
   subtitle: String!
+  thumbnail: String
   title: String!
   updatedAt: DateTime
 }
@@ -113,8 +159,10 @@ input PostScalarWhereInput {
   body: StringFilter
   createdAt: DateTimeFilter
   id: StringFilter
+  rating: EnumRatingFilter
   shopId: StringFilter
   subtitle: StringFilter
+  thumbnail: StringNullableFilter
   title: StringFilter
   updatedAt: DateTimeFilter
 }
@@ -123,7 +171,9 @@ input PostUpdateManyMutationInput {
   body: StringFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  rating: EnumRatingFieldUpdateOperationsInput
   subtitle: StringFieldUpdateOperationsInput
+  thumbnail: NullableStringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
@@ -156,7 +206,9 @@ input PostUpdateWithoutShopInput {
   body: StringFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  rating: EnumRatingFieldUpdateOperationsInput
   subtitle: StringFieldUpdateOperationsInput
+  thumbnail: NullableStringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
@@ -181,6 +233,12 @@ type Query {
 enum QueryMode {
   default
   insensitive
+}
+
+enum Rating {
+  BAD
+  GOOD
+  OK
 }
 
 type Shop {
@@ -230,6 +288,21 @@ input StringFilter {
   lte: String
   mode: QueryMode
   not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
   notIn: [String!]
   startsWith: String
 }
