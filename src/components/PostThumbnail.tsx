@@ -18,8 +18,9 @@ const SIZE_CHART = {
       width: "46px",
     },
     ratingIcon: {
-      width: "20px",
-      height: "20px",
+      [Rating.GOOD]: { width: "16px", height: "21px" },
+      [Rating.OK]: { width: "19px", height: "21px" },
+      [Rating.BAD]: { width: "26px", height: "19.5px" },
     },
   },
   large: {
@@ -31,8 +32,9 @@ const SIZE_CHART = {
       width: "80px",
     },
     ratingIcon: {
-      width: "35px",
-      height: undefined,
+      [Rating.GOOD]: { width: "27px", height: "36px" },
+      [Rating.OK]: { width: "38px", height: "42px" },
+      [Rating.BAD]: { width: "47px", height: "35px" },
     },
   },
 };
@@ -61,8 +63,8 @@ const PostThumbnail: FC<PostThumbnailProps> = ({
         src="/fold.png"
         style={{
           position: "absolute",
-          right: -1,
-          bottom: -1,
+          right: -1.5,
+          bottom: -1.5,
           width: currentSize.fold.width,
         }}
       />
@@ -72,8 +74,8 @@ const PostThumbnail: FC<PostThumbnailProps> = ({
           position: "absolute",
           right: 2,
           bottom: 2,
-          width: currentSize.ratingIcon.width,
-          height: currentSize.ratingIcon.height || undefined,
+          width: currentSize.ratingIcon[Rating[rating]].width,
+          height: currentSize.ratingIcon[Rating[rating]].height || undefined,
         }}
       />
     </Container>
