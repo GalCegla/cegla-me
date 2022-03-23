@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "run-s db:dev generate next start",
+    "start": "db:dev generate next start",
     "debug": "NODE_OPTIONS='--inspect' next dev",
     "test": "jest",
     "lint": "eslint .",
