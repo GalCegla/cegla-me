@@ -7,6 +7,7 @@ import { css, Global } from "@emotion/react";
 import PostCard from "components/PostCard";
 import HeadPost from "components/HeadPost";
 import AboutSection from "components/AboutSection";
+import { Helmet } from "react-helmet";
 
 const IndexPage: FC = () => {
   const { data, error, loading } = useQuery<getPosts>(GET_POSTS);
@@ -25,6 +26,9 @@ const IndexPage: FC = () => {
   }
   return (
     <Container>
+      <Helmet>
+        <link rel="shortcut icon" href="/BAD.png" />
+      </Helmet>
       <Global
         styles={css`
           @import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;400&family=Rubik:wght@300;400&display=swap");
