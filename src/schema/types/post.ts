@@ -40,6 +40,7 @@ export const PostMutation = nexus.extendType({
         });
       },
     });
+    t.crud.updateOnePost();
   },
 });
 
