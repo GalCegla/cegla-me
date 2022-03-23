@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 import { Box, Divider, Typography } from "@material-ui/core";
 import DEFAULT_THUMBNAIL from "consts/defaultThumbnail";
-import { FC } from "react";
+import { useRouter } from "next/router";
+import { FC, useCallback } from "react";
 import { getPosts_posts } from "__generated__/getPosts";
 import PostThumbnail, { Size } from "./PostThumbnail";
 
@@ -10,10 +11,17 @@ type HeadPostProps = {
 };
 
 const HeadPost: FC<HeadPostProps> = ({ post }) => {
+  const router = useRouter();
+
   const createdAt = post.createdAt.slice(0, 10).split("-").reverse().join("/");
 
+  const handlePostRedirect = useCallback(
+    () => router.push(`${router.asPath}/${post.id}`),
+    [router, post]
+  );
+
   return (
-    <Container>
+    <Container onClick={handlePostRedirect}>
       <ThumbnailContainer>
         <PostThumbnail
           size={Size.LARGE}
@@ -55,6 +63,7 @@ const Container = styled(Box)`
   align-items: center;
   justify-content: center;
   margin-bottom: 50px;
+  cursor: pointer;
 `;
 
 const HeaderLogo = styled.img`
