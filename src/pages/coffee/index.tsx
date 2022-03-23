@@ -6,6 +6,7 @@ import { getPosts } from "__generated__/getPosts";
 import { css, Global } from "@emotion/react";
 import PostCard from "components/PostCard";
 import HeadPost from "components/HeadPost";
+import AboutSection from "components/AboutSection";
 
 const IndexPage: FC = () => {
   const { data, error, loading } = useQuery<getPosts>(GET_POSTS);
@@ -39,12 +40,13 @@ const IndexPage: FC = () => {
           return <PostCard post={post} />;
         })}
       </PostsContainer>
-      <Typography
+      <AboutSection />
+      {/* <Typography
         style={{ position: "absolute", bottom: "0", color: "lightgray" }}
         variant="caption"
       >
         Design by Guy Einhorn, Dev & content by your's truly
-      </Typography>
+      </Typography> */}
     </Container>
   );
 };
@@ -74,6 +76,8 @@ const GET_POSTS = gql`
 const Container = styled(Box)`
   display: flex;
   flex-direction: column;
+  margin-bottom: 80px;
+  margin-top: 80px;
   & > * {
     margin-bottom: 10px;
   }
