@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { gql, useQuery } from "@apollo/client";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Divider, Typography } from "@material-ui/core";
 import styled from "@emotion/styled";
 import { getPosts } from "__generated__/getPosts";
 import { css, Global } from "@emotion/react";
@@ -40,6 +40,13 @@ const IndexPage: FC = () => {
           return <PostCard post={post} />;
         })}
       </PostsContainer>
+      <StyledDivider
+        style={{
+          backgroundColor: "#E96F51",
+          width: "620px",
+          marginTop: "50px",
+        }}
+      />
       <AboutSection />
       {/* <Typography
         style={{ position: "absolute", bottom: "0", color: "lightgray" }}
@@ -87,4 +94,10 @@ const Container = styled(Box)`
 const PostsContainer = styled(Box)`
   display: flex;
   flex-wrap: wrap;
+`;
+
+const StyledDivider = styled(Divider)`
+  @media (max-width: 744px) {
+    width: 70% !important;
+  }
 `;
