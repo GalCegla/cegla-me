@@ -57,6 +57,7 @@ const Container = styled(Box)`
   align-self: flex-start;
   margin: 10px;
   cursor: pointer;
+  max-width: 450px;
 `;
 
 const ContentContainer = styled(Box)`

@@ -22,7 +22,11 @@ export const PostQuery = nexus.extendType({
   type: "Query",
   definition(t) {
     t.crud.post();
-    t.crud.posts();
+    t.crud.posts({
+      ordering: {
+        createdAt: true,
+      },
+    });
   },
 });
 

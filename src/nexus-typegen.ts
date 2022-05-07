@@ -202,6 +202,9 @@ export interface NexusGenInputs {
   PostWhereUniqueInput: { // input type
     id?: string | null; // String
   }
+  QueryPostsOrderByInput: { // input type
+    createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
   ShopConnectNestedOne: { // input type
     connect: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
   }
@@ -285,6 +288,7 @@ export interface NexusGenInputs {
 export interface NexusGenEnums {
   QueryMode: "default" | "insensitive"
   Rating: "BAD" | "GOOD" | "OK"
+  SortOrder: "asc" | "desc"
 }
 
 export interface NexusGenScalars {
@@ -427,6 +431,7 @@ export interface NexusGenArgTypes {
       before?: NexusGenInputs['PostWhereUniqueInput'] | null; // PostWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
+      orderBy?: NexusGenInputs['QueryPostsOrderByInput'][] | null; // [QueryPostsOrderByInput!]
     }
     shop: { // args
       where: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!

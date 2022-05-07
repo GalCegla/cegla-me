@@ -38,7 +38,7 @@ const IndexPage: FC = () => {
           }
         `}
       />
-      <HeadPost post={posts[posts.length - 1]} />
+      <HeadPost post={posts[0]} />
       <PostsContainer>
         {posts.map((post) => {
           return <PostCard post={post} key={post.id} />;
@@ -69,7 +69,7 @@ export default IndexPage;
 
 const GET_POSTS = gql`
   query getPosts {
-    posts {
+    posts(orderBy: { createdAt: desc }) {
       id
       createdAt
       updatedAt

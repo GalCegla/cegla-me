@@ -238,7 +238,7 @@ input PostWhereUniqueInput {
 
 type Query {
   post(where: PostWhereUniqueInput!): Post
-  posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int): [Post!]!
+  posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int, orderBy: [QueryPostsOrderByInput!]): [Post!]!
   shop(where: ShopWhereUniqueInput!): Shop
   shops(after: ShopWhereUniqueInput, before: ShopWhereUniqueInput, first: Int, last: Int): [Shop!]!
 }
@@ -246,6 +246,10 @@ type Query {
 enum QueryMode {
   default
   insensitive
+}
+
+input QueryPostsOrderByInput {
+  createdAt: SortOrder
 }
 
 enum Rating {
@@ -316,6 +320,11 @@ input ShopUpsertWithoutPostsInput {
 
 input ShopWhereUniqueInput {
   id: String
+}
+
+enum SortOrder {
+  asc
+  desc
 }
 
 input StringFieldUpdateOperationsInput {

@@ -105,6 +105,7 @@ const StyledDate = styled(Typography)`
 const StyledShopName = styled(Typography)`
   font-family: "Readex Pro", sans-serif !important;
   font-weight: 200 !important;
+  text-align: center;
 `;
 const StyledTitle = styled(Typography)`
   font-family: "Rubik", sans-serif !important;
