@@ -24,7 +24,8 @@
     "generate:graphql-server": "npx cross-env NEXUS_SHOULD_GENERATE_ARTIFACTS=true NODE_PATH=./src npx ts-node --transpile-only src/schema",
     "generate:graphql-client": "run-s rm:generated codegen",
     "studio": "prisma studio",
-    "heroku-postbuild": "run-s generate build"
+    "heroku-postbuild": "run-s generate build",
+    "heroku-deploy": "git push heroku main"
   },
   "license": "0BSD",
   "dependencies": {
