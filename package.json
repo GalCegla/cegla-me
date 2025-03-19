@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start",
     "debug": "NODE_OPTIONS='--inspect' next dev",
@@ -10,8 +10,8 @@
     "check-formatting": "prettier --check .",
     "check-typings": "tsc",
     "format": "prettier --write .",
-    "db:start": "docker-compose up -d db",
-    "db:stop": "docker-compose stop db",
+    "db:start": "docker compose up -d db",
+    "db:stop": "docker compose stop db",
     "db:dev": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:reset": "prisma migrate reset",
@@ -25,7 +25,8 @@
     "generate:graphql-client": "run-s rm:generated codegen",
     "studio": "prisma studio",
     "heroku-postbuild": "run-s generate build",
-    "heroku-deploy": "git push heroku main"
+    "heroku-deploy": "git push heroku main",
+    "prisma:studio": "prisma studio --schema=./prisma/schema.prisma"
   },
   "license": "0BSD",
   "dependencies": {
@@ -33,12 +34,13 @@
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@material-ui/core": "^4.11.3",
-    "@prisma/client": "2.23.0",
+    "@prisma/client": "5.10.2",
     "@types/apollo-upload-client": "^14.1.0",
     "@types/howler": "^2.2.2",
+    "@types/pg": "^8.11.11",
     "@types/react-helmet": "^6.1.1",
     "@types/react-lottie": "^1.2.5",
-    "apollo": "2.33.4",
+    "apollo": "^2.34.0",
     "apollo-server-micro": "2.25.0",
     "apollo-upload-client": "^16.0.0",
     "formik": "^2.2.9",
@@ -49,7 +51,9 @@
     "next": "^11.1.2",
     "nexus": "^1.1.0",
     "nexus-plugin-prisma": "^0.35.0",
-    "prisma": "^2.23.0",
+    "nexus-prisma": "^2.0.8",
+    "pg": "^8.14.1",
+    "prisma": "5.10.2",
     "react": "^17.0.2",
     "react-dom": "^16.14.0",
     "react-helmet": "^6.1.0",
@@ -59,6 +63,8 @@
     "react-markdown-editor-lite": "^1.3.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.5",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@types/node": "^15.0.2",
     "@types/react": "^17.0.5",
     "@types/react-dom": "^17.0.3",
@@ -72,6 +78,6 @@
     "npm-run-all": "^4.1.5",
     "source-map-loader": "^2.0.1",
     "ts-loader": "^9.1.0",
-    "typescript": "^4.2.4"
+    "typescript": "^5.8.2"
   }
 }

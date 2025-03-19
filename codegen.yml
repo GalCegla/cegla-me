@@ -1,0 +1,7 @@
+schema: "./schema.graphql"
+documents: "./src/**/*.{ts,tsx,graphql}" # Adjust the glob if your operations are in .graphql or in tagged literals
+generates:
+  src/__generated__/types.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"

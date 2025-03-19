@@ -7,9 +7,14 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  engineType    = "binary"
+  binaryTargets = ["native", "darwin"]
 }
 
+generator nexusPrisma {
+   provider = "nexus-prisma"
+}
 
 model Post {
 	id			String @id @default(cuid())

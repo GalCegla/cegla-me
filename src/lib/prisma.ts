@@ -17,7 +17,27 @@ function createDevelopmentPrismaClient(): PrismaClient {
   // @ts-ignore
   if (!global.prisma) {
     // @ts-ignore
-    global.prisma = new PrismaClient();
+    global.prisma = new PrismaClient({
+      log: ["query", "info", "warn", "error"],
+      datasources: {
+        db: {
+          url: process.env.DATABASE_URL,
+        },
+      },
+    });
+
+    // Add error handling for the connection
+    // @ts-ignore
+    global.prisma.$on("query", (e: any) => {
+      console.log("Query: " + e.query);
+      console.log("Params: " + e.params);
+      console.log("Duration: " + e.duration + "ms");
+    });
+
+    // @ts-ignore
+    global.prisma.$on("error", (e: any) => {
+      console.error("Prisma Error:", e);
+    });
   }
 
   // @ts-ignore
