@@ -19,7 +19,7 @@ export const ShopQuery = nexus.extendType({
     t.nonNull.field("shop", {
       type: "Shop",
       args: {
-        where: nexus.nonNull(nexus.arg({ type: "ShopWhereUniqueInput" })),
+        where: nexus.nonNull(nexus.arg({ type: ShopWhereUniqueInput })),
       },
       resolve(_, args, ctx) {
         return ctx.prisma.shop.findUnique({
@@ -44,7 +44,7 @@ export const ShopMutation = nexus.extendType({
     t.nonNull.field("createOneShop", {
       type: Shop,
       args: {
-        data: nexus.nonNull(nexus.arg({ type: "ShopCreateInput" })),
+        data: nexus.nonNull(nexus.arg({ type: ShopCreateInput })),
       },
       async resolve(source, args, ctx) {
         return ctx.prisma.shop.create({
@@ -55,7 +55,7 @@ export const ShopMutation = nexus.extendType({
     t.nonNull.field("deleteOneShop", {
       type: Shop,
       args: {
-        where: nexus.nonNull(nexus.arg({ type: "ShopWhereUniqueInput" })),
+        where: nexus.nonNull(nexus.arg({ type: ShopWhereUniqueInput })),
       },
       async resolve(source, args, ctx) {
         return ctx.prisma.shop.delete({
@@ -66,8 +66,8 @@ export const ShopMutation = nexus.extendType({
     t.nonNull.field("updateOneShop", {
       type: Shop,
       args: {
-        data: nexus.nonNull(nexus.arg({ type: "ShopUpdateInput" })),
-        where: nexus.nonNull(nexus.arg({ type: "ShopWhereUniqueInput" })),
+        data: nexus.nonNull(nexus.arg({ type: ShopUpdateInput })),
+        where: nexus.nonNull(nexus.arg({ type: ShopWhereUniqueInput })),
       },
       async resolve(source, args, ctx) {
         return ctx.prisma.shop.update({
