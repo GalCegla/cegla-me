@@ -109,15 +109,15 @@ function ValuesToInput(values: Post): PostUpdateInput {
   const { title, subtitle, body, shopId, rating, thumbnail } = values;
 
   return {
-    title: { set: title },
-    subtitle: { set: subtitle },
-    body: { set: body },
+    title,
+    subtitle,
+    body,
     shop: {
       connect: {
         id: shopId,
       },
     },
-    rating: { set: rating },
-    thumbnail: { set: thumbnail || "" },
+    rating,
+    thumbnail: thumbnail || "",
   };
 }

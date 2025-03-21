@@ -10,7 +10,7 @@ import AboutSection from "components/AboutSection";
 import { Helmet } from "react-helmet";
 
 const IndexPage: FC = () => {
-  const { data, error, loading } = useQuery<GetPostsQuery>(GET_POSTS);
+  const { data, error, loading } = useQuery<getPosts>(GET_POSTS);
   const posts = data?.posts;
 
   if (loading || !posts) {

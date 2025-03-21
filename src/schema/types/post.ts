@@ -27,15 +27,15 @@ export const Post = nexus.objectType({
 export const PostQuery = nexus.extendType({
   type: "Query",
   definition(t) {
-    t.nonNull.field("post", {
+    t.nullable.field("post", {
       type: "Post",
       args: {
-        where: nexus.nonNull(nexus.arg({ type: PostFindUniqueInput })),
+        where: nexus.nonNull(nexus.arg({ type: PostWhereUniqueInput })),
       },
       resolve(_, args, ctx) {
         return ctx.prisma.post.findUnique({
           where: {
-            id: args.where.id || undefined,
+            id: args.where.id,
           },
         });
       },
@@ -84,7 +84,7 @@ export const PostMutation = nexus.extendType({
       type: Post,
       args: {
         data: nexus.nonNull(nexus.arg({ type: PostUpdateInput })),
-        where: nexus.nonNull(nexus.arg({ type: PostFindUniqueInput })),
+        where: nexus.nonNull(nexus.arg({ type: PostWhereUniqueInput })),
       },
       async resolve(source, args, ctx) {
         return ctx.prisma.post.update({
@@ -96,8 +96,8 @@ export const PostMutation = nexus.extendType({
   },
 });
 
-export const PostFindUniqueInput = nexus.inputObjectType({
-  name: "PostFindUniqueInput",
+export const PostWhereUniqueInput = nexus.inputObjectType({
+  name: "PostWhereUniqueInput",
   definition(t) {
     t.nonNull.string("id");
   },

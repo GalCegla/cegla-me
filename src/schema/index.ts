@@ -8,7 +8,7 @@ import {
   PostMutation,
   PostCreateInput,
   PostUpdateInput,
-  PostFindUniqueInput,
+  PostWhereUniqueInput,
 } from "./types/post";
 import {
   Shop,
@@ -33,7 +33,7 @@ export default makeSchema({
     PostMutation,
     PostCreateInput,
     PostUpdateInput,
-    PostFindUniqueInput,
+    PostWhereUniqueInput,
     Shop,
     ShopQuery,
     ShopMutation,
@@ -52,8 +52,8 @@ export default makeSchema({
   //   }),
   // ],
   outputs: {
-    typegen: join(__dirname, "generated", "nexus-typegen.ts"),
-    schema: join(__dirname, "generated", "schema.graphql"),
+    typegen: join(rootDirectory, "src", "nexus-typegen.ts"),
+    schema: join(rootDirectory, "schema.graphql"),
   },
 });
 

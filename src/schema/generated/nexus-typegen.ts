@@ -37,9 +37,6 @@ export interface NexusGenInputs {
     thumbnail: string; // String!
     title: string; // String!
   }
-  PostFindUniqueInput: { // input type
-    id: string; // String!
-  }
   PostOrderByInput: { // input type
     createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
     title?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -52,6 +49,9 @@ export interface NexusGenInputs {
     subtitle?: string | null; // String
     thumbnail?: string | null; // String
     title?: string | null; // String
+  }
+  PostWhereUniqueInput: { // input type
+    id: string; // String!
   }
   ShopConnectNestedOne: { // input type
     connect: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
@@ -196,7 +196,7 @@ export interface NexusGenArgTypes {
     }
     updateOnePost: { // args
       data: NexusGenInputs['PostUpdateInput']; // PostUpdateInput!
-      where: NexusGenInputs['PostFindUniqueInput']; // PostFindUniqueInput!
+      where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
     }
     updateOneShop: { // args
       data: NexusGenInputs['ShopUpdateInput']; // ShopUpdateInput!
@@ -205,7 +205,7 @@ export interface NexusGenArgTypes {
   }
   Query: {
     post: { // args
-      where: NexusGenInputs['PostFindUniqueInput']; // PostFindUniqueInput!
+      where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
     }
     posts: { // args
       orderBy?: NexusGenInputs['PostOrderByInput'] | null; // PostOrderByInput

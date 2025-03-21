@@ -16,7 +16,7 @@ export const Shop = nexus.objectType({
 export const ShopQuery = nexus.extendType({
   type: "Query",
   definition(t) {
-    t.nonNull.field("shop", {
+    t.nullable.field("shop", {
       type: "Shop",
       args: {
         where: nexus.nonNull(nexus.arg({ type: ShopWhereUniqueInput })),

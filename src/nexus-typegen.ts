@@ -5,87 +5,30 @@
 
 
 import type { Context } from "./schema/context"
-
-
+import type { core } from "nexus"
 declare global {
-  interface NexusGenCustomOutputProperties<TypeName extends string> {
-    crud: NexusPrisma<TypeName, 'crud'>
-    model: NexusPrisma<TypeName, 'model'>
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * DateTime custom scalar type
+     */
+    dateTime<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
   }
 }
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * DateTime custom scalar type
+     */
+    dateTime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+  }
+}
+
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
 export interface NexusGenInputs {
-  DateTimeFieldUpdateOperationsInput: { // input type
-    set?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  DateTimeFilter: { // input type
-    equals?: NexusGenScalars['DateTime'] | null; // DateTime
-    gt?: NexusGenScalars['DateTime'] | null; // DateTime
-    gte?: NexusGenScalars['DateTime'] | null; // DateTime
-    in?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
-    lt?: NexusGenScalars['DateTime'] | null; // DateTime
-    lte?: NexusGenScalars['DateTime'] | null; // DateTime
-    not?: NexusGenInputs['NestedDateTimeFilter'] | null; // NestedDateTimeFilter
-    notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
-  }
-  EnumRatingFieldUpdateOperationsInput: { // input type
-    set?: NexusGenEnums['Rating'] | null; // Rating
-  }
-  EnumRatingFilter: { // input type
-    equals?: NexusGenEnums['Rating'] | null; // Rating
-    in?: NexusGenEnums['Rating'][] | null; // [Rating!]
-    not?: NexusGenInputs['NestedEnumRatingFilter'] | null; // NestedEnumRatingFilter
-    notIn?: NexusGenEnums['Rating'][] | null; // [Rating!]
-  }
-  NestedDateTimeFilter: { // input type
-    equals?: NexusGenScalars['DateTime'] | null; // DateTime
-    gt?: NexusGenScalars['DateTime'] | null; // DateTime
-    gte?: NexusGenScalars['DateTime'] | null; // DateTime
-    in?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
-    lt?: NexusGenScalars['DateTime'] | null; // DateTime
-    lte?: NexusGenScalars['DateTime'] | null; // DateTime
-    not?: NexusGenInputs['NestedDateTimeFilter'] | null; // NestedDateTimeFilter
-    notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
-  }
-  NestedEnumRatingFilter: { // input type
-    equals?: NexusGenEnums['Rating'] | null; // Rating
-    in?: NexusGenEnums['Rating'][] | null; // [Rating!]
-    not?: NexusGenInputs['NestedEnumRatingFilter'] | null; // NestedEnumRatingFilter
-    notIn?: NexusGenEnums['Rating'][] | null; // [Rating!]
-  }
-  NestedStringFilter: { // input type
-    contains?: string | null; // String
-    endsWith?: string | null; // String
-    equals?: string | null; // String
-    gt?: string | null; // String
-    gte?: string | null; // String
-    in?: string[] | null; // [String!]
-    lt?: string | null; // String
-    lte?: string | null; // String
-    not?: NexusGenInputs['NestedStringFilter'] | null; // NestedStringFilter
-    notIn?: string[] | null; // [String!]
-    startsWith?: string | null; // String
-  }
-  NestedStringNullableFilter: { // input type
-    contains?: string | null; // String
-    endsWith?: string | null; // String
-    equals?: string | null; // String
-    gt?: string | null; // String
-    gte?: string | null; // String
-    in?: string[] | null; // [String!]
-    lt?: string | null; // String
-    lte?: string | null; // String
-    not?: NexusGenInputs['NestedStringNullableFilter'] | null; // NestedStringNullableFilter
-    notIn?: string[] | null; // [String!]
-    startsWith?: string | null; // String
-  }
-  NullableStringFieldUpdateOperationsInput: { // input type
-    set?: string | null; // String
-  }
   PostCreateInput: { // input type
     body: string; // String!
     rating: NexusGenEnums['Rating']; // Rating!
@@ -94,199 +37,37 @@ export interface NexusGenInputs {
     thumbnail: string; // String!
     title: string; // String!
   }
-  PostCreateManyShopInput: { // input type
-    body: string; // String!
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    id?: string | null; // String
-    rating: NexusGenEnums['Rating']; // Rating!
-    subtitle: string; // String!
-    thumbnail?: string | null; // String
-    title: string; // String!
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  PostCreateManyShopInputEnvelope: { // input type
-    data?: NexusGenInputs['PostCreateManyShopInput'][] | null; // [PostCreateManyShopInput!]
-    skipDuplicates?: boolean | null; // Boolean
-  }
-  PostCreateNestedManyWithoutShopInput: { // input type
-    connect?: NexusGenInputs['PostWhereUniqueInput'][] | null; // [PostWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['PostCreateOrConnectWithoutShopInput'][] | null; // [PostCreateOrConnectWithoutShopInput!]
-    create?: NexusGenInputs['PostCreateWithoutShopInput'][] | null; // [PostCreateWithoutShopInput!]
-    createMany?: NexusGenInputs['PostCreateManyShopInputEnvelope'] | null; // PostCreateManyShopInputEnvelope
-  }
-  PostCreateOrConnectWithoutShopInput: { // input type
-    create: NexusGenInputs['PostCreateWithoutShopInput']; // PostCreateWithoutShopInput!
-    where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
-  }
-  PostCreateWithoutShopInput: { // input type
-    body: string; // String!
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    id?: string | null; // String
-    rating: NexusGenEnums['Rating']; // Rating!
-    subtitle: string; // String!
-    thumbnail?: string | null; // String
-    title: string; // String!
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  PostScalarWhereInput: { // input type
-    AND?: NexusGenInputs['PostScalarWhereInput'][] | null; // [PostScalarWhereInput!]
-    NOT?: NexusGenInputs['PostScalarWhereInput'][] | null; // [PostScalarWhereInput!]
-    OR?: NexusGenInputs['PostScalarWhereInput'][] | null; // [PostScalarWhereInput!]
-    body?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
-    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    rating?: NexusGenInputs['EnumRatingFilter'] | null; // EnumRatingFilter
-    shopId?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    subtitle?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    thumbnail?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
-    title?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+  PostOrderByInput: { // input type
+    createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    title?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   PostUpdateInput: { // input type
-    body?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    rating?: NexusGenInputs['EnumRatingFieldUpdateOperationsInput'] | null; // EnumRatingFieldUpdateOperationsInput
-    shop?: NexusGenInputs['ShopUpdateOneRequiredWithoutPostsInput'] | null; // ShopUpdateOneRequiredWithoutPostsInput
-    subtitle?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    thumbnail?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
-    title?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-  }
-  PostUpdateManyMutationInput: { // input type
-    body?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    rating?: NexusGenInputs['EnumRatingFieldUpdateOperationsInput'] | null; // EnumRatingFieldUpdateOperationsInput
-    subtitle?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    thumbnail?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
-    title?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-  }
-  PostUpdateManyWithWhereWithoutShopInput: { // input type
-    data: NexusGenInputs['PostUpdateManyMutationInput']; // PostUpdateManyMutationInput!
-    where: NexusGenInputs['PostScalarWhereInput']; // PostScalarWhereInput!
-  }
-  PostUpdateManyWithoutShopInput: { // input type
-    connect?: NexusGenInputs['PostWhereUniqueInput'][] | null; // [PostWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['PostCreateOrConnectWithoutShopInput'][] | null; // [PostCreateOrConnectWithoutShopInput!]
-    create?: NexusGenInputs['PostCreateWithoutShopInput'][] | null; // [PostCreateWithoutShopInput!]
-    createMany?: NexusGenInputs['PostCreateManyShopInputEnvelope'] | null; // PostCreateManyShopInputEnvelope
-    delete?: NexusGenInputs['PostWhereUniqueInput'][] | null; // [PostWhereUniqueInput!]
-    deleteMany?: NexusGenInputs['PostScalarWhereInput'][] | null; // [PostScalarWhereInput!]
-    disconnect?: NexusGenInputs['PostWhereUniqueInput'][] | null; // [PostWhereUniqueInput!]
-    set?: NexusGenInputs['PostWhereUniqueInput'][] | null; // [PostWhereUniqueInput!]
-    update?: NexusGenInputs['PostUpdateWithWhereUniqueWithoutShopInput'][] | null; // [PostUpdateWithWhereUniqueWithoutShopInput!]
-    updateMany?: NexusGenInputs['PostUpdateManyWithWhereWithoutShopInput'][] | null; // [PostUpdateManyWithWhereWithoutShopInput!]
-    upsert?: NexusGenInputs['PostUpsertWithWhereUniqueWithoutShopInput'][] | null; // [PostUpsertWithWhereUniqueWithoutShopInput!]
-  }
-  PostUpdateWithWhereUniqueWithoutShopInput: { // input type
-    data: NexusGenInputs['PostUpdateWithoutShopInput']; // PostUpdateWithoutShopInput!
-    where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
-  }
-  PostUpdateWithoutShopInput: { // input type
-    body?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    rating?: NexusGenInputs['EnumRatingFieldUpdateOperationsInput'] | null; // EnumRatingFieldUpdateOperationsInput
-    subtitle?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    thumbnail?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
-    title?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-  }
-  PostUpsertWithWhereUniqueWithoutShopInput: { // input type
-    create: NexusGenInputs['PostCreateWithoutShopInput']; // PostCreateWithoutShopInput!
-    update: NexusGenInputs['PostUpdateWithoutShopInput']; // PostUpdateWithoutShopInput!
-    where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
+    body?: string | null; // String
+    rating?: NexusGenEnums['Rating'] | null; // Rating
+    shop?: NexusGenInputs['ShopConnectNestedOne'] | null; // ShopConnectNestedOne
+    subtitle?: string | null; // String
+    thumbnail?: string | null; // String
+    title?: string | null; // String
   }
   PostWhereUniqueInput: { // input type
-    id?: string | null; // String
-  }
-  QueryPostsOrderByInput: { // input type
-    createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    id: string; // String!
   }
   ShopConnectNestedOne: { // input type
     connect: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
   }
   ShopCreateInput: { // input type
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    id?: string | null; // String
     name: string; // String!
-    posts?: NexusGenInputs['PostCreateNestedManyWithoutShopInput'] | null; // PostCreateNestedManyWithoutShopInput
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  ShopCreateOrConnectWithoutPostsInput: { // input type
-    create: NexusGenInputs['ShopCreateWithoutPostsInput']; // ShopCreateWithoutPostsInput!
-    where: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
-  }
-  ShopCreateWithoutPostsInput: { // input type
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    id?: string | null; // String
-    name: string; // String!
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
   ShopUpdateInput: { // input type
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    posts?: NexusGenInputs['PostUpdateManyWithoutShopInput'] | null; // PostUpdateManyWithoutShopInput
-    updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-  }
-  ShopUpdateOneRequiredWithoutPostsInput: { // input type
-    connect?: NexusGenInputs['ShopWhereUniqueInput'] | null; // ShopWhereUniqueInput
-    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutPostsInput'] | null; // ShopCreateOrConnectWithoutPostsInput
-    create?: NexusGenInputs['ShopCreateWithoutPostsInput'] | null; // ShopCreateWithoutPostsInput
-    update?: NexusGenInputs['ShopUpdateWithoutPostsInput'] | null; // ShopUpdateWithoutPostsInput
-    upsert?: NexusGenInputs['ShopUpsertWithoutPostsInput'] | null; // ShopUpsertWithoutPostsInput
-  }
-  ShopUpdateWithoutPostsInput: { // input type
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-  }
-  ShopUpsertWithoutPostsInput: { // input type
-    create: NexusGenInputs['ShopCreateWithoutPostsInput']; // ShopCreateWithoutPostsInput!
-    update: NexusGenInputs['ShopUpdateWithoutPostsInput']; // ShopUpdateWithoutPostsInput!
+    name?: string | null; // String
   }
   ShopWhereUniqueInput: { // input type
-    id?: string | null; // String
-  }
-  StringFieldUpdateOperationsInput: { // input type
-    set?: string | null; // String
-  }
-  StringFilter: { // input type
-    contains?: string | null; // String
-    endsWith?: string | null; // String
-    equals?: string | null; // String
-    gt?: string | null; // String
-    gte?: string | null; // String
-    in?: string[] | null; // [String!]
-    lt?: string | null; // String
-    lte?: string | null; // String
-    mode?: NexusGenEnums['QueryMode'] | null; // QueryMode
-    not?: NexusGenInputs['NestedStringFilter'] | null; // NestedStringFilter
-    notIn?: string[] | null; // [String!]
-    startsWith?: string | null; // String
-  }
-  StringNullableFilter: { // input type
-    contains?: string | null; // String
-    endsWith?: string | null; // String
-    equals?: string | null; // String
-    gt?: string | null; // String
-    gte?: string | null; // String
-    in?: string[] | null; // [String!]
-    lt?: string | null; // String
-    lte?: string | null; // String
-    mode?: NexusGenEnums['QueryMode'] | null; // QueryMode
-    not?: NexusGenInputs['NestedStringNullableFilter'] | null; // NestedStringNullableFilter
-    notIn?: string[] | null; // [String!]
-    startsWith?: string | null; // String
+    id: string; // String!
   }
 }
 
 export interface NexusGenEnums {
-  QueryMode: "default" | "insensitive"
   Rating: "BAD" | "GOOD" | "OK"
   SortOrder: "asc" | "desc"
 }
@@ -305,7 +86,7 @@ export interface NexusGenObjects {
   Post: { // root type
     body: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: string; // String!
+    id: string; // ID!
     rating: NexusGenEnums['Rating']; // Rating!
     shopId: string; // String!
     subtitle: string; // String!
@@ -316,7 +97,7 @@ export interface NexusGenObjects {
   Query: {};
   Shop: { // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: string; // String!
+    id: string; // ID!
     name: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
@@ -336,14 +117,14 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createOnePost: NexusGenRootTypes['Post']; // Post!
     createOneShop: NexusGenRootTypes['Shop']; // Shop!
-    deleteOneShop: NexusGenRootTypes['Shop'] | null; // Shop
-    updateOnePost: NexusGenRootTypes['Post'] | null; // Post
-    updateOneShop: NexusGenRootTypes['Shop'] | null; // Shop
+    deleteOneShop: NexusGenRootTypes['Shop']; // Shop!
+    updateOnePost: NexusGenRootTypes['Post']; // Post!
+    updateOneShop: NexusGenRootTypes['Shop']; // Shop!
   }
   Post: { // field return type
     body: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: string; // String!
+    id: string; // ID!
     rating: NexusGenEnums['Rating']; // Rating!
     shop: NexusGenRootTypes['Shop']; // Shop!
     shopId: string; // String!
@@ -360,7 +141,7 @@ export interface NexusGenFieldTypes {
   }
   Shop: { // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: string; // String!
+    id: string; // ID!
     name: string; // String!
     posts: NexusGenRootTypes['Post'][]; // [Post!]!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
@@ -378,7 +159,7 @@ export interface NexusGenFieldTypeNames {
   Post: { // field return type name
     body: 'String'
     createdAt: 'DateTime'
-    id: 'String'
+    id: 'ID'
     rating: 'Rating'
     shop: 'Shop'
     shopId: 'String'
@@ -395,7 +176,7 @@ export interface NexusGenFieldTypeNames {
   }
   Shop: { // field return type name
     createdAt: 'DateTime'
-    id: 'String'
+    id: 'ID'
     name: 'String'
     posts: 'Post'
     updatedAt: 'DateTime'
@@ -427,28 +208,10 @@ export interface NexusGenArgTypes {
       where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
     }
     posts: { // args
-      after?: NexusGenInputs['PostWhereUniqueInput'] | null; // PostWhereUniqueInput
-      before?: NexusGenInputs['PostWhereUniqueInput'] | null; // PostWhereUniqueInput
-      first?: number | null; // Int
-      last?: number | null; // Int
-      orderBy?: NexusGenInputs['QueryPostsOrderByInput'][] | null; // [QueryPostsOrderByInput!]
+      orderBy?: NexusGenInputs['PostOrderByInput'] | null; // PostOrderByInput
     }
     shop: { // args
       where: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
-    }
-    shops: { // args
-      after?: NexusGenInputs['ShopWhereUniqueInput'] | null; // ShopWhereUniqueInput
-      before?: NexusGenInputs['ShopWhereUniqueInput'] | null; // ShopWhereUniqueInput
-      first?: number | null; // Int
-      last?: number | null; // Int
-    }
-  }
-  Shop: {
-    posts: { // args
-      after?: NexusGenInputs['PostWhereUniqueInput'] | null; // PostWhereUniqueInput
-      before?: NexusGenInputs['PostWhereUniqueInput'] | null; // PostWhereUniqueInput
-      first?: number | null; // Int
-      last?: number | null; // Int
     }
   }
 }

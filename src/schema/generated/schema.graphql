@@ -9,7 +9,7 @@ type Mutation {
   createOnePost(data: PostCreateInput!): Post!
   createOneShop(data: ShopCreateInput!): Shop!
   deleteOneShop(where: ShopWhereUniqueInput!): Shop!
-  updateOnePost(data: PostUpdateInput!, where: PostFindUniqueInput!): Post!
+  updateOnePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post!
   updateOneShop(data: ShopUpdateInput!, where: ShopWhereUniqueInput!): Shop!
 }
 
@@ -39,10 +39,6 @@ input PostCreateInput {
   title: String!
 }
 
-input PostFindUniqueInput {
-  id: String!
-}
-
 input PostOrderByInput {
   createdAt: SortOrder
   title: SortOrder
@@ -62,8 +58,12 @@ input PostUpdateInput {
   title: String
 }
 
+input PostWhereUniqueInput {
+  id: String!
+}
+
 type Query {
-  post(where: PostFindUniqueInput!): Post!
+  post(where: PostWhereUniqueInput!): Post!
   posts(orderBy: PostOrderByInput): [Post!]!
   shop(where: ShopWhereUniqueInput!): Shop!
   shops: [Shop!]!
