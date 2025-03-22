@@ -26,7 +26,7 @@ const SIZE_CHART = {
   large: {
     container: {
       width: "295px",
-      height: "220px",
+      height: "220px !important",
     },
     fold: {
       width: "80px",

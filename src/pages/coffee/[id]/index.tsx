@@ -3,6 +3,10 @@ import ReactMarkdown from "react-markdown";
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { getPost } from "__generated__/getPost";
+import styled from "@emotion/styled";
+import { Box, Divider, Typography } from "@material-ui/core";
+import PostThumbnail, { Size } from "components/PostThumbnail";
+import { Global, css } from "@emotion/react";
 
 const PostPage: FC = () => {
   const router = useRouter();
@@ -14,9 +18,50 @@ const PostPage: FC = () => {
   if (error || !data?.post) {
     return null;
   }
-  const body = data.post.body;
+  const { body, title, subtitle, thumbnail, createdAt, rating } = data.post;
 
-  return <ReactMarkdown children={body} />;
+  const date = new Date(createdAt);
+
+  return (
+    <Box style={{ display: "flex", justifyContent: "center" }}>
+      <Global
+        styles={css`
+          @import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;400&family=Rubik:wght@300;400&display=swap");
+
+          body {
+            background-color: #f7f6f5;
+          }
+        `}
+      />
+      <Container
+        style={{ width: "50%", minWidth: "350px", alignSelf: "center" }}
+      >
+        <Typography
+          variant="h2"
+          style={{ fontWeight: 400, textAlign: "center" }}
+        >
+          {title}
+        </Typography>
+        <Typography
+          variant="h4"
+          style={{ fontWeight: 300, textAlign: "center" }}
+        >
+          {subtitle}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary">
+          {date.toLocaleDateString()}
+        </Typography>
+        <Divider style={{ width: "100%", margin: 10 }} />
+        <PostThumbnail
+          rating={rating}
+          thumbnail={thumbnail || ""}
+          size={Size.LARGE}
+        />
+        {/* {thumbnail && <img src={thumbnail} />} */}
+        <ReactMarkdown children={body} />
+      </Container>
+    </Box>
+  );
 };
 
 export default PostPage;
@@ -27,6 +72,19 @@ export const GET_POST = gql`
       title
       subtitle
       body
+      thumbnail
+      createdAt
+      rating
     }
   }
+`;
+
+const Container = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  margin-top: 80px;
+  & > * {
+    margin-bottom: 10px;
+  }
+  align-items: center;
 `;
