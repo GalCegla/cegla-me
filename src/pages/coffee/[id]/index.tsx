@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 import { Box, Divider, Typography } from "@material-ui/core";
 import PostThumbnail, { Size } from "components/PostThumbnail";
 import { Global, css } from "@emotion/react";
+import Markdown from "react-markdown";
 
 const PostPage: FC = () => {
   const router = useRouter();
@@ -57,8 +58,7 @@ const PostPage: FC = () => {
           thumbnail={thumbnail || ""}
           size={Size.LARGE}
         />
-        {/* {thumbnail && <img src={thumbnail} />} */}
-        <ReactMarkdown children={body} />
+        <Markdown children={body} />
       </Container>
     </Box>
   );
