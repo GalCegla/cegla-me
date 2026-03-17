@@ -70,7 +70,7 @@ const ShopForm: FC<ShopFormProps> = ({ open, onClose, shops }) => {
 export default ShopForm;
 
 const CREATE_SHOP = gql`
-  mutation CreateShopMutation($data: ShopCreateInput!) {
+  mutation createShop($data: ShopCreateInput!) {
     createOneShop(data: $data) {
       id
     }
