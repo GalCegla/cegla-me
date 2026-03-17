@@ -1,4 +1,4 @@
-import { Rating } from "__generated__/globalTypes";
+import { Rating } from "__generated__/types";
 
 export type Post = {
   title: string;

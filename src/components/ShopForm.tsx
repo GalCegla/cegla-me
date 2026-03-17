@@ -3,9 +3,12 @@ import React, { FC, useCallback } from "react";
 import TextField from "components/TextField";
 import { Button, Dialog, DialogContent } from "@material-ui/core";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { createShop, createShopVariables } from "__generated__/createShop";
+import {
+  CreateShopMutation,
+  CreateShopMutationVariables,
+} from "__generated__/types";
 import styled from "@emotion/styled";
-import { getShops_shops } from "__generated__/getShops";
+import { GetShopsQuery } from "__generated__/types";
 
 type Values = {
   name: string;
@@ -17,27 +20,28 @@ const INITIAL_VALUES: Values = {
 type ShopFormProps = {
   open: boolean;
   onClose: () => void;
-  shops: getShops_shops[] | undefined;
+  shops: GetShopsQuery["shops"][0][] | undefined;
 };
 
 const ShopForm: FC<ShopFormProps> = ({ open, onClose, shops }) => {
-  const [createShop] = useMutation<createShop, createShopVariables>(
-    CREATE_SHOP
-  );
+  const [CreateShopMutation] = useMutation<
+    CreateShopMutation,
+    CreateShopMutationVariables
+  >(CREATE_SHOP);
   const shopNames = shops && shops.map((shop) => shop.name);
   const onSubmit = useCallback(
     (values: Values) => {
       if (shopNames && shopNames.includes(values.name)) {
         return onClose();
       } else {
-        return createShop({
+        return CreateShopMutation({
           variables: {
             data: values,
           },
         }).then(() => onClose());
       }
     },
-    [shops, shopNames]
+    [shops, shopNames],
   );
   return (
     <Dialog open={open} onClose={onClose}>
@@ -66,7 +70,7 @@ const ShopForm: FC<ShopFormProps> = ({ open, onClose, shops }) => {
 export default ShopForm;
 
 const CREATE_SHOP = gql`
-  mutation createShop($data: ShopCreateInput!) {
+  mutation CreateShopMutation($data: ShopCreateInput!) {
     createOneShop(data: $data) {
       id
     }

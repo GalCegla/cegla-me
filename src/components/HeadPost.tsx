@@ -3,11 +3,11 @@ import { Box, Divider, Typography } from "@material-ui/core";
 import DEFAULT_THUMBNAIL from "consts/defaultThumbnail";
 import { useRouter } from "next/router";
 import { FC, useCallback } from "react";
-import { getPosts_posts } from "__generated__/getPosts";
+import { GetPostsQuery } from "__generated__/types";
 import PostThumbnail, { Size } from "./PostThumbnail";
 
 type HeadPostProps = {
-  post: getPosts_posts;
+  post: GetPostsQuery["posts"][0];
 };
 
 const HeadPost: FC<HeadPostProps> = ({ post }) => {
@@ -17,7 +17,7 @@ const HeadPost: FC<HeadPostProps> = ({ post }) => {
 
   const handlePostRedirect = useCallback(
     () => router.push(`${router.asPath}/${post.id}`),
-    [router, post]
+    [router, post],
   );
 
   return (

@@ -4,8 +4,12 @@ import { Formik } from "formik";
 import React, { FC, useCallback, useState } from "react";
 import { Post } from "types/post";
 import { gql, useMutation } from "@apollo/client";
-import { createPost, createPostVariables } from "__generated__/createPost";
-import { PostCreateInput, Rating } from "__generated__/globalTypes";
+import {
+  CreatePostMutation,
+  CreatePostMutationVariables,
+  PostCreateInput,
+  Rating,
+} from "__generated__/types";
 import { useRouter } from "next/router";
 
 export const INITIAL_VALUES: Post = {
@@ -13,17 +17,18 @@ export const INITIAL_VALUES: Post = {
   subtitle: "",
   body: "",
   shopId: "",
-  rating: Rating.GOOD,
+  rating: Rating.Good,
   thumbnail: "",
 };
 
 const AddPage: FC = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const [createPost] = useMutation<createPost, createPostVariables>(
-    CREATE_POST
-  );
-  const onSubmit = useCallback((values) => {
+  const [createPost] = useMutation<
+    CreatePostMutation,
+    CreatePostMutationVariables
+  >(CREATE_POST);
+  const onSubmit = useCallback((values: Post) => {
     return createPost({
       variables: {
         data: ValuesToInput(values),
@@ -32,8 +37,9 @@ const AddPage: FC = () => {
   }, []);
 
   const handlePasswordChange = useCallback(
-    (event) => setPassword(event.target.value),
-    []
+    (event: React.ChangeEvent<HTMLInputElement>) =>
+      setPassword(event.target.value),
+    [],
   );
   if (password !== process.env.NEXT_PUBLIC_PASSWORD) {
     return (

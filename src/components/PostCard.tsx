@@ -4,11 +4,11 @@ import DEFAULT_THUMBNAIL from "consts/defaultThumbnail";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import react, { FC } from "react";
-import { getPosts_posts } from "__generated__/getPosts";
+import { GetPostsQuery } from "__generated__/types";
 import PostThumbnail, { Size } from "./PostThumbnail";
 
 type PostCardProps = {
-  post: getPosts_posts;
+  post: GetPostsQuery["posts"][0];
 };
 
 const PostCard: FC<PostCardProps> = ({ post }) => {
@@ -17,7 +17,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
 
   const handleClick = useCallback(
     () => router.push(`${router.asPath}/${id}`),
-    []
+    [],
   );
 
   const createdAt = post.createdAt.slice(0, 10).split("-").reverse().join("/");

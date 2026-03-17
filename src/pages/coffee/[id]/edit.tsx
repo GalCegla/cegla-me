@@ -6,22 +6,26 @@ import { useRouter } from "next/router";
 import { INITIAL_VALUES } from "pages/coffee/add";
 import { FC, useCallback, useMemo, useState } from "react";
 import { Post } from "types/post";
-import { getFullPost } from "__generated__/getFullPost";
-import { PostUpdateInput } from "__generated__/globalTypes";
-import { updatePostVariables, updatePost } from "__generated__/updatePost";
+import {
+  GetFullPostQuery,
+  PostUpdateInput,
+  UpdatePostMutation,
+  UpdatePostMutationVariables,
+} from "__generated__/types";
 
 const EditPage: FC = () => {
   const router = useRouter();
   const postId = router.query.id as string;
   const [password, setPassword] = useState("");
 
-  const { data } = useQuery<getFullPost>(GET_FULL_POST, {
+  const { data } = useQuery<GetFullPostQuery>(GET_FULL_POST, {
     variables: { id: postId },
   });
 
-  const [updatePost] = useMutation<updatePost, updatePostVariables>(
-    UPDATE_POST
-  );
+  const [updatePost] = useMutation<
+    UpdatePostMutation,
+    UpdatePostMutationVariables
+  >(UPDATE_POST);
 
   const initialValues: Post = useMemo(() => {
     if (!data?.post) {
@@ -39,16 +43,17 @@ const EditPage: FC = () => {
   }, [data]);
 
   const handleSubmit = useCallback(
-    (values) =>
+    (values: Post) =>
       updatePost({
         variables: { data: ValuesToInput(values), id: postId },
       }).then(() => router.push("/coffee")),
-    [router]
+    [router],
   );
 
   const handlePasswordChange = useCallback(
-    (event) => setPassword(event.target.value),
-    []
+    (event: React.ChangeEvent<HTMLInputElement>) =>
+      setPassword(event.target.value),
+    [],
   );
 
   if (password !== process.env.NEXT_PUBLIC_PASSWORD) {

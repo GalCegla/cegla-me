@@ -3,31 +3,30 @@ import { Form } from "formik";
 import React, { FC, useCallback, useMemo, useState } from "react";
 import TextField from "./TextField";
 import { gql, useQuery } from "@apollo/client";
-import { getShops } from "__generated__/getShops";
+import { GetShopsQuery, Rating } from "__generated__/types";
 import Select, { Option } from "./Select";
-import { Button, CircularProgress } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import MarkdownEditor from "./MarkdownEditor";
 import ShopForm from "./ShopForm";
-import { Rating } from "__generated__/globalTypes";
 
 export const Ratings: Option[] = [
   {
-    value: Rating.GOOD,
-    name: Rating.GOOD,
+    value: Rating.Good,
+    name: Rating.Good,
   },
   {
-    value: Rating.OK,
-    name: Rating.OK,
+    value: Rating.Ok,
+    name: Rating.Ok,
   },
   {
-    value: Rating.BAD,
-    name: Rating.BAD,
+    value: Rating.Bad,
+    name: Rating.Bad,
   },
 ];
 
 const PostForm: FC = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const { data, refetch, loading } = useQuery<getShops>(GET_SHOPS);
+  const { data, refetch, loading } = useQuery<GetShopsQuery>(GET_SHOPS);
 
   const shops: Option[] = useMemo(
     () =>
@@ -37,7 +36,7 @@ const PostForm: FC = () => {
             name: shop.name,
           }))
         : [],
-    [data]
+    [data],
   );
 
   const handleClose = useCallback(() => {
@@ -76,7 +75,7 @@ export const GET_SHOPS = gql`
   }
 `;
 
-const StyledForm = styled(Form)`
+const StyledForm = styled(Form as any)`
   display: flex;
   flex-direction: column;
   width: 100%;

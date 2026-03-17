@@ -2,15 +2,15 @@ import React, { FC } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { Box, Divider, Typography } from "@material-ui/core";
 import styled from "@emotion/styled";
-import { getPosts } from "__generated__/getPosts";
+import { GetPostsQuery } from "__generated__/types";
 import { css, Global } from "@emotion/react";
 import PostCard from "components/PostCard";
 import HeadPost from "components/HeadPost";
 import AboutSection from "components/AboutSection";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const IndexPage: FC = () => {
-  const { data, error, loading } = useQuery<getPosts>(GET_POSTS);
+  const { data, error, loading } = useQuery<GetPostsQuery>(GET_POSTS);
   const posts = data?.posts;
 
   if (loading || !posts) {
@@ -28,7 +28,7 @@ const IndexPage: FC = () => {
   return (
     <Container>
       <Helmet>
-        <link rel="shortcut icon" href="/BAD.png" />
+        <link rel="shortcut icon" href="/Bad.png" />
       </Helmet>
       <Global
         styles={css`

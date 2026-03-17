@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Box } from "@material-ui/core";
 import { FC } from "react";
-import { Rating } from "__generated__/globalTypes";
+import { Rating } from "__generated__/types";
 
 export enum Size {
   SMALL = "small",
@@ -18,9 +18,9 @@ const SIZE_CHART = {
       width: "46px",
     },
     ratingIcon: {
-      [Rating.GOOD]: { width: "16px", height: "21px" },
-      [Rating.OK]: { width: "19px", height: "21px" },
-      [Rating.BAD]: { width: "26px", height: "19.5px" },
+      [Rating.Good]: { width: "16px", height: "21px" },
+      [Rating.Ok]: { width: "19px", height: "21px" },
+      [Rating.Bad]: { width: "26px", height: "19.5px" },
     },
   },
   large: {
@@ -32,9 +32,9 @@ const SIZE_CHART = {
       width: "80px",
     },
     ratingIcon: {
-      [Rating.GOOD]: { width: "27px", height: "36px" },
-      [Rating.OK]: { width: "38px", height: "42px" },
-      [Rating.BAD]: { width: "47px", height: "35px" },
+      [Rating.Good]: { width: "27px", height: "36px" },
+      [Rating.Ok]: { width: "38px", height: "42px" },
+      [Rating.Bad]: { width: "47px", height: "35px" },
     },
   },
 };
@@ -52,6 +52,7 @@ const PostThumbnail: FC<PostThumbnailProps> = ({
 }) => {
   const ratingIcon = `/${rating}.png`;
   const currentSize = SIZE_CHART[size];
+  const ratingIconSize = currentSize.ratingIcon[rating];
 
   return (
     <Container sx={{ ...currentSize.container }}>
@@ -74,8 +75,8 @@ const PostThumbnail: FC<PostThumbnailProps> = ({
           position: "absolute",
           right: 2,
           bottom: 2,
-          width: currentSize.ratingIcon[Rating[rating]].width,
-          height: currentSize.ratingIcon[Rating[rating]].height || undefined,
+          width: ratingIconSize.width,
+          height: ratingIconSize.height || undefined,
         }}
       />
     </Container>
