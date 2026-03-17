@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
-    "build": "next build",
+    "build": "yarn generate && next build",
     "start": "next start",
     "debug": "NODE_OPTIONS='--inspect' next dev",
     "test": "jest",
