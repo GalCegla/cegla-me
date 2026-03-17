@@ -14,21 +14,18 @@ const apolloServer = new ApolloServer<Context>({
   },
 });
 
-const handler = startServerAndCreateNextHandler<NextApiRequest>(apolloServer, {
-  context: async (req, res): Promise<Context> => ({
-    prisma,
-  }),
-});
-
-export const config = {
-  api: {
-    bodyParser: false,
+const handler = startServerAndCreateNextHandler<NextApiRequest, Context>(
+  apolloServer,
+  {
+    context: async (req, res): Promise<Context> => ({
+      prisma,
+    }),
   },
-};
+);
 
 export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  return handler(req, res);
+  await handler(req, res);
 };
