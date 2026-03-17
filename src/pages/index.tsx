@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Link from "next/link";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 import { Color, ColorBox, ColorBoxProps } from "material-ui-color";
 import InfoCard, { InfoCardProps } from "components/InfoCard";
@@ -72,7 +72,7 @@ const IndexPage: FC = () => {
   }, [isSoundOn]);
 
   const handleColorChange = useCallback(
-    (color) => {
+    (color: Color) => {
       setPickedColor(color);
     },
     [setPickedColor],

@@ -20,13 +20,13 @@ const MarkdownEditor: FC<MarkdownEditorProps> = ({ height, width, name }) => {
   });
 
   const markdownRenderer = useCallback(
-    (text) => <ReactMarkdown children={text} />,
-    []
+    (text: string) => <ReactMarkdown children={text} />,
+    [],
   );
 
   const handleChange = useCallback(
-    ({ html, text }) => helpers.setValue(text),
-    []
+    ({ html, text }: { html: string; text: string }) => helpers.setValue(text),
+    [],
   );
 
   return (
