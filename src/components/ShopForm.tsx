@@ -77,7 +77,7 @@ const CREATE_SHOP = gql`
   }
 `;
 
-const StyledForm = styled(Form)`
+const StyledForm = styled(Form as any)`
   display: flex;
   flex-direction: column;
   & > * {

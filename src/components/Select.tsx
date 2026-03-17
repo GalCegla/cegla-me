@@ -22,9 +22,12 @@ const Select: FC<SelectProps> = ({ options, name, fullWidth, label }) => {
   });
   const { setValue } = helpers;
 
-  const handleChange = useCallback((event) => {
-    setValue(event.target.value);
-  }, []);
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<{ value: unknown }>) => {
+      setValue(event.target.value as string);
+    },
+    [],
+  );
 
   if (!options) {
     return null;
