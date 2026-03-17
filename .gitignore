@@ -3,3 +3,5 @@ node_modules
 .env
 .next
 .env.local
+.yarn/cache
+.yarn/__virtual__
