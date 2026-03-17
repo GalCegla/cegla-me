@@ -34,7 +34,7 @@ export default new ApolloClient({
     setContext((next, { headers }) => {
       const id = getId();
       if (!id) {
-        return;
+        return {};
       }
       return {
         headers: {
@@ -42,10 +42,10 @@ export default new ApolloClient({
           authorization: `Basic ${btoa(`${id}:`)}`,
         },
       };
-    }),
+    }) as any,
     createUploadLink({
       uri: "/api/graphql",
-    })
-  ),
+    }) as any,
+  ) as any,
   cache,
 });
