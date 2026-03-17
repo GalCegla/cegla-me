@@ -5,3 +5,6 @@ node_modules
 .env.local
 .yarn/cache
 .yarn/__virtual__
+.pnp.cjs
+.pnp.loader.mjs
+.yarn/install-state.gz
