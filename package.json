@@ -20,8 +20,8 @@
     "rm:generated": "npx rimraf ./src/__generated__",
     "codegen": "graphql-codegen --config codegen.yml",
     "generate": "run-s generate:db generate:graphql-server generate:graphql-client",
-    "generate:db": "npx prisma generate",
-    "generate:graphql-server": "npx cross-env NEXUS_SHOULD_GENERATE_ARTIFACTS=true NODE_PATH=./src npx ts-node --transpile-only src/schema/index.ts",
+    "generate:db": "prisma generate",
+    "generate:graphql-server": "NEXUS_SHOULD_GENERATE_ARTIFACTS=true NODE_PATH=./src ts-node --transpile-only src/schema/index.ts",
     "generate:graphql-client": "run-s rm:generated codegen",
     "studio": "prisma studio",
     "heroku-postbuild": "run-s generate build",
@@ -81,6 +81,7 @@
     "npm-run-all": "^4.1.5",
     "source-map-loader": "^2.0.1",
     "ts-loader": "^9.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   },
   "volta": {
@@ -89,5 +90,8 @@
   },
   "engines": {
     "node": "20.x"
+  },
+  "installConfig": {
+    "hoistingLimits": "workspaces"
   }
 }
