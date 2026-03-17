@@ -5,10 +5,10 @@ export const DateTime = nexus.scalarType({
   asNexusMethod: "dateTime",
   description: "DateTime custom scalar type",
   parseValue(value) {
-    return new Date(value);
+    return new Date(value as string);
   },
   serialize(value) {
-    return value.toISOString();
+    return (value as Date).toISOString();
   },
   parseLiteral(ast) {
     if (ast.kind === "StringValue") {
