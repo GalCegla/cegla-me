@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { CSSProperties, FC, useRef } from "react";
 import Draggable from "react-draggable";
 import { Resizable } from "re-resizable";
 import {
@@ -14,6 +14,7 @@ interface AppWindowProps {
   onClose: () => void;
   children?: React.ReactNode;
   scrollable?: boolean; // ← new prop
+  style?: CSSProperties;
 }
 
 const AppWindow: FC<AppWindowProps> = ({
@@ -21,6 +22,7 @@ const AppWindow: FC<AppWindowProps> = ({
   onClose,
   children,
   scrollable = false,
+  style,
 }) => {
   const nodeRef = useRef<HTMLDivElement>(null);
 
@@ -31,11 +33,12 @@ const AppWindow: FC<AppWindowProps> = ({
         style={{
           position: "absolute",
           top: "calc(50vh - 300px)",
-          left: "calc(50vw - 200px)",
+          left: "calc(50vw - 350px)",
+          zIndex: 1,
         }}
       >
         <Resizable
-          defaultSize={{ width: 400, height: 300 }}
+          defaultSize={{ width: 700, height: 500 }}
           minWidth={200}
           minHeight={150}
           enable={{
@@ -106,13 +109,30 @@ const AppWindow: FC<AppWindowProps> = ({
                 </span>
               </Button>
             </WindowHeader>
-            <WindowContent style={{ height: "calc(100% - 45px)", padding: 0 }}>
+            <WindowContent
+              style={{
+                height: "calc(100% - 45px)",
+                padding: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+              }}
+            >
               {scrollable ? (
-                <ScrollView style={{ width: "100%", height: "100%" }}>
+                <ScrollView
+                  style={{
+                    width: "95%",
+                    height: "95%",
+                    margin: "auto",
+                    overflow: "auto",
+                    ...style,
+                  }}
+                >
                   {children}
                 </ScrollView>
               ) : (
-                children
+                <div style={style}>{children}</div>
               )}
             </WindowContent>
           </Window>
