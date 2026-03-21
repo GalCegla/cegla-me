@@ -202,9 +202,20 @@ const IndexPage: FC = () => {
                     <GroupBox
                       variant="flat"
                       label={
-                        <a href={job.companyLink} target="_blank">
-                          {job.company}
-                        </a>
+                        job.companyLink ? (
+                          <a
+                            href={job.companyLink}
+                            target="_blank"
+                            style={{
+                              color: "blue",
+                              textDecoration: "underline",
+                            }}
+                          >
+                            {job.company}
+                          </a>
+                        ) : (
+                          job.company
+                        )
                       }
                       key={job.company}
                       style={{ display: "flex", flexDirection: "column" }}
