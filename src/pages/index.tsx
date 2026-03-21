@@ -285,7 +285,7 @@ const IndexPage: FC = () => {
         >
           <DesktopIcon
             id="cv"
-            icon={<IntelliPointCursor21 size={32} />}
+            icon={<img src="/mepixel.png" style={{ height: "44px" }} />}
             label="My CV"
             isSelected={selectedIds.has("cv")}
             onSelect={handleSelect}
@@ -293,7 +293,7 @@ const IndexPage: FC = () => {
           />
           <DesktopIcon
             id="coffee"
-            icon={<GoldenEra2 size={32} />}
+            icon={<img src="/coffeepixel.png" style={{ height: "44px" }} />}
             label="Coffee Blog"
             isSelected={selectedIds.has("coffee")}
             onSelect={handleSelect}
@@ -301,7 +301,7 @@ const IndexPage: FC = () => {
           />
           <DesktopIcon
             id="github"
-            icon={<img src="/githubpixel.png" style={{ height: "40px" }} />}
+            icon={<img src="/githubpixel.png" style={{ height: "44px" }} />}
             label="Gitub"
             isSelected={selectedIds.has("github")}
             onSelect={handleSelect}
@@ -311,8 +311,8 @@ const IndexPage: FC = () => {
           />
           <DesktopIcon
             id="linkedin"
-            icon={<img src="/linkedinpixel.png" style={{ height: "40px" }} />}
-            label="Gitub"
+            icon={<img src="/linkedinpixel.png" style={{ height: "44px" }} />}
+            label="LinkedIn"
             isSelected={selectedIds.has("linkedin")}
             onSelect={handleSelect}
             onDoubleClick={() =>
