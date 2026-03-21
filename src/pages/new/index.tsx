@@ -1,21 +1,123 @@
-import { Box, CssBaseline, Typography } from "@material-ui/core";
+import { Box, CssBaseline } from "@material-ui/core";
 import AppWindow from "components/AppWindow";
 import DesktopIcon from "components/DesktopIcon";
-import { FC, useCallback, useState } from "react";
+import { useRouter } from "next/router";
+import { FC, useCallback, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { TheSimpsonsIcon, UnnamedIcon } from "react-old-icons";
+import {
+  GoldenEra2,
+  IntelliPointCursor21,
+  PlaneFrom,
+  TheSimpsonsIcon,
+  UnnamedIcon,
+} from "react-old-icons";
 import { AppBar, Button, GroupBox, Toolbar } from "react95";
+
+interface SelectionRect {
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+}
 
 const IndexPage: FC = () => {
   const [cvOpen, setCvOpen] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [selectionRect, setSelectionRect] = useState<SelectionRect | null>(
+    null,
+  );
+  const isDrawing = useRef(false);
+  const isDraggingIcon = useRef(false);
+  const desktopRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
-  const openCV = useCallback(() => {
-    setCvOpen(true);
-  }, [setCvOpen]);
+  const openCV = useCallback(() => setCvOpen(true), []);
+  const closeCV = useCallback(() => setCvOpen(false), []);
+  const openCoffeeBlog = useCallback(() => router.push("/coffee"), [router]);
 
-  const closeCV = useCallback(() => {
-    setCvOpen(false);
-  }, [setCvOpen]);
+  const handleSelect = useCallback((id: string) => {
+    setSelectedIds(new Set([id]));
+  }, []);
+
+  const handleDesktopMouseDown = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if ((e.target as HTMLElement).closest("[data-icon-id]")) {
+        isDraggingIcon.current = true;
+        return;
+      }
+      isDraggingIcon.current = false;
+      isDrawing.current = true;
+      setSelectedIds(new Set());
+      const rect = desktopRef.current!.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      setSelectionRect({ startX: x, startY: y, endX: x, endY: y });
+    },
+    [],
+  );
+
+  const handleDesktopMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (isDraggingIcon.current || !isDrawing.current || !selectionRect)
+        return;
+      const rect = desktopRef.current!.getBoundingClientRect();
+      setSelectionRect((prev) =>
+        prev
+          ? {
+              ...prev,
+              endX: e.clientX - rect.left,
+              endY: e.clientY - rect.top,
+            }
+          : null,
+      );
+    },
+    [selectionRect],
+  );
+
+  const handleDesktopMouseUp = useCallback(() => {
+    if (isDraggingIcon.current) {
+      isDraggingIcon.current = false;
+      return;
+    }
+    if (!isDrawing.current || !selectionRect) return;
+    isDrawing.current = false;
+
+    const minX = Math.min(selectionRect.startX, selectionRect.endX);
+    const maxX = Math.max(selectionRect.startX, selectionRect.endX);
+    const minY = Math.min(selectionRect.startY, selectionRect.endY);
+    const maxY = Math.max(selectionRect.startY, selectionRect.endY);
+
+    const newSelected = new Set<string>();
+    document.querySelectorAll("[data-icon-id]").forEach((el) => {
+      const iconRect = el.getBoundingClientRect();
+      const desktopRect = desktopRef.current!.getBoundingClientRect();
+      const iconLeft = iconRect.left - desktopRect.left;
+      const iconTop = iconRect.top - desktopRect.top;
+      const iconRight = iconRect.right - desktopRect.left;
+      const iconBottom = iconRect.bottom - desktopRect.top;
+
+      if (
+        iconLeft < maxX &&
+        iconRight > minX &&
+        iconTop < maxY &&
+        iconBottom > minY
+      ) {
+        newSelected.add(el.getAttribute("data-icon-id")!);
+      }
+    });
+
+    setSelectedIds(newSelected);
+    setSelectionRect(null);
+  }, [selectionRect]);
+
+  const rectStyle = selectionRect
+    ? {
+        left: Math.min(selectionRect.startX, selectionRect.endX),
+        top: Math.min(selectionRect.startY, selectionRect.endY),
+        width: Math.abs(selectionRect.endX - selectionRect.startX),
+        height: Math.abs(selectionRect.endY - selectionRect.startY),
+      }
+    : null;
 
   return (
     <>
@@ -23,19 +125,21 @@ const IndexPage: FC = () => {
       <Helmet>
         <title>Gal Cegla's Space</title>
         <style>{`
-    html, body {
-      overscroll-behavior: none;
-      height: 100%;
-    }
-      fieldset {
-    margin-bottom: 20px;
-  }
-
-  `}</style>
+          html, body {
+            overscroll-behavior: none;
+            height: 100%;
+          }
+          fieldset {
+            margin-bottom: 20px;
+          }
+        `}</style>
       </Helmet>
-      <Box
+      <div
+        ref={desktopRef}
         style={{ position: "relative", minHeight: "100vh" }}
-        onClick={() => window.dispatchEvent(new CustomEvent("deselectAll"))}
+        onMouseDown={handleDesktopMouseDown}
+        onMouseMove={handleDesktopMouseMove}
+        onMouseUp={handleDesktopMouseUp}
       >
         <img
           src="/BG.gif"
@@ -49,6 +153,20 @@ const IndexPage: FC = () => {
             zIndex: -1,
           }}
         />
+
+        {rectStyle && (
+          <div
+            style={{
+              position: "absolute",
+              ...rectStyle,
+              border: "1px dotted white",
+              backgroundColor: "rgba(0, 0, 128, 0.2)",
+              pointerEvents: "none",
+              zIndex: 9999,
+            }}
+          />
+        )}
+
         {cvOpen && (
           <AppWindow
             title="My CV"
@@ -62,38 +180,29 @@ const IndexPage: FC = () => {
               background: "white",
             }}
           >
-            {CV.map((job) => {
-              return (
-                <GroupBox
-                  variant="flat"
-                  label={
-                    <a
-                      href={job.companyLink}
-                      target="_blank"
-                      // color={job.companyLink ? "blue" : "black"}
-                    >
-                      {job.company}
-                    </a>
-                  }
-                  key={job.company}
-                  style={{ display: "flex", flexDirection: "column" }}
-                >
-                  <span style={{ fontSize: "20px" }}>{job.title}</span>
-                  <span
-                    style={{
-                      color: "grey",
-                      fontSize: "10px",
-                    }}
-                  >
-                    {job.dates}
-                  </span>
-                  <span>{job.description}</span>
-                </GroupBox>
-              );
-            })}
+            {CV.map((job) => (
+              <GroupBox
+                variant="flat"
+                label={
+                  <a href={job.companyLink} target="_blank">
+                    {job.company}
+                  </a>
+                }
+                key={job.company}
+                style={{ display: "flex", flexDirection: "column" }}
+              >
+                <span style={{ fontSize: "20px" }}>{job.title}</span>
+                <span style={{ color: "grey", fontSize: "10px" }}>
+                  {job.dates}
+                </span>
+                <span>{job.description}</span>
+              </GroupBox>
+            ))}
           </AppWindow>
         )}
+
         <Box
+          className="desktop-layer"
           style={{
             display: "flex",
             flexDirection: "column",
@@ -104,11 +213,23 @@ const IndexPage: FC = () => {
           }}
         >
           <DesktopIcon
-            icon={<TheSimpsonsIcon size={32} />}
+            id="cv"
+            icon={<IntelliPointCursor21 size={32} />}
             label="My CV"
+            isSelected={selectedIds.has("cv")}
+            onSelect={handleSelect}
             onDoubleClick={openCV}
           />
+          <DesktopIcon
+            id="coffee"
+            icon={<GoldenEra2 size={32} />}
+            label="Coffee Blog"
+            isSelected={selectedIds.has("coffee")}
+            onSelect={handleSelect}
+            onDoubleClick={openCoffeeBlog}
+          />
         </Box>
+
         <AppBar position="fixed" style={{ top: "auto", bottom: 0 }}>
           <Toolbar style={{ justifyContent: "space-between" }}>
             <div style={{ position: "relative", display: "inline-block" }}>
@@ -119,7 +240,7 @@ const IndexPage: FC = () => {
             </div>
           </Toolbar>
         </AppBar>
-      </Box>
+      </div>
     </>
   );
 };
@@ -130,10 +251,10 @@ const CV = [
   {
     company: "Ludwig Maximilians University Munich",
     dates: "OCTOBER 2024 - ONGOING, MUNICH",
-    title: "Bachelor’s",
+    title: "Bachelor's",
     companyLink: "https://www.lmu.de/en/",
     description:
-      "With Computer-Linguistics as a major subject and Artificial Intelligence as a minor, I’m currently studying for my bachelor’s degree at the LMU in Munich. The program is oriented around the intertwining of human languages and computers, focusing on linguistics and programming.",
+      "With Computer-Linguistics as a major subject and Artificial Intelligence as a minor, I'm currently studying for my bachelor's degree at the LMU in Munich. The program is oriented around the intertwining of human languages and computers, focusing on linguistics and programming.",
   },
   {
     company: "FlyCode",
@@ -141,21 +262,21 @@ const CV = [
     title: "Fullstack Developer",
     companyLink: "https://www.flycode.com/",
     description:
-      "FlyCode is a YCombinator graduate, focused on minimizing revenue loss for subscription-based platforms.\n During my time at FlyCode I had several responsibilities, beyond my daily programming duties for the application; I was responsible for the product’s documentation, helped with the grammar-proofing of our User Interface, took part in the sales and marketing efforts, and contributed to some business aspects of the company.",
+      "FlyCode is a YCombinator graduate, focused on minimizing revenue loss for subscription-based platforms.\n During my time at FlyCode I had several responsibilities, beyond my daily programming duties for the application; I was responsible for the product's documentation, helped with the grammar-proofing of our User Interface, took part in the sales and marketing efforts, and contributed to some business aspects of the company.",
   },
   {
     company: "ITC",
     dates: "OCTOBER 2021 - FEBRUARY 2022, TEL AVIV",
     title: "Fullstack Tech Teacher",
     description:
-      "ITC was a highly acclaimed software development schools in Tel Aviv, teaching people to become programmers. The school provided an intensive 3 month course including a one-month practical internship in software development. Working at ITC gave me the opportunity to guide students through the practices of the developers’ world, help them with the learned materials, and put their knowledge into practice. Another part of my work was lecturing on different topics, with a focus on teaching ReactJS.",
+      "ITC was a highly acclaimed software development schools in Tel Aviv, teaching people to become programmers. The school provided an intensive 3 month course including a one-month practical internship in software development. Working at ITC gave me the opportunity to guide students through the practices of the developers' world, help them with the learned materials, and put their knowledge into practice. Another part of my work was lecturing on different topics, with a focus on teaching ReactJS.",
   },
   {
     company: "withElement",
     dates: "JANUARY 2021 - JULY 2021, TEL AVIV",
     title: "Junior Software Developer",
     description:
-      "withElement was a YCombinator-graduate startup with the goal of helping known finance personas (e.g. “influencers”) reach and interact with their audience in an in-person environment. While working at withElement I was part of a very small development team, carrying out tasks relating to all parts of the codebase, both the front and back ends.",
+      "withElement was a YCombinator-graduate startup with the goal of helping known finance personas (e.g. 'influencers') reach and interact with their audience in an in-person environment. While working at withElement I was part of a very small development team, carrying out tasks relating to all parts of the codebase, both the front and back ends.",
   },
   {
     company: "Amplication",

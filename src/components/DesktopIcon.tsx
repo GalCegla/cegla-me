@@ -1,29 +1,34 @@
-import { FC, useState, useEffect, useRef } from "react";
+import { FC, useRef } from "react";
 import Draggable from "react-draggable";
 
 interface DesktopIconProps {
+  id: string;
   icon: React.ReactNode;
   label: string;
+  isSelected: boolean;
+  onSelect: (id: string) => void;
   onDoubleClick?: () => void;
 }
 
-const DesktopIcon: FC<DesktopIconProps> = ({ icon, label, onDoubleClick }) => {
-  const [selected, setSelected] = useState(false);
+const DesktopIcon: FC<DesktopIconProps> = ({
+  id,
+  icon,
+  label,
+  isSelected,
+  onSelect,
+  onDoubleClick,
+}) => {
   const nodeRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const deselect = () => setSelected(false);
-    window.addEventListener("deselectAll", deselect);
-    return () => window.removeEventListener("deselectAll", deselect);
-  }, []);
-
   return (
-    <Draggable nodeRef={nodeRef} onStart={() => setSelected(true)}>
+    <Draggable nodeRef={nodeRef} onStart={() => onSelect(id)}>
       <div
         ref={nodeRef}
+        data-icon-id={id}
+        onMouseDown={(e) => e.stopPropagation()}
         onClick={(e) => {
-          e.stopPropagation(); // prevents desktop click from firing deselectAll
-          setSelected(true);
+          e.stopPropagation();
+          onSelect(id);
         }}
         onDoubleClick={onDoubleClick}
         style={{
@@ -37,10 +42,9 @@ const DesktopIcon: FC<DesktopIconProps> = ({ icon, label, onDoubleClick }) => {
           width: "64px",
         }}
       >
-        {/* Icon with blue overlay when selected */}
         <div style={{ position: "relative", display: "inline-block" }}>
           {icon}
-          {selected && (
+          {isSelected && (
             <div
               style={{
                 position: "absolute",
@@ -51,8 +55,6 @@ const DesktopIcon: FC<DesktopIconProps> = ({ icon, label, onDoubleClick }) => {
             />
           )}
         </div>
-
-        {/* Label */}
         <span
           style={{
             fontSize: "11px",
@@ -60,11 +62,13 @@ const DesktopIcon: FC<DesktopIconProps> = ({ icon, label, onDoubleClick }) => {
             wordBreak: "break-word",
             width: "100%",
             padding: "1px 2px",
-            backgroundColor: selected ? "rgba(0, 0, 128, 0.8)" : "transparent",
+            backgroundColor: isSelected
+              ? "rgba(0, 0, 128, 0.8)"
+              : "transparent",
             color: "white",
-            outline: selected ? "1px dotted white" : "none",
+            outline: isSelected ? "1px dotted white" : "none",
             lineHeight: "1.2",
-            textShadow: selected ? "none" : "1px 1px 1px black",
+            textShadow: isSelected ? "none" : "1px 1px 1px black",
           }}
         >
           {label}
