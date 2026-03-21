@@ -11,7 +11,16 @@ import {
   TheSimpsonsIcon,
   UnnamedIcon,
 } from "react-old-icons";
-import { AppBar, Button, GroupBox, Toolbar } from "react95";
+import {
+  AppBar,
+  Button,
+  GroupBox,
+  ScrollView,
+  Tab,
+  TabBody,
+  Tabs,
+  Toolbar,
+} from "react95";
 
 interface SelectionRect {
   startX: number;
@@ -26,6 +35,7 @@ const IndexPage: FC = () => {
   const [selectionRect, setSelectionRect] = useState<SelectionRect | null>(
     null,
   );
+  const [activeTab, setActiveTab] = useState(0);
   const isDrawing = useRef(false);
   const isDraggingIcon = useRef(false);
   const desktopRef = useRef<HTMLDivElement>(null);
@@ -34,6 +44,10 @@ const IndexPage: FC = () => {
   const openCV = useCallback(() => setCvOpen(true), []);
   const closeCV = useCallback(() => setCvOpen(false), []);
   const openCoffeeBlog = useCallback(() => router.push("/coffee"), [router]);
+
+  const handleTabChange = useCallback((value: number) => {
+    setActiveTab(value);
+  }, []);
 
   const handleSelect = useCallback((id: string) => {
     setSelectedIds(new Set([id]));
@@ -168,36 +182,55 @@ const IndexPage: FC = () => {
         )}
 
         {cvOpen && (
-          <AppWindow
-            title="My CV"
-            onClose={closeCV}
-            scrollable
-            style={{
-              padding: "1rem",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              background: "white",
-            }}
-          >
-            {CV.map((job) => (
-              <GroupBox
-                variant="flat"
-                label={
-                  <a href={job.companyLink} target="_blank">
-                    {job.company}
-                  </a>
-                }
-                key={job.company}
-                style={{ display: "flex", flexDirection: "column" }}
-              >
-                <span style={{ fontSize: "20px" }}>{job.title}</span>
-                <span style={{ color: "grey", fontSize: "10px" }}>
-                  {job.dates}
-                </span>
-                <span>{job.description}</span>
-              </GroupBox>
-            ))}
+          <AppWindow title="My CV" onClose={closeCV}>
+            <Tabs value={activeTab} onChange={handleTabChange}>
+              <Tab value={0}>CV</Tab>
+              <Tab value={1}>Skills</Tab>
+            </Tabs>
+            <TabBody style={{ height: "90%", width: "100%" }}>
+              {activeTab === 0 && (
+                <ScrollView
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    margin: "auto",
+                    overflow: "auto",
+                    padding: "1rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    background: "white",
+                  }}
+                >
+                  {CV.map((job) => (
+                    <GroupBox
+                      variant="flat"
+                      label={
+                        <a href={job.companyLink} target="_blank">
+                          {job.company}
+                        </a>
+                      }
+                      key={job.company}
+                      style={{ display: "flex", flexDirection: "column" }}
+                    >
+                      <span style={{ fontSize: "20px" }}>{job.title}</span>
+                      <span style={{ color: "grey", fontSize: "10px" }}>
+                        {job.dates}
+                      </span>
+                      <span>{job.description}</span>
+                    </GroupBox>
+                  ))}
+                </ScrollView>
+              )}
+              {activeTab === 1 && (
+                <Box>
+                  <GroupBox label="Programming Skills">
+                    <span>Some skills</span>
+                  </GroupBox>
+                  <GroupBox label="Languages">Some langs</GroupBox>
+                </Box>
+              )}
+            </TabBody>
           </AppWindow>
         )}
 

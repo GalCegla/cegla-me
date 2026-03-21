@@ -4,6 +4,7 @@ import { Resizable } from "re-resizable";
 import {
   Button,
   ScrollView,
+  Tabs,
   Window,
   WindowContent,
   WindowHeader,
@@ -13,17 +14,10 @@ interface AppWindowProps {
   title: string;
   onClose: () => void;
   children?: React.ReactNode;
-  scrollable?: boolean; // ← new prop
   style?: CSSProperties;
 }
 
-const AppWindow: FC<AppWindowProps> = ({
-  title,
-  onClose,
-  children,
-  scrollable = false,
-  style,
-}) => {
+const AppWindow: FC<AppWindowProps> = ({ title, onClose, children, style }) => {
   const nodeRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -112,28 +106,10 @@ const AppWindow: FC<AppWindowProps> = ({
             <WindowContent
               style={{
                 height: "calc(100% - 45px)",
-                padding: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
                 overflow: "hidden",
               }}
             >
-              {scrollable ? (
-                <ScrollView
-                  style={{
-                    width: "95%",
-                    height: "95%",
-                    margin: "auto",
-                    overflow: "auto",
-                    ...style,
-                  }}
-                >
-                  {children}
-                </ScrollView>
-              ) : (
-                <div style={style}>{children}</div>
-              )}
+              {children}
             </WindowContent>
           </Window>
         </Resizable>
