@@ -25,6 +25,7 @@ interface SelectionRect {
 
 const IndexPage: FC = () => {
   const [cvOpen, setCvOpen] = useState(false);
+  const [coffeeOpen, setCoffeeOpen] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [selectionRect, setSelectionRect] = useState<SelectionRect | null>(
     null,
@@ -37,7 +38,9 @@ const IndexPage: FC = () => {
 
   const openCV = useCallback(() => setCvOpen(true), []);
   const closeCV = useCallback(() => setCvOpen(false), []);
-  const openCoffeeBlog = useCallback(() => router.push("/coffee"), [router]);
+  const openCoffee = useCallback(() => setCoffeeOpen(true), []);
+  const closeCoffee = useCallback(() => setCoffeeOpen(false), []);
+  // const openCoffeeBlog = useCallback(() => router.push("/coffee"), [router]);
   const handleTabChange = useCallback(
     (value: number) => setActiveTab(value),
     [],
@@ -271,6 +274,17 @@ const IndexPage: FC = () => {
             </TabBody>
           </AppWindow>
         )}
+        {coffeeOpen && (
+          <AppWindow
+            title="Information regarding coffee blog"
+            onClose={closeCoffee}
+            style={{ height: 200, width: 500 }}
+          >
+            <GroupBox label="Notice">
+              Sorry! The coffee blog is currently under construction.
+            </GroupBox>
+          </AppWindow>
+        )}
 
         <Box
           className="desktop-layer"
@@ -297,7 +311,7 @@ const IndexPage: FC = () => {
             label="Coffee Blog"
             isSelected={selectedIds.has("coffee")}
             onSelect={handleSelect}
-            onDoubleClick={openCoffeeBlog}
+            onDoubleClick={openCoffee}
           />
           <DesktopIcon
             id="github"

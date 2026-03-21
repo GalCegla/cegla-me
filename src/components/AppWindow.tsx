@@ -26,7 +26,10 @@ const AppWindow: FC<AppWindowProps> = ({ title, onClose, children, style }) => {
         }}
       >
         <Resizable
-          defaultSize={{ width: 700, height: 500 }}
+          defaultSize={{
+            width: style?.width || 700,
+            height: style?.height || 500,
+          }}
           minWidth={200}
           minHeight={150}
           enable={{
