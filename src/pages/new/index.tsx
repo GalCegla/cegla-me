@@ -4,13 +4,7 @@ import DesktopIcon from "components/DesktopIcon";
 import { useRouter } from "next/router";
 import { FC, useCallback, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import {
-  GoldenEra2,
-  IntelliPointCursor21,
-  PlaneFrom,
-  TheSimpsonsIcon,
-  UnnamedIcon,
-} from "react-old-icons";
+import { GoldenEra2, IntelliPointCursor21, UnnamedIcon } from "react-old-icons";
 import {
   AppBar,
   Button,
@@ -44,19 +38,25 @@ const IndexPage: FC = () => {
   const openCV = useCallback(() => setCvOpen(true), []);
   const closeCV = useCallback(() => setCvOpen(false), []);
   const openCoffeeBlog = useCallback(() => router.push("/coffee"), [router]);
-
-  const handleTabChange = useCallback((value: number) => {
-    setActiveTab(value);
-  }, []);
-
-  const handleSelect = useCallback((id: string) => {
-    setSelectedIds(new Set([id]));
-  }, []);
+  const handleTabChange = useCallback(
+    (value: number) => setActiveTab(value),
+    [],
+  );
+  const handleSelect = useCallback(
+    (id: string) => setSelectedIds(new Set([id])),
+    [],
+  );
 
   const handleDesktopMouseDown = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if ((e.target as HTMLElement).closest("[data-icon-id]")) {
         isDraggingIcon.current = true;
+        return;
+      }
+      if (
+        (e.target as HTMLElement).closest("[data-window='true']") ||
+        (e.target as HTMLElement).closest("[data-testid='resizeHandle']")
+      ) {
         return;
       }
       isDraggingIcon.current = false;
@@ -77,11 +77,7 @@ const IndexPage: FC = () => {
       const rect = desktopRef.current!.getBoundingClientRect();
       setSelectionRect((prev) =>
         prev
-          ? {
-              ...prev,
-              endX: e.clientX - rect.left,
-              endY: e.clientY - rect.top,
-            }
+          ? { ...prev, endX: e.clientX - rect.left, endY: e.clientY - rect.top }
           : null,
       );
     },
@@ -109,7 +105,6 @@ const IndexPage: FC = () => {
       const iconTop = iconRect.top - desktopRect.top;
       const iconRight = iconRect.right - desktopRect.left;
       const iconBottom = iconRect.bottom - desktopRect.top;
-
       if (
         iconLeft < maxX &&
         iconRight > minX &&
@@ -186,6 +181,7 @@ const IndexPage: FC = () => {
             <Tabs value={activeTab} onChange={handleTabChange}>
               <Tab value={0}>CV</Tab>
               <Tab value={1}>Skills</Tab>
+              <Tab value={2}>Languages</Tab>
             </Tabs>
             <TabBody style={{ height: "90%", width: "100%" }}>
               {activeTab === 0 && (
@@ -225,10 +221,41 @@ const IndexPage: FC = () => {
               {activeTab === 1 && (
                 <Box>
                   <GroupBox label="Programming Skills">
-                    <span>Some skills</span>
+                    <ul>
+                      <li>• TypeScript</li>
+                      <li>• JavaScript</li>
+                      <li>• React</li>
+                      <li>• Nest.js</li>
+                      <li>• Graphql</li>
+                      <li>• Prisma</li>
+                      <li>• Python (kinda)</li>
+                    </ul>
                   </GroupBox>
-                  <GroupBox label="Languages">Some langs</GroupBox>
+                  <GroupBox label="More Skills">
+                    <ul>
+                      <li>• Adobe Premiere</li>
+                      <li>• Adobe After Effects</li>
+                    </ul>
+                  </GroupBox>
                 </Box>
+              )}
+              {activeTab === 2 && (
+                <GroupBox label="Languages">
+                  <ul>
+                    <li>
+                      • <span style={{ fontWeight: "bold" }}>Hebrew</span>:
+                      Mother tongue
+                    </li>
+                    <li>
+                      • <span style={{ fontWeight: "bold" }}>English</span>:
+                      Fluent
+                    </li>
+                    <li>
+                      • <span style={{ fontWeight: "bold" }}>German</span>:
+                      Proficient
+                    </li>
+                  </ul>
+                </GroupBox>
               )}
             </TabBody>
           </AppWindow>
@@ -260,6 +287,29 @@ const IndexPage: FC = () => {
             isSelected={selectedIds.has("coffee")}
             onSelect={handleSelect}
             onDoubleClick={openCoffeeBlog}
+          />
+          <DesktopIcon
+            id="github"
+            icon={<img src="/githubpixel.png" style={{ height: "40px" }} />}
+            label="Gitub"
+            isSelected={selectedIds.has("github")}
+            onSelect={handleSelect}
+            onDoubleClick={() =>
+              window.open("https://github.com/GalCegla", "_blank")
+            }
+          />
+          <DesktopIcon
+            id="linkedin"
+            icon={<img src="/linkedinpixel.png" style={{ height: "40px" }} />}
+            label="Gitub"
+            isSelected={selectedIds.has("linkedin")}
+            onSelect={handleSelect}
+            onDoubleClick={() =>
+              window.open(
+                "https://www.linkedin.com/in/gal-cegla-805a88204/",
+                "_blank",
+              )
+            }
           />
         </Box>
 

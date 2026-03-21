@@ -1,14 +1,7 @@
 import { CSSProperties, FC, useRef } from "react";
 import Draggable from "react-draggable";
 import { Resizable } from "re-resizable";
-import {
-  Button,
-  ScrollView,
-  Tabs,
-  Window,
-  WindowContent,
-  WindowHeader,
-} from "react95";
+import { Button, Window, WindowContent, WindowHeader } from "react95";
 
 interface AppWindowProps {
   title: string;
@@ -24,6 +17,7 @@ const AppWindow: FC<AppWindowProps> = ({ title, onClose, children, style }) => {
     <Draggable nodeRef={nodeRef} handle=".window-header">
       <div
         ref={nodeRef}
+        data-window="true"
         style={{
           position: "absolute",
           top: "calc(50vh - 300px)",
@@ -47,11 +41,11 @@ const AppWindow: FC<AppWindowProps> = ({ title, onClose, children, style }) => {
           }}
           handleStyles={{
             bottomRight: {
-              width: "20px",
-              height: "20px",
+              width: "40px",
+              height: "40px",
               bottom: "0px",
               right: "0px",
-              zIndex: 999,
+              zIndex: 99999, // ← above react95's visual lines
               cursor: "nwse-resize",
             },
           }}
@@ -104,10 +98,7 @@ const AppWindow: FC<AppWindowProps> = ({ title, onClose, children, style }) => {
               </Button>
             </WindowHeader>
             <WindowContent
-              style={{
-                height: "calc(100% - 45px)",
-                overflow: "hidden",
-              }}
+              style={{ height: "calc(100% - 45px)", overflow: "hidden" }}
             >
               {children}
             </WindowContent>
