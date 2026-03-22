@@ -8,6 +8,7 @@ import PostCard from "components/PostCard";
 import HeadPost from "components/HeadPost";
 import AboutSection from "components/AboutSection";
 import { Helmet } from "react-helmet-async";
+import { Hourglass } from "react95";
 
 const IndexPage: FC = () => {
   const { data, error, loading } = useQuery<GetPostsQuery>(GET_POSTS);
@@ -15,7 +16,18 @@ const IndexPage: FC = () => {
 
   if (loading || !posts) {
     console.log(loading ? "loading" : "no posts");
-    return null;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Hourglass size={32} />
+      </div>
+    );
   }
   console.log(posts);
   if (posts.length === 0) {

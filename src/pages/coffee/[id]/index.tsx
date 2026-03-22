@@ -7,13 +7,29 @@ import { Box, Divider, Typography } from "@material-ui/core";
 import PostThumbnail, { Size } from "components/PostThumbnail";
 import { Global, css } from "@emotion/react";
 import Markdown from "react-markdown";
+import { Hourglass } from "react95";
 
 const PostPage: FC = () => {
   const router = useRouter();
   const id = router.query.id;
-  const { data, error } = useQuery<GetPostQuery>(GET_POST, {
+  const { data, error, loading } = useQuery<GetPostQuery>(GET_POST, {
     variables: { id },
   });
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Hourglass size={32} />
+      </div>
+    );
+  }
 
   if (error || !data?.post) {
     return null;
