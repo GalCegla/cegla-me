@@ -20,11 +20,15 @@ const AboutSection: FC = () => {
           textAlign: "center",
         }}
       >
-        CoffeeTLV is a both a coffee-centric magazine and a child project by me,
-        Gal Cegla, a coffee liker (I'm no expert) born and raised in Tel Aviv
-        (loves takeaway cups, hates global warming). This is just a place where
-        I express my personal opinion and is an overall review of coffee shops -
-        considering both the coffee itself but also the vibe!
+        CoffeeTLV is a both a pretty standard blog - mainly created to rate cool
+        (hopefully) coffee spots arounds the world based on the vibe, product
+        quality, price etc'. A bit about me - my name is Gal Cegla, born and
+        raised in Tel Aviv. I'm currently a student at LMU in Munich, and
+        previously worked as a fullstack developer in TLV. Regarding this blog
+        which used to be a coffee blog years ago - I'm not sure I'll continue
+        using it mainly a coffe blog. I'll also write here to express my
+        thoughts on various subjects (possibly) and maybe other things too. Stay
+        tuned!
       </Typography>
       <RatingLegendBox>
         <Typography
