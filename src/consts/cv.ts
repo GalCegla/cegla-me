@@ -28,7 +28,7 @@ const CV: CVObject = [
     dates: "OCTOBER 2021 - FEBRUARY 2022, TEL AVIV",
     title: "Fullstack Tech Teacher",
     description:
-      "ITC was a highly acclaimed software development schools in Tel Aviv, teaching people to become programmers. The school provided an intensive 3 month course including a one-month practical internship in software development. Working at ITC gave me the opportunity to guide students through the practices of the developers' world, help them with the learned materials, and put their knowledge into practice. Another part of my work was lecturing on different topics, with a focus on teaching ReactJS.",
+      "ITC was a highly acclaimed software development school in Tel Aviv, teaching people to become programmers. The school provided an intensive 3 month course including a one-month practical internship in software development. Working at ITC gave me the opportunity to guide students through the practices of the developers' world, help them with the learned materials, and put their knowledge into practice. Another part of my work was lecturing on different topics, with a focus on teaching ReactJS.",
   },
   {
     company: "withElement",
