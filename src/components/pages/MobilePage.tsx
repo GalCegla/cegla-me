@@ -157,7 +157,7 @@ const MobilePage: FC = () => {
                 boxSizing: "border-box",
               }}
             >
-              <GroupBox label="Programming Skills">
+              <GroupBox label="Programming Skills 👾">
                 <ul>
                   <li>• TypeScript</li>
                   <li>• JavaScript</li>
@@ -167,22 +167,25 @@ const MobilePage: FC = () => {
                   <li>• Python (kinda)</li>
                 </ul>
               </GroupBox>
-              <GroupBox label="Tools">
+              <GroupBox label="Other 🔨">
                 <ul>
                   <li>• Adobe Premiere</li>
                   <li>• Adobe After Effects</li>
                 </ul>
               </GroupBox>
-              <GroupBox label="Languages">
+              <GroupBox label="Languages 🗺️">
                 <ul>
                   <li>
-                    • <strong>Hebrew</strong>: Mother tongue
+                    • <span style={{ fontWeight: "bold" }}>Hebrew</span>: Mother
+                    tongue
                   </li>
                   <li>
-                    • <strong>English</strong>: Fluent
+                    • <span style={{ fontWeight: "bold" }}>English</span>:
+                    Fluent
                   </li>
                   <li>
-                    • <strong>German</strong>: Proficient
+                    • <span style={{ fontWeight: "bold" }}>German</span>:
+                    Proficient
                   </li>
                 </ul>
               </GroupBox>
@@ -220,7 +223,7 @@ const MobilePage: FC = () => {
                   Find me online
                 </span>
               </div>
-              <GroupBox label="Links">
+              <GroupBox label="Links 🔗">
                 <ul
                   style={{
                     display: "flex",
@@ -343,7 +346,7 @@ const MobilePage: FC = () => {
             active={activeTab === 3}
             onClick={() => setActiveTab(3)}
           >
-            Coffee
+            Blog
           </Button>
         </div>
       </Frame>
