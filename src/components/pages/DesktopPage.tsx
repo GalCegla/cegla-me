@@ -136,7 +136,7 @@ const IndexPage: FC = () => {
     <>
       <CssBaseline />
       <Helmet>
-        <title>Gal Cegla's Space</title>
+        <title>Gal.exe</title>
         <style>{`
           html, body {
             overscroll-behavior: none;
