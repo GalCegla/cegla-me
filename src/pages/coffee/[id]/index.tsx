@@ -73,7 +73,9 @@ const PostPage: FC = () => {
           thumbnail={thumbnail || ""}
           size={Size.LARGE}
         />
-        <Markdown children={body} />
+        <MarkdownContainer>
+          <Markdown children={body} />
+        </MarkdownContainer>
       </Container>
     </Box>
   );
@@ -102,4 +104,26 @@ const Container = styled(Box)`
     margin-bottom: 10px;
   }
   align-items: center;
+`;
+
+const MarkdownContainer = styled(Box)`
+  font-family: "Rubik", sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+
+  p,
+  li,
+  blockquote {
+    font-family: "Rubik", sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Readex Pro", sans-serif;
+    font-weight: 400;
+  }
 `;
