@@ -2,9 +2,10 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { Button, Card, CardContent, TextField } from "@material-ui/core";
 import PostForm from "components/PostForm";
 import { Formik } from "formik";
+import useAdminAuth from "hooks/useAdminAuth";
 import { useRouter } from "next/router";
 import { INITIAL_VALUES } from "pages/coffee/add";
-import { FC, useCallback, useMemo, useState } from "react";
+import { FC, useCallback, useMemo } from "react";
 import { Post } from "types/post";
 import {
   GetFullPostQuery,
@@ -16,7 +17,13 @@ import {
 const EditPage: FC = () => {
   const router = useRouter();
   const postId = router.query.id as string;
-  const [password, setPassword] = useState("");
+  const {
+    isAuthenticated,
+    password,
+    error,
+    handlePasswordChange,
+    handlePasswordSubmit,
+  } = useAdminAuth();
 
   const { data } = useQuery<GetFullPostQuery>(GET_FULL_POST, {
     variables: { id: postId },
@@ -47,20 +54,25 @@ const EditPage: FC = () => {
       updatePost({
         variables: { data: ValuesToInput(values), id: postId },
       }).then(() => router.push("/coffee")),
-    [router],
+    [router, updatePost, postId],
   );
 
-  const handlePasswordChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) =>
-      setPassword(event.target.value),
-    [],
-  );
-
-  if (password !== process.env.NEXT_PUBLIC_PASSWORD) {
+  if (!isAuthenticated) {
     return (
       <Card>
         <CardContent>
-          <TextField value={password} onChange={handlePasswordChange} />
+          <TextField
+            value={password}
+            onChange={handlePasswordChange}
+            type="password"
+            label="Password"
+            error={error}
+            helperText={error ? "Incorrect password" : ""}
+            onKeyDown={(e) => e.key === "Enter" && handlePasswordSubmit()}
+          />
+          <Button onClick={handlePasswordSubmit} variant="outlined">
+            Enter
+          </Button>
         </CardContent>
       </Card>
     );
@@ -85,6 +97,7 @@ const EditPage: FC = () => {
     </Formik>
   );
 };
+
 export default EditPage;
 
 export const GET_FULL_POST = gql`

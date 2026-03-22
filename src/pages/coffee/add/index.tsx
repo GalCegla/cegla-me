@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, TextField } from "@material-ui/core";
 import PostForm from "components/PostForm";
 import { Formik } from "formik";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback } from "react";
 import { Post } from "types/post";
 import { gql, useMutation } from "@apollo/client";
 import {
@@ -11,6 +11,7 @@ import {
   Rating,
 } from "__generated__/types";
 import { useRouter } from "next/router";
+import useAdminAuth from "hooks/useAdminAuth";
 
 export const INITIAL_VALUES: Post = {
   title: "",
@@ -22,30 +23,46 @@ export const INITIAL_VALUES: Post = {
 };
 
 const AddPage: FC = () => {
-  const [password, setPassword] = useState("");
+  const {
+    isAuthenticated,
+    password,
+    error,
+    handlePasswordChange,
+    handlePasswordSubmit,
+  } = useAdminAuth();
   const router = useRouter();
   const [createPost] = useMutation<
     CreatePostMutation,
     CreatePostMutationVariables
   >(CREATE_POST);
-  const onSubmit = useCallback((values: Post) => {
-    return createPost({
-      variables: {
-        data: ValuesToInput(values),
-      },
-    }).then(() => router.push("/coffee"));
-  }, []);
 
-  const handlePasswordChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) =>
-      setPassword(event.target.value),
-    [],
+  const onSubmit = useCallback(
+    (values: Post) => {
+      return createPost({
+        variables: {
+          data: ValuesToInput(values),
+        },
+      }).then(() => router.push("/coffee"));
+    },
+    [createPost, router],
   );
-  if (password !== process.env.NEXT_PUBLIC_PASSWORD) {
+
+  if (!isAuthenticated) {
     return (
       <Card>
         <CardContent>
-          <TextField value={password} onChange={handlePasswordChange} />
+          <TextField
+            value={password}
+            onChange={handlePasswordChange}
+            type="password"
+            label="Password"
+            error={error}
+            helperText={error ? "Incorrect password" : ""}
+            onKeyDown={(e) => e.key === "Enter" && handlePasswordSubmit()}
+          />
+          <Button onClick={handlePasswordSubmit} variant="outlined">
+            Enter
+          </Button>
         </CardContent>
       </Card>
     );
