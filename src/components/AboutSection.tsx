@@ -6,11 +6,11 @@ const AboutSection: FC = () => {
   return (
     <Container>
       <ProfilePictureBox>
-        <Picture src="/profile-picture.png" />
-        <img
+        <Picture src="/menamepixel.jpeg" />
+        {/* <img
           src="/fold.png"
           style={{ right: 13, bottom: 13, width: "46px", position: "absolute" }}
-        />
+        /> */}
       </ProfilePictureBox>
       <Typography
         variant="caption"
