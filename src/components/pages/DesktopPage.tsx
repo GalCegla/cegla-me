@@ -9,6 +9,7 @@ import { UnnamedIcon, WindowsShutDown } from "react-old-icons";
 import {
   AppBar,
   Button,
+  Frame,
   GroupBox,
   MenuList,
   MenuListItem,
@@ -45,6 +46,7 @@ const IndexPage: FC = () => {
   const desktopRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
+  const [clock, setClock] = useState<string>("");
   const [startMenuOpen, setStartMenuOpen] = useState(false);
   const [shutdownDialogOpen, setShutdownDialogOpen] = useState(false);
   const [shutdownAction, setShutdownAction] =
@@ -53,6 +55,29 @@ const IndexPage: FC = () => {
     "running" | "bsod" | "goodbye"
   >("running");
   const [stopCode, setStopCode] = useState<string>("STOP: 0x00000000");
+
+  useEffect(() => {
+    // Use the browser's resolved timezone so the time matches the user's current location.
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const formatter = new Intl.DateTimeFormat(undefined, {
+      timeZone,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
+
+    const formatClock = () => formatter.format(new Date());
+
+    formatClock();
+    setClock(formatClock());
+
+    const t = window.setInterval(() => {
+      setClock(formatClock());
+    }, 1000);
+
+    return () => window.clearInterval(t);
+  }, []);
 
   const openCV = useCallback(() => setCvOpen(true), []);
   const closeCV = useCallback(() => setCvOpen(false), []);
@@ -770,7 +795,7 @@ const IndexPage: FC = () => {
         )}
 
         <AppBar position="fixed" style={{ top: "auto", bottom: 0 }}>
-          <Toolbar style={{ justifyContent: "space-between" }}>
+          <Toolbar style={{ justifyContent: "space-between", width: "100%" }}>
             <div
               data-start-button="true"
               style={{ position: "relative", display: "inline-block" }}
@@ -787,6 +812,18 @@ const IndexPage: FC = () => {
                 Start
               </Button>
             </div>
+            <Frame
+              variant="field"
+              style={{
+                fontWeight: "bold",
+                padding: 4,
+                whiteSpace: "nowrap",
+                userSelect: "none",
+                background: "transparent",
+              }}
+            >
+              {clock}
+            </Frame>
           </Toolbar>
         </AppBar>
       </div>
