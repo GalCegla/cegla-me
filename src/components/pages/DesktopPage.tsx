@@ -1,6 +1,7 @@
 import { Box, CssBaseline } from "@material-ui/core";
 import AppWindow from "components/AppWindow";
 import DesktopIcon from "components/DesktopIcon";
+import SnakeGame from "components/SnakeGame";
 import CV from "consts/cv";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
@@ -47,6 +48,7 @@ const IndexPage: FC = () => {
   const router = useRouter();
 
   const [clock, setClock] = useState<string>("");
+  const [snakeOpen, setSnakeOpen] = useState(false);
   const [startMenuOpen, setStartMenuOpen] = useState(false);
   const [shutdownDialogOpen, setShutdownDialogOpen] = useState(false);
   const [shutdownAction, setShutdownAction] =
@@ -55,6 +57,9 @@ const IndexPage: FC = () => {
     "running" | "bsod" | "goodbye"
   >("running");
   const [stopCode, setStopCode] = useState<string>("STOP: 0x00000000");
+  const [clockEasterEggArmed, setClockEasterEggArmed] = useState(false);
+  const easterEggBufferRef = useRef("");
+  const easterEggTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     // Use the browser's resolved timezone so the time matches the user's current location.
@@ -217,6 +222,48 @@ const IndexPage: FC = () => {
     if (systemOverlay !== "bsod") return;
     const t = window.setTimeout(() => setSystemOverlay("goodbye"), 4000);
     return () => window.clearTimeout(t);
+  }, [systemOverlay]);
+
+  useEffect(() => {
+    if (!clockEasterEggArmed) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key.length !== 1) return;
+      const key = event.key.toLowerCase();
+      if (!/[a-z]/.test(key)) return;
+
+      easterEggBufferRef.current = (easterEggBufferRef.current + key).slice(-5);
+      if (easterEggBufferRef.current === "snake") {
+        setSnakeOpen(true);
+        setClockEasterEggArmed(false);
+        easterEggBufferRef.current = "";
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [clockEasterEggArmed]);
+
+  useEffect(() => {
+    return () => {
+      if (easterEggTimeoutRef.current) {
+        window.clearTimeout(easterEggTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const armClockEasterEgg = useCallback(() => {
+    if (systemOverlay !== "running") return;
+    setClockEasterEggArmed(true);
+    easterEggBufferRef.current = "";
+    if (easterEggTimeoutRef.current) {
+      window.clearTimeout(easterEggTimeoutRef.current);
+    }
+    easterEggTimeoutRef.current = window.setTimeout(() => {
+      setClockEasterEggArmed(false);
+      easterEggBufferRef.current = "";
+      easterEggTimeoutRef.current = null;
+    }, 5000);
   }, [systemOverlay]);
 
   const openShutdownDialog = useCallback(() => {
@@ -814,6 +861,8 @@ const IndexPage: FC = () => {
             </div>
             <Frame
               variant="field"
+              onDoubleClick={armClockEasterEgg}
+              title="Time"
               style={{
                 fontWeight: "bold",
                 padding: 4,
@@ -826,6 +875,7 @@ const IndexPage: FC = () => {
             </Frame>
           </Toolbar>
         </AppBar>
+        <SnakeGame open={snakeOpen} onClose={() => setSnakeOpen(false)} />
       </div>
     </>
   );
