@@ -32,7 +32,7 @@ const SnakeGame: FC<SnakeGameProps> = ({ open, onClose }) => {
     { x: 4, y: 7 },
   ]);
   const [food, setFood] = useState<Cell>({ x: 9, y: 7 });
-  const [queuedDirection, setQueuedDirection] = useState<Direction>("right");
+  const directionQueueRef = useRef<Direction[]>(["right"]);
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
@@ -44,7 +44,7 @@ const SnakeGame: FC<SnakeGameProps> = ({ open, onClose }) => {
       { x: 4, y: 7 },
     ];
     setSnake(initialSnake);
-    setQueuedDirection("right");
+    directionQueueRef.current = ["right"];
     setScore(0);
     setIsGameOver(false);
     setFood(randomFoodCell(initialSnake));
@@ -56,17 +56,20 @@ const SnakeGame: FC<SnakeGameProps> = ({ open, onClose }) => {
   }, [open, resetSnake]);
 
   const setNextDirection = useCallback((next: Direction) => {
-    setQueuedDirection((current) => {
-      if (
-        (current === "up" && next === "down") ||
-        (current === "down" && next === "up") ||
-        (current === "left" && next === "right") ||
-        (current === "right" && next === "left")
-      ) {
-        return current;
-      }
-      return next;
-    });
+    const queue = directionQueueRef.current;
+    const last = queue[queue.length - 1];
+    if (
+      (last === "up" && next === "down") ||
+      (last === "down" && next === "up") ||
+      (last === "left" && next === "right") ||
+      (last === "right" && next === "left") ||
+      last === next
+    ) {
+      return;
+    }
+    if (queue.length < 3) {
+      directionQueueRef.current = [...queue, next];
+    }
   }, []);
 
   useEffect(() => {
@@ -75,7 +78,9 @@ const SnakeGame: FC<SnakeGameProps> = ({ open, onClose }) => {
     const id = window.setInterval(() => {
       setSnake((prevSnake) => {
         const head = prevSnake[0];
-        const nextDirection = queuedDirection;
+        const queue = directionQueueRef.current;
+        const nextDirection = queue[0];
+        if (queue.length > 1) directionQueueRef.current = queue.slice(1);
 
         let nextHead: Cell = head;
         if (nextDirection === "up") nextHead = { x: head.x, y: head.y - 1 };
@@ -113,7 +118,7 @@ const SnakeGame: FC<SnakeGameProps> = ({ open, onClose }) => {
     }, 170);
 
     return () => window.clearInterval(id);
-  }, [food.x, food.y, isGameOver, open, queuedDirection]);
+  }, [food.x, food.y, isGameOver, open]);
 
   useEffect(() => {
     if (!open) return;
