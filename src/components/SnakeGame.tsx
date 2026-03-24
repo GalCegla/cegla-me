@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Button, Frame, GroupBox } from "react95";
 
 const GRID_SIZE = 14;
@@ -35,6 +35,7 @@ const SnakeGame: FC<SnakeGameProps> = ({ open, onClose }) => {
   const [queuedDirection, setQueuedDirection] = useState<Direction>("right");
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const resetSnake = useCallback(() => {
     const initialSnake = [
@@ -129,6 +130,39 @@ const SnakeGame: FC<SnakeGameProps> = ({ open, onClose }) => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [onClose, open, setNextDirection]);
 
+  const handleTouchStart = useCallback(
+    (event: React.TouchEvent<HTMLDivElement>) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    },
+    [],
+  );
+
+  const handleTouchEnd = useCallback(
+    (event: React.TouchEvent<HTMLDivElement>) => {
+      if (!touchStartRef.current || isGameOver) return;
+
+      const touch = event.changedTouches[0];
+      if (!touch) return;
+
+      const dx = touch.clientX - touchStartRef.current.x;
+      const dy = touch.clientY - touchStartRef.current.y;
+      const minSwipeDistance = 24;
+
+      if (Math.abs(dx) < minSwipeDistance && Math.abs(dy) < minSwipeDistance) {
+        return;
+      }
+
+      if (Math.abs(dx) > Math.abs(dy)) {
+        setNextDirection(dx > 0 ? "right" : "left");
+      } else {
+        setNextDirection(dy > 0 ? "down" : "up");
+      }
+    },
+    [isGameOver, setNextDirection],
+  );
+
   if (!open) return null;
 
   return (
@@ -163,6 +197,8 @@ const SnakeGame: FC<SnakeGameProps> = ({ open, onClose }) => {
           Score: {score} {isGameOver ? " - Game Over" : ""}
         </div>
         <div
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
           style={{
             display: "grid",
             gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
