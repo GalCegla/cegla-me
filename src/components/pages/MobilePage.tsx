@@ -1,6 +1,7 @@
 import { CssBaseline } from "@material-ui/core";
+import SnakeGame from "components/SnakeGame";
 import CV from "consts/cv";
-import { FC, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { AppBar, Button, Frame, GroupBox, ScrollView, Toolbar } from "react95";
 
@@ -19,6 +20,34 @@ const getJobLabel = (job: (typeof CV)[0]) =>
 
 const MobilePage: FC = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [snakeOpen, setSnakeOpen] = useState(false);
+  const secretTapCountRef = useRef(0);
+  const secretTapTimerRef = useRef<number | null>(null);
+
+  const handleSecretTap = useCallback(() => {
+    if (secretTapTimerRef.current) {
+      window.clearTimeout(secretTapTimerRef.current);
+    }
+    secretTapCountRef.current += 1;
+    if (secretTapCountRef.current >= 5) {
+      setSnakeOpen(true);
+      secretTapCountRef.current = 0;
+    }
+
+    secretTapTimerRef.current = window.setTimeout(() => {
+      secretTapCountRef.current = 0;
+      secretTapTimerRef.current = null;
+    }, 1200);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (secretTapTimerRef.current) {
+        window.clearTimeout(secretTapTimerRef.current);
+      }
+      secretTapCountRef.current = 0;
+    };
+  }, []);
 
   return (
     <>
@@ -69,10 +98,14 @@ const MobilePage: FC = () => {
               </span>
             </div>
             <span
+              onClick={handleSecretTap}
+              title="psst..."
               style={{
                 fontSize: "0.75rem",
                 alignSelf: "flex-end",
                 marginBottom: "2px",
+                cursor: "pointer",
+                userSelect: "none",
               }}
             >
               v1.0.0
@@ -350,6 +383,8 @@ const MobilePage: FC = () => {
           </Button>
         </div>
       </Frame>
+
+      <SnakeGame open={snakeOpen} onClose={() => setSnakeOpen(false)} />
     </>
   );
 };
